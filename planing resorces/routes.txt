@@ -1,0 +1,42 @@
+Routs
+
+Server
+/			index router
+/users			user router
+/restaurants		restaurant router
+/restaurants/:id/items	menu item router
+
+index
+get /
+Get /auth/google
+Get /oauth2callback
+Get /logout
+
+
+Users router
+get	/		index
+get 	/:id		show one
+get 	/:id/edit		edit user type
+put	/:id		update
+Delete	/:id		destroy
+
+
+Restaurants router
+get	/		index
+get 	/:id		show one
+get 	/:id/edit		edit
+put	/:id		update
+Get	/new		new
+Post	/		create
+Delete	/:id		destroy
+
+
+items router
+
+get	/		index
+get 	/:id		show one
+get 	/:id/edit		edit
+put	/:id		update
+Get	/new		new
+Post	/		create
+Delete	/:id		destroy
