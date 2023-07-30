@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+<h2><%- title %></h2>
+<% restaurants.forEach(restaurant => { %>
+    <%= restaurant %><br><br>
+    <a href="/restaurants/<%= restaurant._id %>">Details</a>
+    <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
+    <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+        <button>DELETE</button>
+    </form>
+<%}); %>
+
+<% console.log(restaurants) %>
+
+<%- include('../partials/footer') %>
