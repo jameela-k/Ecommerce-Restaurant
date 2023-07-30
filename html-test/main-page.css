@@ -1,3 +1,7 @@
+* {
+    background-color: aliceblue;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -12,11 +16,8 @@ header {
 
 
 .logo {
-    width: 100px;
-    height: 100px;
-    font-size: 15px;
-    color: black;
-    user-select: none;
+    width: 70px;
+    height: 70px;
 }
 
 ul {
