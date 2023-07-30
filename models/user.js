@@ -14,7 +14,11 @@ const userSchema = new Schema({
         type: String,
         enum: ["admin", "user"],
         default: "user"
-    }
+    },
+    reviews: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Restaurant'
+    }]
   }, {
     timestamps: true
 });
