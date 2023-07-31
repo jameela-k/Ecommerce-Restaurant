@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+<h2><%- title %></h2>
+
+<form id="new-form" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+  <label>name:</label>
+  <input type="text" name="name" value="<%= restaurant.name %>" required>
+  <!-- accuire catigories from database and show each with checkbox  -->
+  <label for="image">image</label>
+  <img src="<%= restaurant.image.src %>" alt="">
+  <input type="file" id="image" name="file">
+  <h4>Address</h4>
+  <label>shopNumber:</label>
+  <input type="text" name="address.shopNumber" value="<%= restaurant.address.shopNumber %>">
+  <label>building</label>   
+  <input type="text" name="address.building" value="<%= restaurant.address.building %>">
+  <label>road</label>   
+  <input type="text" name="address.road" value="<%= restaurant.address.road %>">
+  <label>city</label>   
+  <input type="text" name="address.city" value="<%= restaurant.address.city %>">
+  <label>block</label>   
+  <input type="text" name="address.block" value="<%= restaurant.address.block %>">
+  <label>country</label>   
+  <input type="text" name="address.country" value="<%= restaurant.address.country %>">
+  <input type="submit" value="Update Restaurant">
+</form>
+
+<%- include('../partials/footer') %>

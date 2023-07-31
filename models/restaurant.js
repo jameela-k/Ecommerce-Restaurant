@@ -32,7 +32,7 @@ const menuSchema = new Schema({
     required: true,
    },
    image: {
-    profile_img:{
+    src:{
         type: String,
     },
     cloudinary_id: {
@@ -57,7 +57,7 @@ const restaurantSchema = new Schema({
     type: String,
    }],
    image: {
-    profile_img:{
+    src:{
         type: String,
     },
     cloudinary_id: {

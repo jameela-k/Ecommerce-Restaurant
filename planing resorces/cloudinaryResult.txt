@@ -1,0 +1,23 @@
+result:
+{
+  asset_id: '7d0ec8db7fd9874b87493d976d85b298',
+  public_id: 'v1xz8cukrerywv7iwsol',
+  version: 1690715598,
+  version_id: '7aee7654b3bc2245cfeeabc2297fd22c',
+  signature: '44e24d7224ce25949a4c71643ab245472d963715',
+  width: 1122,
+  height: 793,
+  format: 'jpg',
+  resource_type: 'image',
+  created_at: '2023-07-30T11:13:18Z',
+  tags: [],
+  bytes: 128173,
+  type: 'upload',
+  etag: 'ad538b7491cd71f28bbe30776a7d93ff',
+  placeholder: false,
+  url: 'http://res.cloudinary.com/dzwjhrfil/image/upload/v1690715598/v1xz8cukrerywv7iwsol.jpg',
+  secure_url: 'https://res.cloudinary.com/dzwjhrfil/image/upload/v1690715598/v1xz8cukrerywv7iwsol.jpg',
+  folder: '',
+  original_filename: 'a5d9dd905348da0fa33c9d0177ef216b',
+  api_key: '218419421522669'
+}
