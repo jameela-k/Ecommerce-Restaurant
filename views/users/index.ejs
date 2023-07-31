@@ -11,15 +11,34 @@
         <img src="<%= dbUser.avatar %>" alt="user avatar">
         <!-- show user name -->
         <h2><%= dbUser.name %></h2>
-        <h2><%= dbUser.userType %></h2>
-        <a href="/users/<%= dbUser._id %>/edit">Edit</a>
+        <!-- show user type and option to change-->
+        <form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
+            <lable>Prevlages</label>
+            <!-- if admin show radio buttons with admin selected -->
+            <% if(dbUser.userType == "admin"){ %>
+                <input type="radio" id="admin" name="userType" value="admin" checked>
+                <label for="admin">Admin</label>
+                <input type="radio" id="user" name="userType" value="user">
+                <label for="user">user</label>
+                <!-- if normal user show radio buttons with user selected -->
+            <%} else {%>
+                <input type="radio" id="admin" name="userType" value="admin">
+                <label for="admin">Admin</label>
+                <input type="radio" id="user" name="userType" value="user" checked>
+                <label for="user">user</label>
+            <% } %>
+            <input type="submit" value="Update user">
+        </form>
+        <!-- delete user using id and method overide DELETE -->
         <form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
             <button>DELETE</button>
         </form>
         <% }); %>
+    <!-- show not autorized message if user is not admin  -->
     <% }else { %>
         <h1>YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE</h1>
     <% } %>
+<!-- show login message if no user is loged in -->
 <% } else { %>
     <h1>Plaese Login</h1>
 <% } %>
