@@ -6,7 +6,7 @@
 <!-- for each user in the list do the following -->
 <% dbUsers.forEach(dbUser => { %>
     <!-- show user avatar -->
-    <img src="<%= user.avatar =>" alt="user avatar">
+    <img src="<%= dbUser.avatar %>" alt="user avatar">
     <!-- show user name -->
     <h2><%= dbUser.name %></h2>
     <h2><%= dbUser.userType %></h2>
