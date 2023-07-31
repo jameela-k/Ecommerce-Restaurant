@@ -2,7 +2,6 @@ const User = require('../models/user');
 
 module.exports = {
     index,
-    edit,
     update,
     destroy,
 };
@@ -13,23 +12,6 @@ async function index(req, res) {
     const dbUsers = await User.find({});
     //render users/index page and pass title "all users" and users constant
     res.render('users/index', { title: 'All Users', dbUsers });
-}
-
-// show edit page with user info function
-async function edit(req, res) {
-    // get selected user from database using id from req.params.id and store it in constant user
-    const dbUser = await User.findById(req.params.id); 
-    // if user was aquired from database
-    if (dbUser) {
-        // render users/edit page and pass title "User Details" and user constant
-        res.render('users/edit', { title: 'User Details', dbUser});
-    }
-    // else
-    else {
-        // return to all users and pass errMsg user not found
-        console.log("user not found")
-        res.redirect('/users');
-    }
 }
 
 // update user function
