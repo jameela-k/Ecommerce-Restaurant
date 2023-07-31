@@ -3,19 +3,25 @@
 <!-- title provided by controller for users index -->
 <h2><%- title %></h2>
 
-<!-- for each user in the list do the following -->
-<% dbUsers.forEach(dbUser => { %>
-    <!-- show user avatar -->
-    <img src="<%= dbUser.avatar %>" alt="user avatar">
-    <!-- show user name -->
-    <h2><%= dbUser.name %></h2>
-    <h2><%= dbUser.userType %></h2>
-    <a href="/users/<%= dbUser._id %>/edit">Edit</a>
-    <form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
-        <button>DELETE</button>
-    </form>
-<%}); %>
-
-<% console.log(dbUsers) %>
+<% if (user) { %>
+    <% if(user.userType == "admin"){ %>
+        <!-- for each user in the list do the following -->
+        <% dbUsers.forEach(dbUser => { %>
+        <!-- show user avatar -->
+        <img src="<%= dbUser.avatar %>" alt="user avatar">
+        <!-- show user name -->
+        <h2><%= dbUser.name %></h2>
+        <h2><%= dbUser.userType %></h2>
+        <a href="/users/<%= dbUser._id %>/edit">Edit</a>
+        <form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
+            <button>DELETE</button>
+        </form>
+        <% }); %>
+    <% }else { %>
+        <h1>YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE</h1>
+    <% } %>
+<% } else { %>
+    <h1>Plaese Login</h1>
+<% } %>
 
 <%- include('../partials/footer') %>
