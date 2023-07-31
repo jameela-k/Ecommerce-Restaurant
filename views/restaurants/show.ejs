@@ -2,5 +2,19 @@
 
 <h2><%- title %></h2>
 <%= restaurant %>
-
+<% if(user?.userType == "admin"){ %>
+    <a href="/restaurants/<%= restaurant._id %>/items/new">Add New Item</a>
+<% } %>
+<% restaurant.menu.forEach(item => { %>
+    <div>
+        <h5><%= item.name %></h5>
+        <% if(user?.userType == "admin"){ %>
+            <a href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit">Edit Item</a>
+            <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
+                <button>DELETE</button>
+            </form>
+        <% } %>
+       
+    </div>
+<% }); %>
 <%- include('../partials/footer') %>
