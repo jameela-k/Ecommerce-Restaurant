@@ -11,7 +11,7 @@
     <h2><%= dbUser.name %></h2>
     <h2><%= dbUser.userType %></h2>
     <a href="/users/<%= dbUser._id %>/edit">Edit</a>
-    <form action="/restaurants/<%= dbUser._id %>?_method=DELETE" method="POST">
+    <form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
         <button>DELETE</button>
     </form>
 <%}); %>
