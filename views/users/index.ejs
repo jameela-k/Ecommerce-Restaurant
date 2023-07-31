@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+
+<!-- title provided by controller for users index -->
+<h2><%- title %></h2>
+
+<!-- for each user in the list do the following -->
+<% dbUsers.forEach(dbUser => { %>
+    <!-- show user avatar -->
+    <img src="<%= user.avatar =>" alt="user avatar">
+    <!-- show user name -->
+    <h2><%= dbUser.name %></h2>
+    <h2><%= dbUser.userType %></h2>
+    <a href="/users/<%= dbUser._id %>/edit">Edit</a>
+    <form action="/restaurants/<%= dbUser._id %>?_method=DELETE" method="POST">
+        <button>DELETE</button>
+    </form>
+<%}); %>
+
+<% console.log(dbUsers) %>
+
+<%- include('../partials/footer') %>

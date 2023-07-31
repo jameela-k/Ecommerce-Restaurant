@@ -10,19 +10,19 @@ module.exports = {
 // show index (all users) function
 async function index(req, res) {
     // get all users from database and store them in constant users
-    const users = await User.find({});
+    const dbUsers = await User.find({});
     //render users/index page and pass title "all users" and users constant
-    res.render('users/index', { title: 'All Users', users });
+    res.render('users/index', { title: 'All Users', dbUsers });
 }
 
 // show edit page with user info function
 async function edit(req, res) {
     // get selected user from database using id from req.params.id and store it in constant user
-    const user = await User.findById(req.params.id); 
+    const dbUser = await User.findById(req.params.id); 
     // if user was aquired from database
-    if (user) {
+    if (dbUser) {
         // render users/edit page and pass title "User Details" and user constant
-        res.render('users/edit', { title: 'User Details', user});
+        res.render('users/edit', { title: 'User Details', dbUser});
     }
     // else
     else {
