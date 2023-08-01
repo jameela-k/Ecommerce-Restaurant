@@ -35,11 +35,11 @@
 <% } %>
 
 <!-- go through all restaurants -->
-<% restaurants.forEach(restaurant => { %>
+<% restaurants.forEach((restaurant, r) => { %>
     <!-- go through all of the restaurant's items -->
-    <% restaurant.menu.forEach (item => { %>
+    <% restaurant.menu.forEach ((item, i) => { %>
         <!-- go through all of the items reviews -->
-        <% item.reviews.forEach (review => { %>
+        <% item.reviews.forEach ((review, w) => { %>
             <!-- if the review is made by the selected user -->
             <% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
                 <!-- show restaurant logo -->
@@ -64,11 +64,11 @@
                             <input type="hidden" name="userName" value="<%= user.name %>">
                             <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
                             <!-- show the comment with the user review filled in -->
-                            <label for="comment">Comment</label>
-                            <textarea name="comment" id="comment"><%= review.comment %></textarea>
+                            <label for="comment#<%= r %><%= i %><%= w %>">Comment</label>
+                            <textarea name="comment" id="comment#<%= r %><%= i %><%= w %>"><%= review.comment %></textarea>
                             <!-- show the user's rating for the item -->
-                            <label for="rating">Rating</label>
-                            <select name="rating" id="rating">
+                            <label for="rating#<%= r %><%= i %><%= w %>">Rating</label>
+                            <select name="rating" id="rating#<%= r %><%= i %><%= w %>">
                                 <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
                                 <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
                                 <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
