@@ -1,10 +1,30 @@
 const User = require('../models/user');
+const Restaurant = require('../models/restaurant');
 
 module.exports = {
     index,
     update,
     destroy,
+    show: showOne,
 };
+
+async function showOne(req, res) {
+  
+    try {
+        //get all restaurants
+        const restaurants = await Restaurant.find({});
+        const dbUser = await User.findOne ({_id: req.params.id})
+        // console.log("selected user");
+        // console.log(dbUser);
+        if(dbUser){
+            res.render(`users/show`, { title: "All User's Reviews", dbUser, restaurants });
+        }
+    } 
+    catch (err) {
+        console.log(err);
+        res.redirect(`/users`);
+    }
+}
 
 // show index (all users) function
 async function index(req, res) {
