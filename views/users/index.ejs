@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+
+<!-- title provided by controller for users index -->
+<h2><%- title %></h2>
+
+<!-- for each user in the list do the following -->
+<% dbUsers.forEach((dbUser, i) => { %>
+    <!-- show user avatar -->
+    <img src="<%= dbUser.avatar %>" alt="user avatar">
+    <!-- show user name -->
+    <h2><%= dbUser.name %></h2>
+
+    <!-- if user is loged in -->
+    <% if (user) { %>
+        <!-- if user is admin -->
+        <% if(user.userType == "admin"){ %>
+            <h2><%= dbUser.email %></h2>
+            <!-- show user type and option to change-->
+            <form id="edit-userType-form##<%= i %>" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
+                <lable>Prevlages</label>
+                <!-- if admin show radio buttons with admin selected -->
+                
+                    <input type="radio" id="admin#<%= i %>" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
+                    <label for="admin">Admin</label>
+                    <input type="radio" id="user#<%= i %>" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
+                    <label for="user">user</label>
+                    <!-- if normal user show radio buttons with user selected -->
+        
+                <input type="submit" value="Update user">
+            </form>
+            <!-- delete user using id and method overide DELETE -->
+            <form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
+                <button>DELETE</button>
+            </form>
+        <% } %>    
+        <!-- maybe add follow button if there is time  -->
+    
+    <!-- show login message if no user is loged in -->
+    <% } else { %>
+        <h1>Plaese Login</h1>
+    <% } %>
+<% }); %>
+
+<%- include('../partials/footer') %>
