@@ -39,8 +39,14 @@ const menuSchema = new Schema({
         type: String,
     }
    },
+   type: {
+        type: String,
+   },
    description: {
     type: String,
+   },
+   price: {
+    type: mongoose.Decimal128,
    },
    reviews: [reviewSchema],
   }, {

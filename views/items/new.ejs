@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+<h2><%- title %></h2>
+<%= restaurant %>
+
+<% if(user?.userType == 'admin'){ %>
+    <form id="new-form" action="/restaurants/<%= restaurant._id %>/items" method="POST" enctype="multipart/form-data">
+        <label>Name: </label>
+        <input type="text" name="name" required>
+
+        <label for="image">Image: </label>
+        <input type="file" id="image" name="file">
+
+        <label for="type">Type: </label>   
+        <input type="text" name="type" id="type">
+
+        <label for="description">Description: </label>   
+        <textarea name="description" id="description"></textarea>
+
+
+        <label for="price">Price: </label>   
+        <input type="text" name="price" id="price">
+ 
+        <input type="submit" value="Add Item">
+    </form>
+<% } %>
+
+<%- include('../partials/footer') %>
