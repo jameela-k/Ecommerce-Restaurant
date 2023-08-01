@@ -13,10 +13,10 @@
           <% if (user) { %>
             <% if(user.userType == "admin"){ %>
                 <h3>This is an admin</h3>
-                <a href="/users">Show Users</a>
             <% }else if(user.userType == "user"){ %>
                 <h3>This is a normal user</h3>
             <% } %>
+            <a href="/users">Show Users</a>
             <a href="/logout">LOG OUT</a>
           <% } else { %>
             <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
