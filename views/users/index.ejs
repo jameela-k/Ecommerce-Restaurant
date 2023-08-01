@@ -4,7 +4,7 @@
 <h2><%- title %></h2>
 
 <!-- for each user in the list do the following -->
-<% dbUsers.forEach(dbUser => { %>
+<% dbUsers.forEach((dbUser, i) => { %>
     <!-- show user avatar -->
     <img src="<%= dbUser.avatar %>" alt="user avatar">
     <!-- show user name -->
@@ -16,21 +16,16 @@
         <% if(user.userType == "admin"){ %>
             <h2><%= dbUser.email %></h2>
             <!-- show user type and option to change-->
-            <form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
+            <form id="edit-userType-form##<%= i %>" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
                 <lable>Prevlages</label>
                 <!-- if admin show radio buttons with admin selected -->
-                <% if(dbUser.userType == "admin"){ %>
-                    <input type="radio" id="admin" name="userType" value="admin" checked>
+                
+                    <input type="radio" id="admin#<%= i %>" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
                     <label for="admin">Admin</label>
-                    <input type="radio" id="user" name="userType" value="user">
+                    <input type="radio" id="user#<%= i %>" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
                     <label for="user">user</label>
                     <!-- if normal user show radio buttons with user selected -->
-                <%} else {%>
-                    <input type="radio" id="admin" name="userType" value="admin">
-                    <label for="admin">Admin</label>
-                    <input type="radio" id="user" name="userType" value="user" checked>
-                    <label for="user">user</label>
-                <% } %>
+        
                 <input type="submit" value="Update user">
             </form>
             <!-- delete user using id and method overide DELETE -->
