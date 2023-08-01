@@ -43,11 +43,12 @@ async function create(req, res) {
 
 async function edit(req, res) {
     const restaurant = await Restaurant.findById(req.params.res_id); 
-    const item = await Restaurant.findOne({"menu._id":req.params.id}, {"menu.$":1}); 
+    // const item = await Restaurant.findOne({"menu._id":req.params.id}, {"menu.$":1}); 
+    const item = restaurant.menu.id(req.params.id);
     console.log("item:");
     console.log(item);
     
-    res.render('items/edit', { title: 'Edit ITEM', restaurant, item: item.menu[0]});
+    res.render('items/edit', { title: 'Edit ITEM', restaurant, item});
 }
 
 async function update(req, res) {
