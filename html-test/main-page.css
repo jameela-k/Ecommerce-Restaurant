@@ -84,7 +84,7 @@ ul {
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: minmax(30px, auto);
     gap: 2%;
-    padding: ;
+    padding: 2%;
 }
 
 .menu-dish {
@@ -95,6 +95,12 @@ ul {
 
 .main-details-text {
     padding: 4%;
+}
+
+.add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 
