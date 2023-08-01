@@ -65,17 +65,37 @@ ul {
 }
 
 .Main-details{
-    display: flex;
-    justify-content: center;
-    gap: 3%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: 4%;
+    margin-right: 4%;
 }
 
+
+.Resturant-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8%;
+    padding: 2%;
+}
 
 .Resturant {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    grid-auto-rows: minmax(100px, auto);
+    grid-auto-rows: minmax(30px, auto);
+    gap: 2%;
+    padding: ;
+}
+
+.menu-dish {
+    width: 400px;
+    height: 350px;
+    padding: 4%;
+}
+
+.main-details-text {
+    padding: 4%;
+
 }
 
 
