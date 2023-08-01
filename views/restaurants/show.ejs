@@ -14,6 +14,68 @@
                 <button>DELETE</button>
             </form>
         <% } %>
+
+        <% if(user){
+            let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
+            console.log(review);
+            if(review) {%>
+              
+                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
+                    <input type="hidden" name="user" value="<%= user._id %>">
+                    <input type="hidden" name="userName" value="<%= user.name %>">
+                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                    <label for="comment">Comment</label>
+                    <textarea name="comment" id="comment"><%= review.comment %></textarea>
+                    <label for="rating"></label>
+                    <select name="rating" id="rating">
+                        <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
+                        <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
+                        <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
+                        <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
+                        <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
+                    </select>
+                    <button>Edit</button>
+                </form>
+
+                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                    <button>DELETE</button>
+                </form>
+           
+            <%}else{ %>
+                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
+                    <input type="hidden" name="user" value="<%= user._id %>">
+                    <input type="hidden" name="userName" value="<%= user.name %>">
+                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                    <label for="comment">Comment</label>
+                    <textarea name="comment" id="comment"></textarea>
+                    <label for="rating"></label>
+                    <select name="rating" id="rating">
+                        <option value="1">*</option>
+                        <option value="2">**</option>
+                        <option value="3">***</option>
+                        <option value="4">****</option>
+                        <option value="5">*****</option>
+                    </select>
+                    <button>submit</button>
+                </form>
+        <%}} %>
+
+        <% item.reviews.forEach(review => { 
+            console.log("review user:");
+            console.log(review.user);
+            console.log("user id");
+            console.log(user?._id);
+            console.log("compa");
+            console.log(JSON.stringify(review.user) == JSON.stringify(user?._id));
+            if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
+                <div>
+                    <img src="<%= review.userAvatar %>" alt="">
+                    <h2><%= review.userName %></h2>
+                    <p><%= review.comment %></p>
+                    <h4><%= review.rating %></h4>
+                </div>
+
+        <% }}); %>
        
     </div>
 <% }); %>
