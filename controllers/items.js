@@ -73,23 +73,31 @@ async function update(req, res) {
    
    try {
        
-        const updatedRestaurant = await Restaurant.findOneAndUpdate({_id: req.params.res_id,"menu._id":req.params.id},
-        { 
-            $set: 
-            {
-            "menu.$.name": req.body.name,
-            "menu.$.image": req.body.image,
-            "menu.$.type": req.body.type || null,
-            "menu.$.description": req.body.description || null,
-            "menu.$.price": req.body.price || null, 
-            } 
-        },
+        // const updatedRestaurant = await Restaurant.findOneAndUpdate({_id: req.params.res_id,"menu._id":req.params.id},
+        // { 
+        //     $set: 
+        //     {
+        //         "menu.$.name": req.body.name,
+        //         "menu.$.image": req.body.image,
+        //         "menu.$.type": req.body.type || null,
+        //         "menu.$.description": req.body.description || null,
+        //         "menu.$.price": req.body.price || null, 
+        //     } 
+        // },
 
-        { new: true });
-        
-        console.log("result:");
-        console.log(updatedRestaurant); 
-        console.log("end result:");
+        // { new: true });
+        const restaurant = await Restaurant.findById(req.params.res_id);
+        const item = restaurant.menu.id(req.params.id);
+        if(item){
+            item.name = req.body.name;
+            item.image = req.body.image?req.body.image:null;
+            item.type = req.body.type? req.body.type: null;
+            item.description = req.body.description?req.body.description:null;
+            item.price = req.body.price?req.body.price:null;
+        }
+
+        await restaurant.save();
+
         res.redirect(`/restaurants/${req.params.res_id}`);
     } catch (err) {
         console.log(err);
@@ -100,10 +108,16 @@ async function update(req, res) {
 
 async function destroy(req, res) {
     try {
-        const result = await Restaurant.findOneAndUpdate(
-            {_id: req.params.res_id},
-            {$pull: {menu: {_id:req.params.id}},
-        });
+        // const result = await Restaurant.findOneAndUpdate(
+        //     {_id: req.params.res_id},
+        //     {$pull: {menu: {_id:req.params.id}},
+        // });
+
+        const restaurant = await Restaurant.findById(req.params.res_id);
+    
+        restaurant.menu.remove(req.params.id);
+
+        await restaurant.save();
 
         res.redirect(`/restaurants/${req.params.res_id}`);
     }catch(err) {
