@@ -84,12 +84,24 @@ ul {
     text-align: center;
 }
 
-.Main-details{
+.Main-details {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin-left: 4%;
     margin-right: 4%;
 }
+
+/* .Main-details {
+    display: flex;
+    flex-direction: row;
+}
+
+.main-details-text {
+    display: grid;
+    grid-template-columns: none;
+    padding: 4%;
+} */
+
 
 .Resturant-image {
     display: grid;
@@ -117,9 +129,7 @@ ul {
     padding: 2%;
 }
 
-.main-details-text {
-    padding: 4%;
-}
+
 
 .add-button {
     display: flex;
@@ -131,4 +141,19 @@ footer {
     text-align: center;
 }
 
+.img-fluid {
+    width: 80%;
+}
 
+.card-mb-3 {
+    display: flex;
+    justify-content: center;
+}
+
+.card-group {
+    gap: 1%;
+}
+
+.card-img-top {
+    width: 50%;
+}
