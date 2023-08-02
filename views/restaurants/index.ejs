@@ -6,15 +6,33 @@
 <br>
 <br>
 <h2><%- title %></h2>
-<% restaurants.forEach(restaurant => { %>
-    <%= restaurant %><br><br>
-    <a href="/restaurants/<%= restaurant._id %>">Details</a>
-    <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
-    <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-        <button>DELETE</button>
-    </form>
-<%}); %>
+<div class="container text-center my-3">
+  <div class="row mx-auto my-auto">
+    <div class="grid-item">
+      <div class="row">
+        <% restaurants.forEach(restaurant => { %>
+        <%= restaurant %><br><br>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                  <img src="<%= restaurant.image.src %>" class="dish">
+                  <h4 class="card-title"><%= restaurant.name %></h4>
+                  <p class="type"><%= restaurant.categories %></p>
+                  <p class="address"><%= restaurant.address %></p>
+                  <p class="card-text">Rating</p>
+                </div>
+              </div>
+              <a href="/restaurants/<%= restaurant._id %>">Details</a>
+              <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
+              <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+              <button>DELETE</button>
+              </form>
+              <%}); %>
+            </div>
+           </div>
+        </div>
+    </div> 
+</div>
 
-<% console.log(restaurants) %>
 
 <%- include('../partials/footer') %>
