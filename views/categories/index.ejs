@@ -1,0 +1,39 @@
+
+
+
+<%- include('../partials/header') %>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!-- title provided by controller for users index -->
+<h2><%- title %></h2>
+
+
+<% if(user?.userType == "admin"){ %>
+  
+    <form action="/categories" method="post">
+        <label for="category">category name: </label>
+        <input type="text" name="name" id="category">
+        <button>ADD</button>
+    </form>
+    <!-- for each user in the list do the following -->
+    <% categories.forEach((category, i) => { %>
+        <!-- show category name -->
+        <form action="/categories/<%= category._id %>?_method=PUT" method="post">
+            <label for="category#<%= i %>"></label>
+            <input type="text" name="name" id="category#<%= i %>" value="<%= category.name %>">
+            <button>Update</button>
+        </form>
+    
+        <!-- delete user using id and method overide DELETE -->
+        <form action="/categories/<%= category._id %>?_method=DELETE" method="POST">
+            <button>DELETE</button>
+        </form>
+    
+    <% }); %>
+
+<% } %>
+
+<%- include('../partials/footer') %>

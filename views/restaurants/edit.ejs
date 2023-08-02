@@ -6,6 +6,13 @@
   <label>name:</label>
   <input type="text" name="name" value="<%= restaurant.name %>" required>
   <!-- accuire catigories from database and show each with checkbox  -->
+  <label for="">categories</label>
+  <% categories.forEach((category, i) => { %>
+    <% console.log(`trial#${i}`); %>
+    <% let result = RestaurantCategories.findIndex(RCategory => {return JSON.stringify(RCategory._id) == JSON.stringify(category._id)}) + 1 %>
+    <input type="checkbox" name="categories[]" value="<%= category._id %>" id="category#<%= i %>"<%= result?'checked':''%>>
+    <label for="category#<%= i %>"><%= category.name %></label>
+  <%}); %>
   <label for="image">image</label>
   <img src="<%= restaurant.image.src %>" alt="" referrerpolicy="no-referrer">
   <input type="file" id="image" name="file">

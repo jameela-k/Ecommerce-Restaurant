@@ -59,7 +59,8 @@ const restaurantSchema = new Schema({
     required: true,
    },
    categories: [{
-    type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
    }],
    image: {
     src:{

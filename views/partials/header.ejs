@@ -23,7 +23,7 @@
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="/restaurants">Show All </a></li>
           <% allCategories.forEach ((c, i)=> { %>
-            <li><a class="dropdown-item" href="/restaurants/?<%= c._id %>">c.name</a></li>
+            <li><a class="dropdown-item" href="/restaurants/?category=<%= c.name %>"><%= c.name %></a></li>
             <% }); %>
         </ul>
       </div>
