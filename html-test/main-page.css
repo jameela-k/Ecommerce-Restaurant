@@ -9,6 +9,7 @@
 }
 
 header {
+    text-transform: uppercase;
     position: fixed;
     top: 0;
     left: 0;
@@ -113,7 +114,7 @@ ul {
 .menu-dish {
     width: 400px;
     height: 350px;
-    padding: 4%;
+    padding: 2%;
 }
 
 .main-details-text {
