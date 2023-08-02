@@ -3,7 +3,7 @@
 <h1><%- title %></h1>
 
 <!-- show user avatar -->
-<img src="<%= dbUser.avatar %>" alt="user avatar">
+<img src="<%= dbUser.avatar %>" alt="user avatar" referrerpolicy="no-referrer">
 <!-- show user name -->
 <p><%= dbUser.name %></p>
 
@@ -44,13 +44,13 @@
             <% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
                 <!-- show restaurant logo -->
                 <h3>Restaurant logo</h3>
-                <img src="<%= restaurant.image.src %>" alt="logo">
+                <img src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
                 <!-- show restaurant name -->
                 <h3>Restaurant Name</h3>
                 <h4><%= restaurant.name %></h4>
                 <!-- show item image -->
                 <h3>Item Image</h3>
-                <img src="<%= item.image.src %>" alt="logo">
+                <img src="<%= item.image.src %>" alt="logo" referrerpolicy="no-referrer">
                 <!-- show the item name -->
                 <h3>Item Name</h3>
                 <h4><%= item.name %></h4>

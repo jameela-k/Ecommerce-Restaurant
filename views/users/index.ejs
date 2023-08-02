@@ -6,7 +6,7 @@
 <!-- for each user in the list do the following -->
 <% dbUsers.forEach((dbUser, i) => { %>
     <!-- show user avatar -->
-    <img src="<%= dbUser.avatar %>" alt="user avatar">
+    <img src="<%= dbUser.avatar %>" alt="user avatar" referrerpolicy="no-referrer">
     <!-- show user name -->
     <h2><a href="/users/<%= dbUser._id %>"><%= dbUser.name %></a></h2>
 
