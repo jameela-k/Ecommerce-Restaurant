@@ -17,6 +17,7 @@ var usersRouter = require('./routes/users');
 var restaurantsRouter = require('./routes/restaurants');
 var itemsRouter = require('./routes/items');
 var reviewsRouter = require('./routes/reviews');
+const categoryModel = require('./models/category');
 
 var app = express();
 
@@ -41,8 +42,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
   res.locals.user = req.user;
+  const allCategories = await categoryModel.find({});
+  res.locals.allCategories = allCategories;
   next();
 });
 

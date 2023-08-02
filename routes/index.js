@@ -3,9 +3,12 @@ var router = express.Router();
 
 const passport = require('passport');
 
+const restaurant = require('../models/restaurant');
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home Page' });
+router.get('/', async function(req, res, next) {
+  const restaurants = await restaurant.find({});
+  res.render('index', { title: 'Home Page' , restaurants});
 });
 
 // Google OAuth login route
