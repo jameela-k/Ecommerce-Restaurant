@@ -12,4 +12,7 @@ router.put('/:id', usersCtrl.update);
 // DELETE /users/:id =>  Delete	/:id		destroy
 router.delete('/:id', usersCtrl.destroy);
 
+// show user and all its reviews
+router.get('/:id', usersCtrl.show);
+
 module.exports = router;

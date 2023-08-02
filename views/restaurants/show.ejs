@@ -69,7 +69,7 @@
             console.log(JSON.stringify(review.user) == JSON.stringify(user?._id));
             if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
                 <div>
-                    <img src="<%= review.userAvatar %>" alt="">
+                    <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                     <h2><%= review.userName %></h2>
                     <p><%= review.comment %></p>
                     <h4><%= review.rating %></h4>
