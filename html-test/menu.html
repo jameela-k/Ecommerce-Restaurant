@@ -37,9 +37,42 @@
         <div class="card">
           <img src="resturant imge.jpg" class="card-img-top">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+            <form class="row g-3">
+                <div class="col-md-6">
+                  <label for="resturantName" class="form-label">Resturant Name</label>
+                  <input type="name" class="form-control" id="inputName">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputCuisine" class="form-label">Cuisine</label>
+                  <input type="cuisine" class="form-control" id="inputCuisine">
+                </div>
+                <div class="col-12">
+                  <label for="inputDescription" class="form-label">Description</label>
+                  <input type="text" class="form-control" id="inputDescription">
+                </div>
+                <div class="col-md-12">
+                  <label for="inputRating" class="form-label">Rating</label>
+                  <select id="inputRating" class="form-select">
+                    <option selected>Choose</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                      Check me out
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary">Admin - Edit</button>
+                </div>
+              </form>
           </div>
         </div>
         <div class="card">
