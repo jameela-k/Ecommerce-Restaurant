@@ -15,7 +15,7 @@
           <a href="/users">Show Users</a>
           <% if (user) { %>
             <% if(user.userType == "admin"){ %>
-                <a href="/restaurants/new">Add restaurants</a>
+                <a href="/restaurants/new">Add restaurant</a>
                 <a href="/users/<%= user._id %>"><%= user.name %></a>
             <% }else if(user.userType == "user"){ %>
                 <a href="/users/<%= user._id %>"><%= user.name %></a>
