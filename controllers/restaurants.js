@@ -1,4 +1,5 @@
 const Restaurant = require('../models/restaurant');
+const Category = require('../models/category');
 const cloudinary = require("../utils/cloudinary");
 
 module.exports = {
@@ -12,12 +13,32 @@ module.exports = {
 };
 
 async function index(req, res) {
-  const restaurants = await Restaurant.find({});
+  
+  let restaurants = [];
+  // req.query.category = "Ali";
+  if("category" in req.query && req.query.category){
+    const allRestaurants = await Restaurant.find({}).populate('categories');
+    for(let i=0; i < allRestaurants.length; i++){
+      const restaurantCat = allRestaurants[i].categories;
+      for(let j=0; j < restaurantCat.length; j++){
+        // console.log(restaurantCat[j].name);
+        if(restaurantCat[j].name == req.query.category){
+          restaurants.push(allRestaurants[i]);
+          break;
+        }
+      }
+    }
+  }else {
+    restaurants = await Restaurant.find({});
+  }
+  // console.log(restaurants);
   res.render('restaurants/index', { title: 'All Restaurants', restaurants });
 }
 
 async function newRestaurant(req, res) {
-    res.render("restaurants/new", {title: 'New Restaurant'});
+    const categories = await Category.find({});
+    console.log(categories);
+    res.render("restaurants/new", {title: 'New Restaurant', categories});
 }
 
 async function create(req, res) {
@@ -43,14 +64,19 @@ async function create(req, res) {
 }
 
 async function showOne(req, res) {
-  const restaurant = await Restaurant.findById(req.params.id); 
+  const restaurant = await Restaurant.findById(req.params.id).populate('categories'); 
+
   res.render('restaurants/show', { title: 'Restaurant Detail', restaurant});
 
 }
 
 async function edit(req, res) {
     const restaurant = await Restaurant.findById(req.params.id); 
-    res.render('restaurants/edit', { title: 'Restaurant Detail', restaurant});
+    const RestaurantCategories = await Restaurant.findById(req.params.id).populate('categories');
+    const categories = await Category.find({});
+    // console.log("RestaurantCategories: ");
+    // console.log(RestaurantCategories);
+    res.render('restaurants/edit', { title: 'Restaurant Detail', restaurant, categories, RestaurantCategories:RestaurantCategories.categories});
 }
 
 
@@ -71,6 +97,10 @@ async function update(req, res) {
         if (req.body[key] === '') delete req.body[key];
     }
 
+    if(!("categories" in req.body)){
+      req.body.categories = [];
+    }
+
     try {
         // Update this line because now we need the _id of the new movie
         const result = await Restaurant.updateOne({_id: req.params.id}, req.body);
@@ -89,7 +119,7 @@ async function update(req, res) {
         console.log(err);
         res.redirect(`/restaurants/${req.params.id}/edit`);
     }
-  }
+}
 
 
 async function destroy(req, res) {
