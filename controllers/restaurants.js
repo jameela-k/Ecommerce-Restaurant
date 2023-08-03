@@ -136,7 +136,6 @@ async function index(req, res) {
 
 async function newRestaurant(req, res) {
     const categories = await Category.find({});
-    console.log(categories);
     let errors = [];
     let formBody = [];
     if(req.session.errors) {
@@ -150,7 +149,6 @@ async function newRestaurant(req, res) {
 }
 
 async function create(req, res) {
-
 
   // validation
   try {
@@ -205,24 +203,80 @@ async function showOne(req, res) {
 }
 
 async function edit(req, res) {
+
+
+    let errors = [];
+    let formBody = [];
+    if(req.session.errors) {
+      // console.log(req.session.errors);
+      formBody = req.session.formBody;
+      delete req.session.formBody;
+      errors = req.session.errors;
+      delete req.session.errors;
+    }
     const restaurant = await Restaurant.findById(req.params.id); 
     const RestaurantCategories = await Restaurant.findById(req.params.id).populate('categories');
     const categories = await Category.find({});
     // console.log("RestaurantCategories: ");
     // console.log(RestaurantCategories);
-    res.render('restaurants/edit', { title: 'Restaurant Detail', restaurant, categories, RestaurantCategories:RestaurantCategories.categories});
+    res.render('restaurants/edit', { title: 'Restaurant Detail', restaurant, categories, RestaurantCategories:RestaurantCategories.categories, errors, formBody});
 }
 
 
 async function update(req, res) {
-  
-    if(req.file){
+
+  // validation
+  try {
+    // Manually run checkSchema to validate the request body
+    await checkSchema(restaurantFormCheckSchema).run(req);
+
+    // Check if there are any validation errors
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        req.session.formBody = req.body;
+        req.session.errors = errors.mapped();
+        console.log(req.session.errors);
+        return res.redirect(301, `/restaurants/${req.params.id}/edit`);
+    }
+
+  }catch (err) {
+      // Handle errors thrown by checkSchema
+      console.error(err);
+      res.status(500).send('Internal server error');
+  }
+  // end validation
+
+  const restaurant = await Restaurant.findById(req.params.id);
+  console.log(restaurant);
+    if(!("deleteImg" in req.body)){
+      if(req.file){
+        if("image" in restaurant){
+          if("cloudinary_id" in restaurant.image){
+            if(restaurant.image.cloudinary_id){
+              // remove the image from the cloudinary
+              await cloudinary.uploader.destroy(restaurant.image.cloudinary_id);
+            }
+          }
+        }
         // Upload image to cloudinary
         const result = await cloudinary.uploader.upload(req.file.path);
-        console.log(result);
         req.body.image = {};
         req.body.image.src = result.secure_url;
         req.body.image.cloudinary_id = result.public_id;
+      }
+    }else {
+      try{
+        if("image" in restaurant){
+          if("cloudinary_id" in restaurant.image){
+            await cloudinary.uploader.destroy(restaurant.image.cloudinary_id);
+            req.body.image = {};
+          }
+        }
+        
+      }catch(err){
+        console.log(err);
+      }
     }
 
     // Remove empty properties so that defaults will be applied
@@ -267,4 +321,3 @@ async function destroy(req, res) {
     }
     
 }
-
