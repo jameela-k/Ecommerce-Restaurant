@@ -1,6 +1,105 @@
 const Restaurant = require('../models/restaurant');
 const Category = require('../models/category');
 const cloudinary = require("../utils/cloudinary");
+const path = require("path");
+
+const { checkSchema, validationResult } = require('express-validator');
+
+const restaurantFormCheckSchema = {
+    name: {
+        in: ['body'],
+        notEmpty: true,
+        errorMessage: 'Name is required',
+        isLength: {
+          options: { min: 2, max: 50 },
+          errorMessage: 'name must be between 2 and 50 characters'
+        }
+    },
+    file: {
+        custom: {
+          options: (value, { req }) => {
+            // if (!req.file) {
+            //   throw new Error('Image file is required');
+            // }
+            if(req.file) {
+               
+                if (!req.file.mimetype.startsWith('image/')) {
+                  throw new Error('Invalid file type. Only image files are allowed');
+                }
+
+                let ext = path.extname(req.file.originalname);
+                if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
+                    throw new Error('Invalid image type');
+                }
+            }
+
+            return true;
+          }
+        }
+    },
+
+    "address.shopNumber": {
+        in: ['body'],
+        isLength: {
+          options: {
+            min: 1,
+            max: 255
+        },
+          errorMessage: 'Shop Number must be between 1 and 255 characters'
+        }
+    },
+    "address.building": {
+        in: ['body'],
+        isLength: {
+          options: {
+            min: 1,
+            max: 255
+          },
+          errorMessage: 'Building must be between 1 and 255 characters'
+        }
+    },
+    "address.road": {
+        in: ['body'],
+        isLength: {
+          options: {
+            min: 1,
+            max: 255
+          },
+          errorMessage: 'Road must be between 1 and 255 characters'
+        }
+    },
+    "address.city": {
+        in: ['body'],
+        isLength: {
+          options: {
+            min: 1,
+            max: 255
+          },
+          errorMessage: 'City must be between 1 and 255 characters'
+        }
+    },
+    "address.block": {
+        in: ['body'],
+        isLength: {
+          options: {
+            min: 1,
+            max: 255
+          },
+          errorMessage: 'Block must be between 1 and 255 characters'
+        }
+    },
+    "address.country": {
+        in: ['body'],
+        isLength: {
+          options: {
+            min: 1,
+            max: 255
+          },
+          errorMessage: 'Country must be between 1 and 255 characters'
+        }
+    },
+
+} 
 
 module.exports = {
   index,
@@ -29,7 +128,7 @@ async function index(req, res) {
       }
     }
   }else {
-    restaurants = await Restaurant.find({});
+    restaurants = await Restaurant.find({}).populate('categories');
   }
   // console.log(restaurants);
   res.render('restaurants/index', { title: 'All Restaurants', restaurants });
@@ -38,23 +137,58 @@ async function index(req, res) {
 async function newRestaurant(req, res) {
     const categories = await Category.find({});
     console.log(categories);
-    res.render("restaurants/new", {title: 'New Restaurant', categories});
+    let errors = [];
+    let formBody = [];
+    if(req.session.errors) {
+        // console.log(req.session.errors);
+        formBody = req.session.formBody;
+        delete req.session.formBody;
+        errors = req.session.errors;
+        delete req.session.errors;
+    }
+    res.render("restaurants/new", {title: 'New Restaurant', categories, errors, formBody});
 }
 
 async function create(req, res) {
-  
-   // Upload image to cloudinary
-  const result = await cloudinary.uploader.upload(req.file.path);
+
+
+  // validation
+  try {
+    // Manually run checkSchema to validate the request body
+    await checkSchema(restaurantFormCheckSchema).run(req);
+
+    // Check if there are any validation errors
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        req.session.formBody = req.body;
+        req.session.errors = errors.mapped();
+        // console.log(req.session.errors);
+        return res.redirect(301, '/restaurants/new');
+    }
+
+  }catch (err) {
+      // Handle errors thrown by checkSchema
+      console.error(err);
+      res.status(500).send('Internal server error');
+  }
+  // end validation
+
+  // check if file exists Upload image to cloudinary
+  if(req.file){
+    // Upload image to cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
+    req.body.image = {};
+    req.body.image.src = result.secure_url;
+    req.body.image.cloudinary_id = result.public_id;
+  }
 
   // Remove empty properties so that defaults will be applied
   for (let key in req.body) {
     if (req.body[key] === '') delete req.body[key];
   }
-  req.body.image = {};
-  req.body.image.src = result.secure_url;
-  req.body.image.cloudinary_id = result.public_id;
-  try {
 
+  try {
     const restaurant = await Restaurant.create(req.body);
     res.redirect(`/`);
   } catch (err) {

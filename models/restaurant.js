@@ -71,6 +71,10 @@ const restaurantSchema = new Schema({
     }
    },
 
+   description: {
+    type: String,
+    },
+
    address: {
         shopNumber: {
             type: String,

@@ -6,36 +6,73 @@
 <br>
 <br>
 
-<h2><%- title %></h2>
 
-
-<form id="new-form" action="/restaurants" method="POST" enctype="multipart/form-data">
-  <label>name:</label>
-  <input type="text" name="name" required>
-  <!-- accuire catigories from database and show each with checkbox  -->
-  <label for="">categories</label>
-  <% categories.forEach((category, i) => { %>
-
-      <input type="checkbox" name="categories[]" value="<%= category._id %>" id="category#<%= i %>">
-      <label for="category#<%= i %>"><%= category.name %></label>
-      
- <%}); %>
-  <label for="image">image</label>
-  <input type="file" id="image" name="file">
-  <h4>Address</h4>
-  <label>shopNumber:</label>
-  <input type="text" name="address.shopNumber">
-  <label>building</label>   
-  <input type="text" name="address.building">
-  <label>road</label>   
-  <input type="text" name="address.road">
-  <label>city</label>   
-  <input type="text" name="address.city">
-  <label>block</label>   
-  <input type="text" name="address.block">
-  <label>country</label>   
-  <input type="text" name="address.country">
-  <input type="submit" value="Add Restaurant">
-</form>
+<div class="newRestaurant">
+  <form id="new-form" action="/restaurants" method="POST" enctype="multipart/form-data">
+  <div class="card">
+    <div class="card-header">
+        <h4 class="card-title"><%- title %></h4>
+    </div>
+    <div class="card-body">
+        <div class="basic-form">
+            <form>
+              <input class="form-control form-control-sm" name="file" id="image" type="file">
+                <div class="row">
+                    <div class="name">
+                        <label class="form-label">Name</label>
+                        <input type="text"  name="name" class="form-control">
+                    </div>
+                    <div class="categories">
+                        <label class="form-label">Categories</label>
+                        <% categories.forEach((category, i) => { %>
+                          <div class="card-body">
+                            <div class="basic-form">
+                                <form>
+                                    <div class="categoriesShow">
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label"for="category# <%= i %>">
+                                                <input type="checkbox" name="categories[]" class="form-check-input" value="<%= category._id %>" checked="" id="category#<%= i %>">
+                                                <%= category.name %>
+                                              </label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%}); %>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                      <h4> Address</h4>
+                        <label class="form-label">Shop Number</label>
+                        <input type="number" name="address.shopNumber" class="form-control">
+  
+                        <label class="form-label">Building</label>
+                        <input type="number" name="address.building" class="form-control">
+  
+                        <label class="form-label">Road</label>
+                        <input type="number" name="address.road" class="form-control">
+  
+                        <label class="form-label">City</label>
+                        <input type="text" name="address.city" class="form-control">
+                        
+                        <label class="form-label">Block</label>
+                        <input type="number" name="address.block" class="form-control">
+  
+                        <label class="form-label">Country</label>
+                        <input type="text" name="address.country" class="form-control">
+                        
+                    <button type="button" class="btn light btn-add"></button>
+                    <input type="submit" value="Add Restaurant">
+                    </div>
+                  </div>
+                </div>    
+            </form>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
 
 <%- include('../partials/footer') %>
