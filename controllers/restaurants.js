@@ -29,7 +29,7 @@ async function index(req, res) {
       }
     }
   }else {
-    restaurants = await Restaurant.find({});
+    restaurants = await Restaurant.find({}).populate('categories');
   }
   // console.log(restaurants);
   res.render('restaurants/index', { title: 'All Restaurants', restaurants });
