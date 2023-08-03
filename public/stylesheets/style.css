@@ -168,21 +168,6 @@ hr {
   font-weight: bold;
 }
 
-.login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 34px;
-  /* width: 34px; */
-  min-width: 40px;
-}
-
-.login #logo {
-  vertical-align: middle;
-  height: 30px;
-  width: 30px;
-}
-
 .review-user {
   display: flex;
   justify-content: center;
