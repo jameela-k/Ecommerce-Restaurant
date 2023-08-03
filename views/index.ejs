@@ -18,39 +18,39 @@
                   <div class="carousel-inner" role="listbox">
                       <div class="carousel-item py-5 active">
                           <div class="row">
-
-      <% restaurants.forEach((restaurant) => { %> 
-        <div class="col-sm-3">
-            <div class="card">
-              <div class="card-body">
-                <img src="<%= restaurant.image.src %>" class="dish">
-                <h4 class="card-title"><%= restaurant.name %></h4>
-                <p class="card-text">Rating</p>
+                          <% restaurants.forEach((restaurant) => { %> 
+                        <div class="col-sm-3">
+                          <div class="card">
+                          <div class="card-body">
+                            <img src="<%= restaurant.image.src %>" class="dish">
+                            <h4 class="card-title"><%= restaurant.name %></h4>
+                            <p class="card-text">Rating</p>
+                          </div>
+                        </div>
+                      </div>
+                      <%  }) %>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            
+          <div class="row">
+            <div class="col-12">
+              <a class="carousel-control-prev text-dark" href="#myCarousel" role="button" data-slide="prev">
+              <span class="fa fa-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next text-dark" href="#myCarousel" role="button" data-slide="next">
+              <span class="fa fa-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
         </div>
-        <%  }) %>
+      </div>
     </div>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-12">
-<a class="carousel-control-prev text-dark" href="#myCarousel" role="button" data-slide="prev">
-<span class="fa fa-chevron-left" aria-hidden="true"></span>
-<span class="sr-only">Previous</span>
-</a>
-<a class="carousel-control-next text-dark" href="#myCarousel" role="button" data-slide="next">
-<span class="fa fa-chevron-right" aria-hidden="true"></span>
-<span class="sr-only">Next</span>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>  
+  </div>  
 </main>
 
 <%- include('./partials/footer') %>
