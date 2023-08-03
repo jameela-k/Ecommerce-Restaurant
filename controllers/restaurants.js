@@ -15,6 +15,16 @@ const restaurantFormCheckSchema = {
           errorMessage: 'name must be between 2 and 50 characters'
         }
     },
+    description: {
+      in: ['body'],
+      isLength: {
+        options: {
+          min: 1,
+          max: 255
+      },
+        errorMessage: 'description must be between 1 and 255 characters'
+      }
+    },
     file: {
         custom: {
           options: (value, { req }) => {

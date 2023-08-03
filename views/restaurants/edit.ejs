@@ -4,8 +4,15 @@
 
 <form id="new-form" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
   <label>name:</label>
-  <input type="text" name="name" value="<%= restaurant.name %>" required>
-  <!-- accuire catigories from database and show each with checkbox  -->
+  <input type="text" name="name" value="<%= errors?errors.name?formBody?formBody.name:restaurant.name:restaurant.name:restaurant.name %>">
+  <% if(errors && errors.name){ %>
+    <span><%= errors.name.msg %></span>
+  <%  }%>
+  <label>description:</label>
+  <input type="text" name="description" value="<%= errors?errors.description?formBody?formBody.description:restaurant.description:restaurant.description:restaurant.description %>">
+  <% if(errors && errors.description){ %>
+    <span><%= errors.description.msg %></span>
+  <%  }%>
   <label for="">categories</label>
   <% categories.forEach((category, i) => { %>
     <% console.log(`trial#${i}`); %>
@@ -14,21 +21,44 @@
     <label for="category#<%= i %>"><%= category.name %></label>
   <%}); %>
   <label for="image">image</label>
-  <img src="<%= restaurant.image.src %>" alt="" referrerpolicy="no-referrer">
+  <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name %>" referrerpolicy="no-referrer">
   <input type="file" id="image" name="file">
+  <% if(errors && errors.file){ %>
+    <span><%= errors.file.msg %></span>
+  <%  }%>
+  <label for="deleteImg">Do you want to delete the img</label>
+  <input type="checkbox" name="deleteImg" id="deleteImg" value="1">
   <h4>Address</h4>
   <label>shopNumber:</label>
-  <input type="text" name="address.shopNumber" value="<%= restaurant.address.shopNumber %>">
+  <input type="text" name="address.shopNumber" value="<%= errors?errors['address.shopNumber']?formBody?formBody['address.shopNumber']: restaurant.address.shopNumber:restaurant.address.shopNumber:restaurant.address.shopNumber %>">
+  <% if(errors && errors['address.shopNumber']){ %>
+    <span><%= errors['address.shopNumber'].msg %></span>
+  <%  }%>
   <label>building</label>   
-  <input type="text" name="address.building" value="<%= restaurant.address.building %>">
+  <input type="text" name="address.building" value="<%= errors?errors['address.building']?formBody?formBody['address.building']:restaurant.address.building:restaurant.address.building:restaurant.address.building %>">
+  <% if(errors && errors['address.building']){ %>
+    <span><%= errors['address.building'].msg %></span>
+  <%  }%>
   <label>road</label>   
-  <input type="text" name="address.road" value="<%= restaurant.address.road %>">
+  <input type="text" name="address.road" value="<%= errors?errors['address.road']?formBody?formBody['address.road']: restaurant.address.road:restaurant.address.road:restaurant.address.road %>">
+  <% if(errors && errors['address.road']){ %>
+    <span><%= errors['address.road'].msg %></span>
+  <%  }%>
   <label>city</label>   
-  <input type="text" name="address.city" value="<%= restaurant.address.city %>">
+  <input type="text" name="address.city" value="<%=  errors?errors['address.city']?formBody?formBody['address.city']: restaurant.address.city:restaurant.address.city:restaurant.address.city %>">
+  <% if(errors && errors['address.city']){ %>
+    <span><%= errors['address.city'].msg %></span>
+  <%  }%>
   <label>block</label>   
-  <input type="text" name="address.block" value="<%= restaurant.address.block %>">
+  <input type="text" name="address.block" value="<%= errors?errors['address.block']?formBody?formBody['address.block']: restaurant.address.block:restaurant.address.block:restaurant.address.block %>">
+  <% if(errors && errors['address.block']){ %>
+    <span><%= errors['address.block'].msg %></span>
+  <%  }%>
   <label>country</label>   
-  <input type="text" name="address.country" value="<%= restaurant.address.country %>">
+  <input type="text" name="address.country" value="<%= errors?errors['address.country']?formBody?formBody['address.country']:restaurant.address.country:restaurant.address.country:restaurant.address.country %>">
+  <% if(errors && errors['address.country']){ %>
+    <span><%= errors['address.country'].msg %></span>
+  <%  }%>
   <input type="submit" value="Update Restaurant">
 </form>
 
