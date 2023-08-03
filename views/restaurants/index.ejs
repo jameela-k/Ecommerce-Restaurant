@@ -15,15 +15,38 @@
             <div class="card">
               <div class="card-body">
                 <img src="<%= restaurant.image.src %>" class="dish">
-                <h4 class="card-title"><%= restaurant.name %></h4>
-                <p class="type"><%= restaurant.categories %></p>
-                <p class="address"><%= restaurant.address %></p>
+                <h5>Restaurant Name</h5>
+                <h5 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h5>
+                <h5>Categories</h5>
+                <% restaurant.categories.forEach ((category) => { %>
+                  <p class="type"><%= category.name %></p>
+                <% }); %>
+                <h5>Address</h5>
+                <h6>Shop Number</h6>
+                <p class="address"><%= restaurant.address.shopNumber %></p>
+                <h6>Building</h6>
+                <p class="address"><%= restaurant.address.building %></p>
+                <h6>Shop Number</h6>
+                <p class="address"><%= restaurant.address.road %></p>
+                <h6>Road</h6>
+                <p class="address"><%= restaurant.address.block %></p>
+                <h6>City</h6>
+                <p class="address"><%= restaurant.address.city %></p>
+                <h6>Country</h6>
+                <p class="address"><%= restaurant.address.country %></p>
+                <h5>Over All Rating</h5>
                 <p class="card-text">Rating</p>
-                <a href="/restaurants/<%= restaurant._id %>">Details</a>
-                <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
-                <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-                  <button>DELETE</button>
-                </form>
+                <!-- if user is loged in -->
+                <% if (user) { %>
+                  <!-- if user is admin -->
+                  <% if(user.userType == "admin"){ %>
+                    <a href="/restaurants/<%= restaurant._id %>">Details</a>
+                    <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
+                    <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+                      <button>DELETE</button>
+                    </form>
+                  <% } %>    
+                <% } %>
               </div>
             </div>
           </div>
