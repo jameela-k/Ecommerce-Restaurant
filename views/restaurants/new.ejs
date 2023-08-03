@@ -8,102 +8,94 @@
 
 
 <div class="newRestaurant">
-  <form id="new-form" action="/restaurants" method="POST" enctype="multipart/form-data">
-  <div class="card">
-    <div class="card-header">
+  <form action="/restaurants" method="POST" enctype="multipart/form-data">
+    <div class="card">
+      <div class="card-header">
         <h4 class="card-title"><%- title %></h4>
-    </div>
-    <div class="card-body">
-        <div class="basic-form">
-            <form>
-              <input class="form-control form-control-sm" name="file" id="image" type="file">
-              <% if(errors && errors.file){ %>
-                <span><%= errors.file.msg %></span>
-              <%  }%>
-                <div class="row">
-                    <div class="name">
-                        <label class="form-label">Name</label>
-                        <input type="text"  name="name" class="form-control" value="<%= errors.length?!errors.name?formBody?formBody.name:'':'':'' %>" required>
-                        <% if(errors && errors.name){ %>
-                          <span><%= errors.name.msg %></span>
-                        <%  }%>
-                    </div>
-                    <div class="description">
-                      <label class="form-label">Description</label>
-                      <input type="text"  name="description" class="form-control" value="<%= errors?!errors.description?formBody?formBody.description:'':'':'' %>" required>
-                      <% if(errors && errors.description){ %>
-                        <span><%= errors.description.msg %></span>
-                      <%  }%>
-                    </div>
-                    <div class="categories">
-                        <label class="form-label">Categories</label>
-                        <% categories.forEach((category, i) => { %>
-                          <div class="card-body">
-                            <div class="basic-form">
-                                <form>
-                                    <div class="categoriesShow">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label"for="category# <%= i %>">
-                                                <input type="checkbox" name="categories[]" class="form-check-input" value="<%= category._id %>" checked="" id="category#<%= i %>">
-                                                <%= category.name %>
-                                              </label>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%}); %>
-                <div class="row">
-                    <div class="mb-3 col-md-6">
-                      <h4> Address</h4>
-                        <label class="form-label">Shop Number</label>
-                        <input type="number" name="address.shopNumber" class="form-control" value="<%= errors.length?!errors['address.shopNumber']?formBody?formBody['address.shopNumber']:'':'':'' %>">
-                        <% if(errors && errors['address.shopNumber']){ %>
-                          <span><%= errors['address.shopNumber'].msg %></span>
-                        <%  }%>
-  
-                        <label class="form-label">Building</label>
-                        <input type="number" name="address.building" class="form-control" value="<%= errors.length?!errors['address.building']?formBody?formBody['address.building']:'':'':'' %>">
-                        <% if(errors && errors['address.building']){ %>
-                          <span><%= errors['address.building'].msg %></span>
-                        <%  }%>
-  
-                        <label class="form-label">Road</label>
-                        <input type="number" name="address.road" class="form-control" value="<%= errors.length?!errors['address.road']?formBody?formBody['address.road']:'':'':'' %>">
-                        <% if(errors && errors['address.road']){ %>
-                          <span><%= errors['address.road'].msg %></span>
-                        <%  }%>
-  
-                        <label class="form-label">City</label>
-                        <input type="text" name="address.city" class="form-control" value="<%= errors.length?!errors['address.city']?formBody?formBody['address.city']:'':'':'' %>">
-                        <% if(errors && errors['address.city']){ %>
-                          <span><%= errors['address.city'].msg %></span>
-                        <%  }%>
-                        
-                        <label class="form-label">Block</label>
-                        <input type="number" name="address.block" class="form-control" value="<%= errors.length?!errors['address.block']?formBody?formBody['address.block']:'':'':'' %>">
-                        <% if(errors && errors['address.block']){ %>
-                          <span><%= errors['address.block'].msg %></span>
-                        <%  }%>
-  
-                        <label class="form-label">Country</label>
-                        <input type="text" name="address.country" class="form-control" value="<%= errors.length?!errors['address.country']?formBody?formBody['address.country']:'':'':'' %>">
-                        <% if(errors && errors['address.country']){ %>
-                          <span><%= errors['address.country'].msg %></span>
-                        <%  }%>
-                        
-                    <button type="button" class="btn light btn-add"></button>
-                    <input type="submit" value="Add Restaurant">
-                    </div>
-                  </div>
-                </div>    
-            </form>
-          </div>
-        </div>
       </div>
-    </form>
-    </div>
+      <div class="card-body">
+        <div class="basic-form">
+          <div class="row">
+            <input class="form-control form-control-sm" name="file" id="image" type="file">
+            <% if(errors && errors.file){ %>
+              <span><%= errors.file.msg %></span>
+            <%  }%>
+          </div>
+          <div class="row">
+              <div class="name">
+                  <label class="form-label">Name</label>
+                  <input type="text"  name="name" class="form-control" value="<%= errors.length?!errors.name?formBody?formBody.name:'':'':'' %>" required>
+                  <% if(errors && errors.name){ %>
+                    <span><%= errors.name.msg %></span>
+                  <%  }%>
+              </div>
+              <div class="description">
+                <label class="form-label">Description</label>
+                <input type="text"  name="description" class="form-control" value="<%= errors?!errors.description?formBody?formBody.description:'':'':'' %>">
+                <% if(errors && errors.description){ %>
+                  <span><%= errors.description.msg %></span>
+                <%  }%>
+              </div>
+              <div class="categories">
+                  <label class="form-label">Categories</label>
+                  <% categories.forEach((category, i) => { %>
+                      <div class="categoriesShow">
+                          <div class="form-check form-check-inline">
+                            <label class="form-check-label"for="category# <%= i %>">
+                                <input type="checkbox" name="categories[]" class="form-check-input" value="<%= category._id %>" id="category#<%= i %>">
+                                <%= category.name %>
+                            </label>
+                          </div>
+                      </div>
+                  <%}); %>   
+              </div>
+          </div>
+          <div class="row px-2">
+            <fieldset class="form-group border mb-3 col-md-6">
+              <legend>Address</legend>
+                <label class="form-label">Shop Number</label>
+                <input type="text" name="address.shopNumber" class="form-control" value="<%= errors.length?!errors['address.shopNumber']?formBody?formBody['address.shopNumber']:'':'':'' %>">
+                <% if(errors && errors['address.shopNumber']){ %>
+                  <span><%= errors['address.shopNumber'].msg %></span>
+                <%  }%>
+
+                <label class="form-label">Building</label>
+                <input type="text" name="address.building" class="form-control" value="<%= errors.length?!errors['address.building']?formBody?formBody['address.building']:'':'':'' %>">
+                <% if(errors && errors['address.building']){ %>
+                  <span><%= errors['address.building'].msg %></span>
+                <%  }%>
+
+                <label class="form-label">Road</label>
+                <input type="text" name="address.road" class="form-control" value="<%= errors.length?!errors['address.road']?formBody?formBody['address.road']:'':'':'' %>">
+                <% if(errors && errors['address.road']){ %>
+                  <span><%= errors['address.road'].msg %></span>
+                <%  }%>
+
+                <label class="form-label">City</label>
+                <input type="text" name="address.city" class="form-control" value="<%= errors.length?!errors['address.city']?formBody?formBody['address.city']:'':'':'' %>">
+                <% if(errors && errors['address.city']){ %>
+                  <span><%= errors['address.city'].msg %></span>
+                <%  }%>
+                
+                <label class="form-label">Block</label>
+                <input type="text" name="address.block" class="form-control" value="<%= errors.length?!errors['address.block']?formBody?formBody['address.block']:'':'':'' %>">
+                <% if(errors && errors['address.block']){ %>
+                  <span><%= errors['address.block'].msg %></span>
+                <%  }%>
+
+                <label class="form-label">Country</label>
+                <input type="text" name="address.country" class="form-control" value="<%= errors.length?!errors['address.country']?formBody?formBody['address.country']:'':'':'' %>">
+                <% if(errors && errors['address.country']){ %>
+                  <span><%= errors['address.country'].msg %></span>
+                <%  }%>
+              </fieldset>
+            </div>
+            <button type="submit" class="btn light btn-add">Add Restaurant</button>
+        </div>  
+      </div>
+    </div>  
+  </form>
+</div>
+        
 
 <%- include('../partials/footer') %>
