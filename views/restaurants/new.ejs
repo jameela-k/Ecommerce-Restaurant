@@ -28,6 +28,13 @@
                           <span><%= errors.name.msg %></span>
                         <%  }%>
                     </div>
+                    <div class="description">
+                      <label class="form-label">Description</label>
+                      <input type="text"  name="description" class="form-control" value="<%= errors?!errors.description?formBody?formBody.description:'':'':'' %>" required>
+                      <% if(errors && errors.description){ %>
+                        <span><%= errors.description.msg %></span>
+                      <%  }%>
+                    </div>
                     <div class="categories">
                         <label class="form-label">Categories</label>
                         <% categories.forEach((category, i) => { %>
