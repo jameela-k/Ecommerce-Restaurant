@@ -9,23 +9,23 @@
 
 <div class="card mb-3">
     <div class="row g-0">
-      <div class="col-md-4">
-        <img src="<%= restaurant.image.src %>" class="img-fluid" alt="" referrerpolicy="no-referrer>
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">Title</h5>
-          <p class="card-text"><%= restaurant.name %></p>
-          <h5 class="card-title">Cuisine</h5>
-            <% restaurant.categories.forEach ((category) => { %>
-                <p class="card-text"><%= category.name %></p>
-            <% }); %>
-          <h5 class="card-title">Description</h5>
-          <p class="card-text"><%= restaurant.description %></p>
-          <h5 class="card-title">Rating</h5>
-          <p class="card-text">4</p>
+        <div class="col-md-4">
+            <img src="<%= restaurant.image.src %>" class="img-fluid" alt="" referrerpolicy="no-referrer">
         </div>
-      </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Title</h5>
+                <p class="card-text"><%= restaurant.name %></p>
+                <h5 class="card-title">Cuisine</h5>
+                    <% restaurant.categories.forEach ((category) => { %>
+                        <p class="card-text"><%= category.name %></p>
+                    <% }); %>
+                <h5 class="card-title">Description</h5>
+                <p class="card-text"><%= restaurant.description %></p>
+                <h5 class="card-title">Rating</h5>
+                <p class="card-text">4</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -35,7 +35,7 @@
 <div class="card-group">
     <% restaurant.menu.forEach(item => { %>
         <div class="card">
-            <img src="resturant imge.jpg" class="card-img-top">
+            <img src="<%= item.image.src %>" class="card-img-top">
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -49,7 +49,7 @@
 
                         <% if(user){
                             let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
-                            console.log(review);
+                            
                             if(review) {%>
                             
                                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
