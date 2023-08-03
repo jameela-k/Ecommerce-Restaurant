@@ -1,49 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resturant Food Review</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/stylesheets/main-page.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resturant Food Review</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="/stylesheets/main-page.css">
-</head>
+  <body>
+    <header>
+      <img
+        src="/images/logo/Egg-logo.gif"
+        class="logo"
+        alt="logo"
+        referrerpolicy="no-referrer"
+      />
+      <ul class="navbar">
+        <li><a href="/">Home Page</a></li>
+        <li><a href="/users">Show Users</a></li>
 
-<body>
-
-  <header>
-    <img src="/images/logo/Egg-logo.gif" class="logo" alt="logo" referrerpolicy="no-referrer">
-    <ul class="navbar">
-      <li><a href="/">Home Page</a></li>
-      <li><a href="/users">Show Users</a></li>
-      
-      <div class="dropdown-center">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Cuisine</button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/restaurants">Show All </a></li>
-          <% allCategories.forEach ((c, i)=> { %>
-            <li><a class="dropdown-item" href="/restaurants/?category=<%= c.name %>"><%= c.name %></a></li>
+        <div class="dropdown-center">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Cuisine
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/restaurants">Show All </a></li>
+            <% allCategories.forEach ((c, i)=> { %>
+            <li>
+              <a
+                class="dropdown-item"
+                href="/restaurants/?category=<%= c.name %>"
+                ><%= c.name %></a
+              >
+            </li>
             <% }); %>
-        </ul>
-      </div>
+          </ul>
+        </div>
 
-
-      <% if (user) { %>
-        <% if(user.userType=="admin" ){ %>
-          <li><a href="/restaurants/new">Add restaurant</a></li>
-          <li><a href="/users/<%= user._id %>">
-              <%= user.name %>
-            </a></li>
-          <% }else if(user.userType=="user" ){ %>
-            <li><a href="/users/<%= user._id %>">
-                <%= user.name %>
-              </a></li>
-            <% } %>
-              <li><a href="/logout">LOG OUT</a></li>
-              <% } else { %>
-                <li>><a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
-                </li>
-                <% } %>
-    </ul>
-  </header>
+        <% if (user) { %> <% if(user.userType=="admin" ){ %>
+        <li><a href="/restaurants/new">Add restaurant</a></li>
+        <li><a href="/users/<%= user._id %>"> <%= user.name %> </a></li>
+        <% }else if(user.userType=="user" ){ %>
+        <li><a href="/users/<%= user._id %>"> <%= user.name %> </a></li>
+        <% } %>
+        <li><a href="/logout">LOG OUT</a></li>
+        <% } else { %>
+        <li>
+          <a href="/auth/google" class="login"
+            >LOG IN&nbsp;<img id="logo" src="https://i.imgur.com/FHjYyi0.png"
+          /></a>
+        </li>
+        <% } %>
+      </ul>
+    </header>
+  </body>
+</html>
