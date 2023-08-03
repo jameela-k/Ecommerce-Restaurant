@@ -1,76 +1,112 @@
 <%- include('../partials/header') %>
 
+<br>
+<br>
+<br>
+<br>
+
 <h2><%- title %></h2>
-<%= restaurant %>
+
+<div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="<%= restaurant.image.src %>" class="img-fluid" alt="" referrerpolicy="no-referrer>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Title</h5>
+          <p class="card-text"><%= restaurant.name %></p>
+          <h5 class="card-title">Cuisine</h5>
+            <% restaurant.categories.forEach ((category) => { %>
+                <p class="card-text"><%= category.name %></p>
+            <% }); %>
+          <h5 class="card-title">Description</h5>
+          <p class="card-text"><%= restaurant.description %></p>
+          <h5 class="card-title">Rating</h5>
+          <p class="card-text">4</p>
+        </div>
+      </div>
+    </div>
+</div>
+
 <% if(user?.userType == "admin"){ %>
     <a href="/restaurants/<%= restaurant._id %>/items/new">Add New Item</a>
 <% } %>
-<% restaurant.menu.forEach(item => { %>
-    <div>
-        <h5><%= item.name %></h5>
-        <% if(user?.userType == "admin"){ %>
-            <a href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit">Edit Item</a>
-            <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
-                <button>DELETE</button>
-            </form>
-        <% } %>
+<div class="card-group">
+    <% restaurant.menu.forEach(item => { %>
+        <div class="card">
+            <img src="resturant imge.jpg" class="card-img-top">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <h5><%= item.name %></h5>
+                        <% if(user?.userType == "admin"){ %>
+                            <a href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit">Edit Item</a>
+                            <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
+                                <button>DELETE</button>
+                            </form>
+                        <% } %>
 
-        <% if(user){
-            let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
-            console.log(review);
-            if(review) {%>
-              
-                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
-                    <input type="hidden" name="user" value="<%= user._id %>">
-                    <input type="hidden" name="userName" value="<%= user.name %>">
-                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-                    <label for="comment">Comment</label>
-                    <textarea name="comment" id="comment"><%= review.comment %></textarea>
-                    <label for="rating"></label>
-                    <select name="rating" id="rating">
-                        <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
-                        <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
-                        <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
-                        <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
-                        <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
-                    </select>
-                    <button>Edit</button>
-                </form>
+                        <% if(user){
+                            let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
+                            console.log(review);
+                            if(review) {%>
+                            
+                                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
+                                    <input type="hidden" name="user" value="<%= user._id %>">
+                                    <input type="hidden" name="userName" value="<%= user.name %>">
+                                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                                    <label for="comment">Comment</label>
+                                    <textarea name="comment" id="comment"><%= review.comment %></textarea>
+                                    <label for="rating"></label>
+                                    <select name="rating" id="rating">
+                                        <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
+                                        <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
+                                        <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
+                                        <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
+                                        <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
+                                    </select>
+                                    <button>Edit</button>
+                                </form>
 
-                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                    <button>DELETE</button>
-                </form>
-           
-            <%}else{ %>
-                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
-                    <input type="hidden" name="user" value="<%= user._id %>">
-                    <input type="hidden" name="userName" value="<%= user.name %>">
-                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-                    <label for="comment">Comment</label>
-                    <textarea name="comment" id="comment"></textarea>
-                    <label for="rating"></label>
-                    <select name="rating" id="rating">
-                        <option value="1">*</option>
-                        <option value="2">**</option>
-                        <option value="3">***</option>
-                        <option value="4">****</option>
-                        <option value="5">*****</option>
-                    </select>
-                    <button>submit</button>
-                </form>
-        <%}} %>
+                                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                    <button>DELETE</button>
+                                </form>
+                        
+                            <%}else{ %>
+                                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
+                                    <input type="hidden" name="user" value="<%= user._id %>">
+                                    <input type="hidden" name="userName" value="<%= user.name %>">
+                                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                                    <label for="comment">Comment</label>
+                                    <textarea name="comment" id="comment"></textarea>
+                                    <label for="rating"></label>
+                                    <select name="rating" id="rating">
+                                        <option value="1">*</option>
+                                        <option value="2">**</option>
+                                        <option value="3">***</option>
+                                        <option value="4">****</option>
+                                        <option value="5">*****</option>
+                                    </select>
+                                    <button>submit</button>
+                                </form>
+                        <%}} %>
 
-        <% item.reviews.forEach(review => { 
-            if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
-                <div>
-                    <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
-                    <h2><%= review.userName %></h2>
-                    <p><%= review.comment %></p>
-                    <h4><%= review.rating %></h4>
+                        <% item.reviews.forEach(review => { 
+                            if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
+                                <div>
+                                    <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
+                                    <h2><%= review.userName %></h2>
+                                    <p><%= review.comment %></p>
+                                    <h4><%= review.rating %></h4>
+                                </div>
+
+                        <% }}); %>
+        
+                    </div>
                 </div>
-
-        <% }}); %>
-       
-    </div>
-<% }); %>
+            </div>
+        </div>
+    <% }); %>
+</div>
 <%- include('../partials/footer') %>
