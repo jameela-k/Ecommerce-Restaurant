@@ -6,6 +6,16 @@
 <br>
 <br>
 
+<% if (errorMessages && errorMessages.length > 0) { %>
+  <div class="alert alert-danger d-flex justify-content-between">
+    <div class="alert-body">
+      <% errorMessages.forEach(message => { %>
+        <p><%= message %></p>
+      <% }); %>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
 
 <div class="newRestaurant">
   <form action="/restaurants" method="POST" enctype="multipart/form-data">
