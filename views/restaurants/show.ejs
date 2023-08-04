@@ -84,7 +84,7 @@
                     No Reviews Yet
                   <% }else {%>
                     <% avr= total/count %>
-                    <%= avr %>
+                    <%= parseFloat(avr.toFixed(2)) %>
                   <% } %>
                 </p>
             </div>
@@ -126,7 +126,6 @@
                     <div class="col-md-6">
                         <h5><%= item.name %></h5>
                         <h6>Rating</h6>
-                        <h5>Over All Ratings</h5>
                         <p class="card-text">
                         <% let count=0; %>
                         <% let total=0; %>
@@ -139,7 +138,7 @@
                             No Reviews Yet
                         <% }else {%>
                             <% avr= total/count %>
-                            <%= avr %>
+                            <%= parseFloat(avr.toFixed(2)) %>
                         <% } %>
                         </p>
                         <% if(user?.userType == "admin"){ %>
