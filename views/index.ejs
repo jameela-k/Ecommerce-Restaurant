@@ -44,8 +44,30 @@
                   <div class="col-sm-3">
                     <div class="card">
                       <div class="card-body">
-                        <img src="<%= restaurant.image.src %>" class="dish" />
-                        <h4 class="card-title"><%= restaurant.name %></h4>
+                        <% 
+                          if("image" in restaurant){
+                            if("src" in restaurant.image){
+                              if(restaurant.image.src){
+                              %>
+                              <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name%>" class="dish">
+                              <%
+                              }else{
+                                %>
+                                  <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
+                                <%
+                              } 
+                            }else{
+                              %>
+                              <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
+                              <%
+                            }
+                          }else{
+                            %>
+                              <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
+                            <%
+                          } 
+                        %>
+                        <h4 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h4>
                         <p class="card-text">Rating</p>
                       </div>
                     </div>
