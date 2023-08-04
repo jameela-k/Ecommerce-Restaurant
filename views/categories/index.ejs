@@ -10,30 +10,63 @@
 <!-- title provided by controller for users index -->
 <h2><%- title %></h2>
 
-
 <% if(user?.userType == "admin"){ %>
-  
-    <form action="/categories" method="post">
-        <label for="category">category name: </label>
-        <input type="text" name="name" id="category">
-        <button>ADD</button>
-    </form>
-    <!-- for each user in the list do the following -->
-    <% categories.forEach((category, i) => { %>
-        <!-- show category name -->
-        <form action="/categories/<%= category._id %>?_method=PUT" method="post">
-            <label for="category#<%= i %>"></label>
-            <input type="text" name="name" id="category#<%= i %>" value="<%= category.name %>">
-            <button>Update</button>
+<div class="container categories">
+    <div class="row addCategory">
+        <form action="/categories" method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Add Category</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row basic-form">
+                        <div class="col">
+                            <label class="form-label"  for="category">category name: </label>
+                            <input type="text" class="form-control" name="name" id="category">
+                        </div>
+                    </div>
+                    
+                </div>
+                <button type="submit" class="col-12 btn light btn-add mt-3">Add Category</button>
+            </div> 
         </form>
-    
-        <!-- delete user using id and method overide DELETE -->
-        <form action="/categories/<%= category._id %>?_method=DELETE" method="POST">
-            <button>DELETE</button>
-        </form>
-    
-    <% }); %>
-
+    </div>
+    <div class="row editRemoveCategory justify-content-evenly mt-5">
+        <% categories.forEach((category, i) => { %>
+            <div class="col-5 editCategory mt-3">
+                <form class="row" action="/categories/<%= category._id %>?_method=PUT" method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Edit Category</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row basic-form">
+                                <label class="form-label" for="category#<%= i %>">Name</label>
+                                <input type="text" class="form-control" name="name" id="category#<%= i %>" value="<%= category.name %>">
+                            </div>
+                        </div>
+                        <button type="submit" class="col-12 btn light btn-add">Update Category</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-5 removeCategory mt-3">
+                <form class="row" action="/categories/<%= category._id %>?_method=DELETE" method="POST">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Remove Category</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row basic-form">
+                                
+                            </div>
+                        </div>
+                        <button type="submit" class="col-12 btn light btn-add">Delete Category</button>
+                    </div>
+                </form>
+            </div>
+        <% }); %>
+    </div>
+</div>
 <% } %>
 
 <%- include('../partials/footer') %>
