@@ -8,140 +8,140 @@
 <h1><%- title %></h1>
 
 <div class="card mb-3">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <!-- show user avatar -->
-            <img src="<%= dbUser.avatar %>" class="img-fluid" alt="user avatar" referrerpolicy="no-referrer">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <!-- show user name -->
-                <h5 class="card-title">Name</h5>
-                <p class="card-text"><%= dbUser.name %></p>
-                <!-- if user is loged in -->
-                <% if (user) { %>
-                    <!-- if user is admin -->
-                    <% if(user.userType == "admin"){ %>
-                        <h2><%= dbUser.email %></h2>
-                        <!-- show user type and option to change-->
-                        <form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
-                            <lable>Prevlages</label>
-                            <!-- if admin show radio buttons with admin selected -->
-                            
-                                <input type="radio" id="admin" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
-                                <label for="admin">Admin</label>
-                                <input type="radio" id="user" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
-                                <label for="user">user</label>
-                                <!-- if normal user show radio buttons with user selected -->
-                    
-                            <input type="submit" value="Update user">
-                        </form>
-                        <!-- delete user using id and method overide DELETE -->
-                        <form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
-                            <button>DELETE</button>
-                        </form>
-                    <% } %>    
-                    <!-- maybe add follow button if there is time  -->
-                
-                <% } %>
-            </div>
-        </div>
-    </div>
+	<div class="row g-0">
+		<div class="col-md-4">
+			<!-- show user avatar -->
+			<img src="<%= dbUser.avatar %>" class="img-fluid" alt="user avatar" referrerpolicy="no-referrer">
+		</div>
+		<div class="col-md-8">
+			<div class="card-body">
+				<!-- show user name -->
+				<h5 class="card-title">Name</h5>
+				<p class="card-text"><%= dbUser.name %></p>
+				<!-- if user is loged in -->
+				<% if (user) { %>
+					<!-- if user is admin -->
+					<% if(user.userType == "admin"){ %>
+						<h2><%= dbUser.email %></h2>
+						<!-- show user type and option to change-->
+						<form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
+							<lable>Prevlages</label>
+							<!-- if admin show radio buttons with admin selected -->
+							
+								<input type="radio" id="admin" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
+								<label for="admin">Admin</label>
+								<input type="radio" id="user" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
+								<label for="user">user</label>
+								<!-- if normal user show radio buttons with user selected -->
+			
+							<input type="submit" value="Update user">
+						</form>
+						<!-- delete user using id and method overide DELETE -->
+						<form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
+								<button>DELETE</button>
+						</form>
+					<% } %>    
+					<!-- maybe add follow button if there is time  -->
+				
+				<% } %>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="card-group">
-    <!-- go through all restaurants -->
-    <% restaurants.forEach((restaurant, r) => { %>
-        <!-- go through all of the restaurant's items -->
-        <% restaurant.menu.forEach ((item, i) => { %>
-            <!-- go through all of the items reviews -->
-            <% item.reviews.forEach ((review, w) => { %>
-                <!-- if the review is made by the selected user -->
-                <% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
-                    <div class="card row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <!-- show restaurant logo -->
-                                <img  class="col-md-6" src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
-                                <!-- show restaurant name -->
-                                <h3 class="col-md-6"><%= restaurant.name %></h3>
-                            </div>
-                            <div class="row">
-                                <!-- show item image -->
-                                <img class="col-md-3" src="<%= item.image.src %>" alt="Item image" referrerpolicy="no-referrer">
-                                <!-- show the item name -->
-                                <div class="col-md-9">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h4><%= item.name %></h4>
-                                        </div>
-                                    </div>
-                                    <!-- if user is loged in -->
-                                    <% if(user) { %>
-                                        <!-- if the loged in user is the same user selected or admin -->
-                                        <% if(JSON.stringify(user._id) == JSON.stringify(dbUser._id) || user.userType == "admin") {%>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <!-- show the edit form -->
-                                                        <form class="col-md-10" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
-                                                            <div class="row">
-                                                                <input type="hidden" name="user" value="<%= user._id %>">
-                                                                <input type="hidden" name="userName" value="<%= user.name %>">
-                                                                <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-                                                                <div class="col-md-7">
-                                                                    <!-- show the comment with the user review filled in -->
-                                                                    <label for="comment#<%= r %><%= i %><%= w %>">Comment</label>
-                                                                    <textarea name="comment" id="comment#<%= r %><%= i %><%= w %>"><%= review.comment %></textarea>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <!-- show the user's rating for the item -->
-                                                                    <label for="rating#<%= r %><%= i %><%= w %>">Rating</label>
-                                                                    <select name="rating" id="rating#<%= r %><%= i %><%= w %>">
-                                                                        <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
-                                                                        <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
-                                                                        <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
-                                                                        <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
-                                                                        <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
-                                                                    </select>
-                                                                </div>
-                                                                <button class="col-md-2">Edit</button>
-                                                            </div>
-                                                        </form>
-                                                        <!-- show the delete button -->
-                                                        <form class ="col-md-2" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                                            <div class="row">
-                                                                <button class="col-md-12">DELETE</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        <!-- if loged in user is normal user and not owner of the reviews -->
-                                        <% } else { %>
-                                            <!-- show comment and rating -->
-                                            <h5>Comment</h5>
-                                            <p><%= review.comment %></p>
-                                            <h5>Rating</h5>
-                                            <p><%= review.rating %></p> 
-                                        <% } %> 
-                                    <!-- if no user is loged in -->
-                                    <% } else { %>
-                                        <!-- show comment and rating -->
-                                        <h5>Comment</h5>
-                                        <p><%= review.comment %></p>
-                                        <h5>Rating</h5>
-                                        <p><%= review.rating %></hp> 
-                                    <% } %>
-                                </div>
-                            </div>   
-                        </div>
-                    </div>
-                <% }; %>
-            <% }); %>
-        <% }); %>
-    <% }); %>
+	<!-- go through all restaurants -->
+	<% restaurants.forEach((restaurant, r) => { %>
+		<!-- go through all of the restaurant's items -->
+		<% restaurant.menu.forEach ((item, i) => { %>
+			<!-- go through all of the items reviews -->
+			<% item.reviews.forEach ((review, w) => { %>
+				<!-- if the review is made by the selected user -->
+				<% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
+					<div class="card row">
+						<div class="col-md-12">
+							<div class="row">
+								<!-- show restaurant logo -->
+								<img  class="col-md-6" src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
+								<!-- show restaurant name -->
+								<h3 class="col-md-6"><%= restaurant.name %></h3>
+							</div>
+							<div class="row">
+								<!-- show item image -->
+								<img class="col-md-3" src="<%= item.image.src %>" alt="Item image" referrerpolicy="no-referrer">
+								<!-- show the item name -->
+								<div class="col-md-9">
+									<div class="row">
+										<div class="col">
+											<h4><%= item.name %></h4>
+										</div>
+									</div>
+									<!-- if user is loged in -->
+									<% if(user) { %>
+										<!-- if the loged in user is the same user selected or admin -->
+										<% if(JSON.stringify(user._id) == JSON.stringify(dbUser._id) || user.userType == "admin") {%>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="row">
+														<!-- show the edit form -->
+														<form class="col-md-10" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
+															<div class="row">
+																<input type="hidden" name="user" value="<%= user._id %>">
+																<input type="hidden" name="userName" value="<%= user.name %>">
+																<input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+																<div class="col-md-7">
+																	<!-- show the comment with the user review filled in -->
+																	<label for="comment#<%= r %><%= i %><%= w %>">Comment</label>
+																	<textarea name="comment" id="comment#<%= r %><%= i %><%= w %>"><%= review.comment %></textarea>
+																</div>
+																<div class="col-md-3">
+																	<!-- show the user's rating for the item -->
+																	<label for="rating#<%= r %><%= i %><%= w %>">Rating</label>
+																	<select name="rating" id="rating#<%= r %><%= i %><%= w %>">
+																		<option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
+																		<option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
+																		<option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
+																		<option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
+																		<option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
+																	</select>
+																</div>
+																<button class="col-md-2">Edit</button>
+															</div>
+														</form>
+														<!-- show the delete button -->
+														<form class ="col-md-2" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+															<div class="row">
+																	<button class="col-md-12">DELETE</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+												
+										<!-- if loged in user is normal user and not owner of the reviews -->
+										<% } else { %>
+											<!-- show comment and rating -->
+											<h5>Comment</h5>
+											<p><%= review.comment %></p>
+											<h5>Rating</h5>
+											<p><%= review.rating %></p> 
+										<% } %> 
+									<!-- if no user is loged in -->
+									<% } else { %>
+											<!-- show comment and rating -->
+											<h5>Comment</h5>
+											<p><%= review.comment %></p>
+											<h5>Rating</h5>
+											<p><%= review.rating %></hp> 
+									<% } %>
+								</div>
+							</div>   
+						</div>
+					</div>
+				<% }; %>
+			<% }); %>
+		<% }); %>
+	<% }); %>
 </div>
 
 <%- include('../partials/footer') %>
