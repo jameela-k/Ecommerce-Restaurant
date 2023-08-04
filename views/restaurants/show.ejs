@@ -5,6 +5,29 @@
 <br>
 <br>
 
+
+<% if (successMessages && successMessages.length > 0) { %>
+    <div class="alert alert-success d-flex justify-content-between">
+      <div class="alert-body">
+        <% successMessages.forEach(message => { %>
+          <p><%= message %></p>
+        <% }); %>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<% if (errorMessages && errorMessages.length > 0) { %>
+    <div class="alert alert-danger d-flex justify-content-between">
+        <div class="alert-body">
+        <% errorMessages.forEach(message => { %>
+            <p><%= message %></p>
+        <% }); %>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
 <h2><%- title %></h2>
 
 <div class="card mb-3">

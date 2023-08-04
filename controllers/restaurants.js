@@ -178,37 +178,51 @@ module.exports = {
 
 async function index(req, res) {
   
-  let restaurants = [];
-  // req.query.category = "Ali";
-  if("category" in req.query && req.query.category){
-    const allRestaurants = await Restaurant.find({}).populate('categories');
-    for(let i=0; i < allRestaurants.length; i++){
-      const restaurantCat = allRestaurants[i].categories;
-      for(let j=0; j < restaurantCat.length; j++){
-        if(restaurantCat[j].name == req.query.category){
-          restaurants.push(allRestaurants[i]);
-          break;  // to stop the inner loop
+  try {
+    let restaurants = [];
+    if("category" in req.query && req.query.category){
+      // find restaurants by category
+      const allRestaurants = await Restaurant.find({}).populate('categories');
+      for(let i=0; i < allRestaurants.length; i++){
+        const restaurantCat = allRestaurants[i].categories;
+        for(let j=0; j < restaurantCat.length; j++){
+          if(restaurantCat[j].name == req.query.category){
+            restaurants.push(allRestaurants[i]);
+            break;  // to stop the inner loop
+          }
         }
       }
+    }else {
+      // all restaurants
+      restaurants = await Restaurant.find({}).populate('categories');
     }
-  }else {
-    restaurants = await Restaurant.find({}).populate('categories');
+    const successMessages = req.flash('success');
+    const errorMessages = req.flash('error');
+    res.render('restaurants/index', { title: 'All Restaurants', restaurants, successMessages, errorMessages});
+    
+  }catch(err){
+    console.log(err);
   }
-  res.render('restaurants/index', { title: 'All Restaurants', restaurants });
+
 }
 
 async function newRestaurant(req, res) {
-    const categories = await Category.find({});
-    let errors = [];
-    let formBody = [];
-    if(req.session.errors) {
-        // console.log(req.session.errors);
-        formBody = req.session.formBody;
-        delete req.session.formBody;
-        errors = req.session.errors;
-        delete req.session.errors;
+    try{
+      const categories = await Category.find({});
+      let errors = [];
+      let formBody = [];
+      if(req.session.errors) {
+          // console.log(req.session.errors);
+          formBody = req.session.formBody;
+          delete req.session.formBody;
+          errors = req.session.errors;
+          delete req.session.errors;
+      }
+      const errorMessages = req.flash('error');
+      res.render("restaurants/new", {title: 'New Restaurant', categories, errors, formBody, errorMessages});
+    }catch(err){
+      console.log(err);
     }
-    res.render("restaurants/new", {title: 'New Restaurant', categories, errors, formBody});
 }
 
 async function create(req, res) {
@@ -224,6 +238,7 @@ async function create(req, res) {
     if (!errors.isEmpty()) {
         req.session.formBody = req.body;
         req.session.errors = errors.mapped();
+        req.flash('error', 'validation errors');
         return res.redirect(301, '/restaurants/new');
     }
 
@@ -242,6 +257,7 @@ async function create(req, res) {
     req.body.image.src = result.secure_url;
     req.body.image.cloudinary_id = result.public_id;
   }else {
+    // if user does not upload an image add the default image 
     req.body.image = {};
     req.body.image.src = "/images/restaurant.jpg";
   }
@@ -251,40 +267,62 @@ async function create(req, res) {
     if (req.body[key] === '') delete req.body[key];
   }
 
+  // add restaurant logic
   try {
     const restaurant = await Restaurant.create(req.body);
-    res.redirect(`/`);
+    if(restaurant) {
+      req.flash('success', 'restaurant is added successfully');
+      res.redirect(`/restaurants`);
+    }else {
+      req.flash('error', 'an error occured');
+      return res.redirect(301, '/restaurants/new');
+    }
   } catch (err) {
     console.log(err);
+    req.flash('error', 'an error occured');
     res.redirect('restaurants/new');
   }
 }
 
 async function showOne(req, res) {
-  const restaurant = await Restaurant.findById(req.params.id).populate('categories'); 
-
-  res.render('restaurants/show', { title: 'Restaurant Detail', restaurant});
-
+  try{
+    const restaurant = await Restaurant.findById(req.params.id).populate('categories'); 
+    if(restaurant){
+      const successMessages = req.flash('success');
+      const errorMessages = req.flash('error');
+      res.render('restaurants/show', { title: 'Restaurant Detail', restaurant, successMessages, errorMessages});
+    }else {
+      // requested restaurant is not exist
+      res.redirect(301, '/restaurants');
+    }
+   
+  }catch(err){
+    console.log(err);
+  }
 }
 
 async function edit(req, res) {
-
-
+  try{
     let errors = [];
     let formBody = [];
     if(req.session.errors) {
-      // console.log(req.session.errors);
       formBody = req.session.formBody;
       delete req.session.formBody;
       errors = req.session.errors;
       delete req.session.errors;
     }
+    // find the requested restaurant
     const restaurant = await Restaurant.findById(req.params.id); 
+    // populate the categories of the requested restaurant
     const RestaurantCategories = await Restaurant.findById(req.params.id).populate('categories');
+    // find all categories (to compare them with the RestaurantCategories)
     const categories = await Category.find({});
-    // console.log("RestaurantCategories: ");
-    // console.log(RestaurantCategories);
-    res.render('restaurants/edit', { title: 'Restaurant Detail', restaurant, categories, RestaurantCategories:RestaurantCategories.categories, errors, formBody});
+
+    const errorMessages = req.flash('error');
+    res.render('restaurants/edit', { title: 'Restaurant Detail', restaurant, categories, RestaurantCategories:RestaurantCategories.categories, errors, formBody, errorMessages});
+  }catch(err){
+    console.log(err);
+  }
 }
 
 
@@ -302,89 +340,142 @@ async function update(req, res) {
         req.session.formBody = req.body;
         req.session.errors = errors.mapped();
         console.log(req.session.errors);
+        req.flash('error', 'validation errors');
         return res.redirect(301, `/restaurants/${req.params.id}/edit`);
     }
 
   }catch (err) {
-      // Handle errors thrown by checkSchema
-      console.error(err);
-      res.status(500).send('Internal server error');
+    // Handle errors thrown by checkSchema
+    console.error(err);
+      // res.status(500).send('Internal server error');
   }
   // end validation
 
-  const restaurant = await Restaurant.findById(req.params.id);
-  console.log(restaurant);
-    if(!("deleteImg" in req.body)){
-      if(req.file){
-        if("image" in restaurant){
-          if("cloudinary_id" in restaurant.image){
-            if(restaurant.image.cloudinary_id){
-              // remove the image from the cloudinary
-              await cloudinary.uploader.destroy(restaurant.image.cloudinary_id);
+
+  // image logic
+  try{
+    // retrieve the requested resturant
+    const restaurant = await Restaurant.findById(req.params.id);
+    if(restaurant){
+      // the requested resturant is exist
+      if(!("deleteImg" in req.body)){
+        if(req.file){
+          if("image" in restaurant){
+            if("cloudinary_id" in restaurant.image){
+              if(restaurant.image.cloudinary_id){
+                // remove the image from the cloudinary
+                try{
+                  await cloudinary.uploader.destroy(restaurant.image.cloudinary_id);
+                }catch(err){
+                  console.log(err);
+                }
+              }
             }
           }
+          // Upload image to cloudinary
+          try{
+            const result = await cloudinary.uploader.upload(req.file.path);
+            req.body.image = {};
+            req.body.image.src = result.secure_url;
+            req.body.image.cloudinary_id = result.public_id;
+          }catch(err){
+            console.log(err);
+          }
         }
-        // Upload image to cloudinary
-        const result = await cloudinary.uploader.upload(req.file.path);
-        req.body.image = {};
-        req.body.image.src = result.secure_url;
-        req.body.image.cloudinary_id = result.public_id;
-      }
-    }else {
-      try{
+      }else {
         if("image" in restaurant){
           if("cloudinary_id" in restaurant.image){
-            await cloudinary.uploader.destroy(restaurant.image.cloudinary_id);
+            try{
+              await cloudinary.uploader.destroy(restaurant.image.cloudinary_id);
+            }catch(err){
+              console.log(err);
+            }
             req.body.image = {};
             // after remove the image set the default image
             req.body.image.src = "/images/restaurant.jpg";
           }
         }
-        
-      }catch(err){
-        console.log(err);
       }
+    }else {
+      // the requested resturant is not exist
+      res.redirect(301, `/restaurants`);
     }
+  }catch(err){
+    console.log(err);
+  }
+  // end image logic
 
-    // Remove empty properties so that defaults will be applied
-   
-    for (let key in req.body) {
-        if (req.body[key] === '') delete req.body[key];
-    }
 
-    if(!("categories" in req.body)){
-      req.body.categories = [];
-    }
+  // Remove empty properties so that defaults will be applied
+  
+  for (let key in req.body) {
+      if (req.body[key] === '') delete req.body[key];
+  }
 
-    try {
-        // Update this line because now we need the _id of the new movie
-        const result = await Restaurant.updateOne({_id: req.params.id}, req.body);
-        console.log(result);
-        // result:
-            // {
-            //     acknowledged: true,
-            //     modifiedCount: 1,
-            //     upsertedId: null,
-            //     upsertedCount: 0,
-            //     matchedCount: 1
-            // }
-        res.redirect(`/restaurants/${req.params.id}`);
-    } catch (err) {
-        // Typically some sort of validation error
-        console.log(err);
-        res.redirect(`/restaurants/${req.params.id}/edit`);
-    }
+  if(!("categories" in req.body)){
+    req.body.categories = [];
+  }
+
+  // update restaurant logic
+  try {
+      // Update this line because now we need the _id of the new movie
+      const result = await Restaurant.updateOne({_id: req.params.id}, req.body);
+      if(result.acknowledged){
+        if(result.matchedCount > 0){
+          if(result.matchedCount == result.modifiedCount){
+            // updated successfully
+            req.flash('success', 'resturant updeted successfully');
+            res.redirect(`/restaurants/${req.params.id}`);
+          }else{
+            // not all of them are updated (but in our case it is only one restaurant)
+            req.flash('error', 'an error occured');
+            res.redirect(`/restaurants/${req.params.id}`);
+          }
+
+        }else{
+          // restaurant to be update is not exist
+          req.flash('error', 'the restaurnt to be updeted is no longer exist');
+          res.redirect(`/restaurants`);
+        }
+      }
+      // console.log(result);
+      // result:
+          // {
+          //     acknowledged: true,
+          //     modifiedCount: 1,
+          //     upsertedId: null,
+          //     upsertedCount: 0,
+          //     matchedCount: 1
+          // }
+      
+  } catch (err) {
+      // Typically some sort of validation error
+      console.log(err);
+      req.flash('error', 'an error ocurred');
+      res.redirect(`/restaurants/${req.params.id}/edit`);
+  }
 }
 
 
 async function destroy(req, res) {
-    try {
-        const result = await Restaurant.deleteOne({_id: req.params.id}); 
-        console.log(result);
-        res.redirect('/restaurants');
-    }catch(err) {
-        console.log(err);
-        res.redirect('/restaurants');
-    }
-    
+  try {
+      const result = await Restaurant.deleteOne({_id: req.params.id}); 
+      // console.log(result);
+        // { acknowledged: true, deletedCount: 1 }
+      if(result.acknowledged && result.deletedCount > 0){
+        // deleted succ.
+        req.flash('success', 'resturant was deleted successfully');
+        res.redirect(301, '/restaurants');
+
+      }else{
+        // error occured
+        req.flash('error', 'an error occured restuarnt was not deleted');
+        res.redirect(301, '/restaurants');
+      }
+      
+  }catch(err) {
+      console.log(err);
+      req.flash('error', 'an error occured');
+      res.redirect('/restaurants');
+  }
 }

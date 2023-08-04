@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 require('dotenv').config();
 var session = require('express-session');
+const flash = require('express-flash');
 var passport = require('passport');
 require('./config/database');
 require('./config/passport');
@@ -44,6 +45,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use(async function (req, res, next) {
   res.locals.user = req.user;
