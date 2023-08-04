@@ -15,7 +15,7 @@
 
         <% if(user?.userType == 'admin'){ %>
         <div class="card-body">
-            <div class="basic-form">
+            <div class="basic-form" style="max-width: 400px;">
                 <form id="new-form" action="/restaurants/<%= restaurant._id %>/items" method="POST" enctype="multipart/form-data">
 
                     <div class="row">
