@@ -13,17 +13,41 @@ const restaurantFormCheckSchema = {
         isLength: {
           options: { min: 2, max: 50 },
           errorMessage: 'name must be between 2 and 50 characters'
+        },
+        custom: {
+          options: async(value, { req }) => {
+            // check if the restaurant is exist
+            let checkIfExist;
+            if(req.params?.id){
+              // for edit a restaurant
+              checkIfExist = await Restaurant.findOne({name: value, _id: { $ne: req.params.id }});
+            }else {
+              // for create a new restaurant
+              checkIfExist = await Restaurant.findOne({name: value});
+            }
+            
+            if(checkIfExist) {
+              throw new Error(value + ' is already exist');
+            }else {
+              return true;
+            }
+          }
         }
     },
     description: {
       in: ['body'],
-      isLength: {
-        options: {
-          min: 1,
-          max: 255
-      },
-        errorMessage: 'description must be between 1 and 255 characters'
-      }
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            if (value) {
+              if(value.length < 10 || value.length >255){
+                return false
+              }
+            }
+            return true;
+          },
+          errorMessage: 'description must be between 10 and 255 characters'
+        }
     },
     file: {
         custom: {
@@ -50,65 +74,96 @@ const restaurantFormCheckSchema = {
 
     "address.shopNumber": {
         in: ['body'],
-        isLength: {
-          options: {
-            min: 1,
-            max: 255
-        },
-          errorMessage: 'Shop Number must be between 1 and 255 characters'
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            if (value) {
+              if(value.length < 1 || value.length >10){
+                return false
+              }
+            }
+            return true;
+          },
+          errorMessage: 'Shop Number must be between 1 and 10 characters'
         }
     },
     "address.building": {
         in: ['body'],
-        isLength: {
-          options: {
-            min: 1,
-            max: 255
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            if (value) {
+              if(value.length < 1 || value.length >10){
+                return false
+              }
+            }
+            return true;
           },
-          errorMessage: 'Building must be between 1 and 255 characters'
+          errorMessage: 'Building must be between 1 and 10 characters'
         }
+        
     },
     "address.road": {
         in: ['body'],
-        isLength: {
-          options: {
-            min: 1,
-            max: 255
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            if (value) {
+              if(value.length < 1 || value.length >10){
+                return false
+              }
+            }
+            return true;
           },
-          errorMessage: 'Road must be between 1 and 255 characters'
+          errorMessage: 'Road must be between 1 and 10 characters'
         }
+        
     },
     "address.city": {
         in: ['body'],
-        isLength: {
-          options: {
-            min: 1,
-            max: 255
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            if (value) {
+              if(value.length < 1 || value.length >10){
+                return false
+              }
+            }
+            return true;
           },
-          errorMessage: 'City must be between 1 and 255 characters'
+          errorMessage: 'City must be between 1 and 10 characters'
         }
     },
     "address.block": {
         in: ['body'],
-        isLength: {
-          options: {
-            min: 1,
-            max: 255
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            if (value) {
+              if(value.length < 1 || value.length >10){
+                return false
+              }
+            }
+            return true;
           },
-          errorMessage: 'Block must be between 1 and 255 characters'
+          errorMessage: 'Block must be between 1 and 10 characters'
         }
     },
     "address.country": {
         in: ['body'],
-        isLength: {
-          options: {
-            min: 1,
-            max: 255
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            if (value) {
+              if(value.length < 1 || value.length >10){
+                return false
+              }
+            }
+            return true;
           },
-          errorMessage: 'Country must be between 1 and 255 characters'
+          errorMessage: 'Country must be between 1 and 10 characters'
         }
     },
-
 } 
 
 module.exports = {
@@ -130,17 +185,15 @@ async function index(req, res) {
     for(let i=0; i < allRestaurants.length; i++){
       const restaurantCat = allRestaurants[i].categories;
       for(let j=0; j < restaurantCat.length; j++){
-        // console.log(restaurantCat[j].name);
         if(restaurantCat[j].name == req.query.category){
           restaurants.push(allRestaurants[i]);
-          break;
+          break;  // to stop the inner loop
         }
       }
     }
   }else {
     restaurants = await Restaurant.find({}).populate('categories');
   }
-  // console.log(restaurants);
   res.render('restaurants/index', { title: 'All Restaurants', restaurants });
 }
 
@@ -171,14 +224,13 @@ async function create(req, res) {
     if (!errors.isEmpty()) {
         req.session.formBody = req.body;
         req.session.errors = errors.mapped();
-        // console.log(req.session.errors);
         return res.redirect(301, '/restaurants/new');
     }
 
   }catch (err) {
       // Handle errors thrown by checkSchema
       console.error(err);
-      res.status(500).send('Internal server error');
+      // res.status(500).send('Internal server error');
   }
   // end validation
 
@@ -189,6 +241,9 @@ async function create(req, res) {
     req.body.image = {};
     req.body.image.src = result.secure_url;
     req.body.image.cloudinary_id = result.public_id;
+  }else {
+    req.body.image = {};
+    req.body.image.src = "/images/restaurant.jpg";
   }
 
   // Remove empty properties so that defaults will be applied
@@ -281,6 +336,8 @@ async function update(req, res) {
           if("cloudinary_id" in restaurant.image){
             await cloudinary.uploader.destroy(restaurant.image.cloudinary_id);
             req.body.image = {};
+            // after remove the image set the default image
+            req.body.image.src = "/images/restaurant.jpg";
           }
         }
         
