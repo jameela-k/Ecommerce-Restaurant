@@ -69,7 +69,24 @@
                 <h5 class="card-title">Description</h5>
                 <p class="card-text"><%= restaurant.description %></p>
                 <h5 class="card-title">Rating</h5>
-                <p class="card-text">4</p>
+                <h5>Over All Ratings</h5>
+                <p class="card-text">
+                  <% let count=0; %>
+                  <% let total=0; %>
+                  <% let avr=0 %>
+                  <% restaurant.menu.forEach ((item, i) => { %>
+                    <% item.reviews.forEach ((review , r) => { %>
+                      <% total += review.rating; %>
+                      <% count++;%>
+                    <% }); %>
+                  <% }); %>
+                  <% if (total ===0) {%>
+                    No Reviews Yet
+                  <% }else {%>
+                    <% avr= total/count %>
+                    <%= parseFloat(avr.toFixed(2)) %>
+                  <% } %>
+                </p>
             </div>
         </div>
     </div>
@@ -108,10 +125,26 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <h5><%= item.name %></h5>
+                        <h6>Rating</h6>
+                        <p class="card-text">
+                        <% let count=0; %>
+                        <% let total=0; %>
+                        <% let avr=0 %>
+                        <% item.reviews.forEach ((review , r) => { %>
+                            <% total += review.rating; %>
+                            <% count++;%>
+                        <% }); %>
+                        <% if (total ===0) {%>
+                            No Reviews Yet
+                        <% }else {%>
+                            <% avr= total/count %>
+                            <%= parseFloat(avr.toFixed(2)) %>
+                        <% } %>
+                        </p>
                         <% if(user?.userType == "admin"){ %>
                             <a href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit">Edit Item</a>
                             <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
-                                <button>DELETE</button>
+                                <button>DELETE Item</button>
                             </form>
                         <% } %>
 
@@ -119,7 +152,7 @@
                             let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
                             
                             if(review) {%>
-                            
+                                <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
                                     <input type="hidden" name="user" value="<%= user._id %>">
                                     <input type="hidden" name="userName" value="<%= user.name %>">
@@ -134,14 +167,15 @@
                                         <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
                                         <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
                                     </select>
-                                    <button>Edit</button>
+                                    <button>Update Review</button>
                                 </form>
 
                                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                    <button>DELETE</button>
+                                    <button>DELETE Review</button>
                                 </form>
                         
                             <%}else{ %>
+                                <img src="<%= user.avatar %>" alt="" referrerpolicy="no-referrer">
                                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
                                     <input type="hidden" name="user" value="<%= user._id %>">
                                     <input type="hidden" name="userName" value="<%= user.name %>">
@@ -160,7 +194,7 @@
                                 </form>
                         <%}} %>
 
-                        <% item.reviews.forEach(review => { 
+                        <% item.reviews.forEach((review, r) => { 
                             if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
                                 <div>
                                     <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
@@ -168,7 +202,11 @@
                                     <p><%= review.comment %></p>
                                     <h4><%= review.rating %></h4>
                                 </div>
-
+                                <% if(user?.userType == "admin") { %> 
+                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                        <button>DELETE Review</button>
+                                    </form>
+                                <% } %>
                         <% }}); %>
         
                     </div>
