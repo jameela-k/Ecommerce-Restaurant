@@ -17,6 +17,10 @@ async function create(req, res) {
     req.body.image = {};
     req.body.image.src = result.secure_url;
     req.body.image.cloudinary_id = result.public_id;
+  }else {
+    // if user does not upload an image add the default image 
+    req.body.image = {};
+    req.body.image.src = "/images/dish.jpg";
   }
 
 
