@@ -68,18 +68,18 @@ const itemFormCheckSchema = {
   },
   description: {
     in: ['body'],
-      optional: true,
-      custom: {
-        options: (value, { req }) => {
-          if (value) {
-            if(value.length < 10 || value.length >255){
-              return false
-            }
+    optional: true,
+    custom: {
+      options: (value, { req }) => {
+        if (value) {
+          if(value.length < 10 || value.length >255){
+            return false
           }
-          return true;
-        },
-        errorMessage: 'description must be between 10 and 255 characters'
-      }
+        }
+        return true;
+      },
+      errorMessage: 'description must be between 10 and 255 characters'
+    }
   },
   file: {
       custom: {
@@ -235,7 +235,6 @@ async function create(req, res) {
   }
 }
 
-
 async function edit(req, res) {
 
   let errors = [];
@@ -297,71 +296,134 @@ async function update(req, res) {
       // res.status(500).send('Internal server error');
   }
   // end validation
-  
-    // Upload image to cloudinary
-   if(req.file){ 
-      try{
-        const result = await cloudinary.uploader.upload(req.file.path);
-        req.body.image = {};
-        req.body.image.src = result.secure_url;
-        req.body.image.cloudinary_id = result.public_id;
-      }catch(err){
-        console.log(err);
-      }
-   }
- 
- 
-   // Remove empty properties so that defaults will be applied
-   for (let key in req.body) {
-     if (req.body[key] === '') delete req.body[key];
-   }
- 
-   if(req.body.price){
-      try{
-        // convert from string to Decimal128
-        req.body.price = mongoose.Types.Decimal128.fromString(req.body.price);
-      }catch(err){
-        console.log(err);
-      }
-   }
 
-   
-   try {
-       
-        // const updatedRestaurant = await Restaurant.findOneAndUpdate({_id: req.params.res_id,"menu._id":req.params.id},
-        // { 
-        //     $set: 
-        //     {
-        //         "menu.$.name": req.body.name,
-        //         "menu.$.image": req.body.image,
-        //         "menu.$.type": req.body.type || null,
-        //         "menu.$.description": req.body.description || null,
-        //         "menu.$.price": req.body.price || null, 
-        //     } 
-        // },
-
-        // { new: true });
-        const restaurant = await Restaurant.findById(req.params.res_id);
-        const item = restaurant.menu.id(req.params.id);
-        if(item){
-            item.name = req.body.name;
-            item.image = req.body.image?req.body.image:null;
-            item.type = req.body.type? req.body.type: null;
-            item.description = req.body.description?req.body.description:null;
-            item.price = req.body.price?req.body.price:null;
-        }else{
-          // item to be updated is no longer exist
-          req.flash('error', 'Item to be updated is no longer exist');
-          return res.redirect(`/restaurants/${restaurant._id}`);
+  // image logic
+  try{
+    // retrieve the requested resturant
+    const restaurant = await Restaurant.findById(req.params.res_id);
+    if(restaurant){
+      // the requested resturant is exist
+      const item = restaurant.menu.id(req.params.id);
+      if(item){
+        if(!("deleteImg" in req.body)){
+          if(req.file){
+            if("image" in item){
+              if("cloudinary_id" in item.image){
+                if(item.image.cloudinary_id){
+                  // remove the image from the cloudinary
+                  try{
+                    await cloudinary.uploader.destroy(item.image.cloudinary_id);
+                  }catch(err){
+                    console.log(err);
+                  }
+                }
+              }
+            }
+            // Upload image to cloudinary
+            try{
+              const result = await cloudinary.uploader.upload(req.file.path);
+              req.body.image = {};
+              req.body.image.src = result.secure_url;
+              req.body.image.cloudinary_id = result.public_id;
+            }catch(err){
+              console.log(err);
+            }
+          }
+        }else {
+          if("image" in item){
+            if("cloudinary_id" in item.image){
+              try{
+                // Destroy image from cloudinary
+                await cloudinary.uploader.destroy(item.image.cloudinary_id);
+              }catch(err){
+                console.log(err);
+              }
+              req.body.image = {};
+              // after remove the image set the default image
+              req.body.image.src = "/images/dish.jpg";
+            }
+          }
         }
-
-        await restaurant.save();
-        req.flash('success', 'Item is updated successfully');
-        res.redirect(`/restaurants/${req.params.res_id}`);
-    } catch (err) {
-        console.log(err);
-        //  res.redirect('items/new');
+      }else{
+         // the requested item is not exist
+        req.flash('error', 'the requested item is not exist');
+        return res.redirect(301, `/restaurants/${req.params.res_id}`);
+      }
+    }else {
+      // the requested resturant is not exist
+      req.flash('error', 'the requested resturant is not exist');
+      return res.redirect(301, `/restaurants`);
     }
+  }catch(err){
+    console.log(err);
+  }
+  // end image logic
+  
+  // Remove empty properties so that defaults will be applied
+  for (let key in req.body) {
+    if (req.body[key] === '') delete req.body[key];
+  }
+
+  if(req.body.price){
+    try{
+      // convert from string to Decimal128
+      req.body.price = mongoose.Types.Decimal128.fromString(req.body.price);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  // Add item logic
+  try {
+      
+      // const updatedRestaurant = await Restaurant.findOneAndUpdate({_id: req.params.res_id,"menu._id":req.params.id},
+      // { 
+      //     $set: 
+      //     {
+      //         "menu.$.name": req.body.name,
+      //         "menu.$.image": req.body.image,
+      //         "menu.$.type": req.body.type || null,
+      //         "menu.$.description": req.body.description || null,
+      //         "menu.$.price": req.body.price || null, 
+      //     } 
+      // },
+
+      // { new: true });
+      const restaurant = await Restaurant.findById(req.params.res_id);
+      const item = restaurant.menu.id(req.params.id);
+      if(item){
+          item.name = req.body.name;
+          if(req.body.image){
+            item.image = req.body.image;
+          } // no need for else because we already set the default image when the image is deleted
+          if(req.body.type){
+            item.type = req.body.type;
+          }else{
+            item.type = undefined;
+          }
+          if(req.body.description){
+            item.description = req.body.description
+          }else{
+            item.description = undefined;
+          }
+          if(req.body.price){
+            item.price = req.body.price?req.body.price:null;
+          }else{
+            item.price = undefined;
+          }
+      }else{
+        // item to be updated is no longer exist
+        req.flash('error', 'Item to be updated is no longer exist');
+        return res.redirect(`/restaurants/${restaurant._id}`);
+      }
+
+      await restaurant.save();
+      req.flash('success', 'Item is updated successfully');
+      res.redirect(`/restaurants/${req.params.res_id}`);
+  } catch (err) {
+      console.log(err);
+      //  res.redirect('items/new');
+  }
 }
 
 
