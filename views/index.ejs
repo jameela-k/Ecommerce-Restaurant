@@ -32,48 +32,29 @@
       </div>
       <div class="container text-center my-3">
         <div class="row mx-auto my-auto">
-          <div
-            id="myCarousel"
-            class="carousel slide w-100"
-            data-ride="carousel"
-          >
+          <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
-              <div class="carousel-item py-5 active">
-                <div class="row">
+              <% let act="active"; %>
+              <div class="carousel-item py-5 <%= act %>">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                   <% restaurants.forEach((restaurant) => { %>
-                  <div class="col-sm-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <% 
-                          if("image" in restaurant){
-                            if("src" in restaurant.image){
-                              if(restaurant.image.src){
-                              %>
-                              <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name%>" class="dish">
-                              <%
-                              }else{
-                                %>
-                                  <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                                <%
-                              } 
-                            }else{
-                              %>
-                              <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                              <%
-                            }
-                          }else{
-                            %>
-                              <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                            <%
-                          } 
-                        %>
-                        <h4 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h4>
-                        <p class="card-text">Rating</p>
+                    <div class="col-sm-3">
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name %>" class="dish" />
+                          <h4 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h4>
+                          <p class="card-text">Rating</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <% }) %>
+                  <% act="" }); %>
                 </div>
+                <button class="carousel-control-prev" data-bs-target="#myCarousel" role="button"href="#myCarousel" data-slide="prev" type="button">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" role="button" data-bs-slide="next" data-bs-target="#myCarousel" type="button">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
               </div>
             </div>
           </div>
@@ -81,28 +62,20 @@
 
         <div class="row">
           <div class="col-12">
-            <a
-              class="carousel-control-prev"
-              href="#myCarousel"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
+            <!-- <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </a>
             <a
               class="carousel-control-next"
               href="#myCarousel"
               role="button"
-              data-slide="ne  xt"
+              data-slide="next"
             >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-            </a>
+            <span
+              class="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
+            </a> -->
           </div>
         </div>
       </div>
