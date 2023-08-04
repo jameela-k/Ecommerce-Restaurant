@@ -145,7 +145,7 @@
                         <% if(user?.userType == "admin"){ %>
                             <a href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit">Edit Item</a>
                             <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
-                                <button>DELETE</button>
+                                <button>DELETE Item</button>
                             </form>
                         <% } %>
 
@@ -168,11 +168,11 @@
                                         <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
                                         <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
                                     </select>
-                                    <button>Edit</button>
+                                    <button>Update Review</button>
                                 </form>
 
                                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                    <button>DELETE</button>
+                                    <button>DELETE Review</button>
                                 </form>
                         
                             <%}else{ %>
@@ -197,35 +197,16 @@
 
                         <% item.reviews.forEach((review, r) => { 
                             if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
-                                <% if(user?.userType == "admin") { %>
-                                    <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
-                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
-                                        <input type="hidden" name="user" value="<%= user._id %>">
-                                        <input type="hidden" name="userName" value="<%= user.name %>">
-                                        <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-                                        <label for="comment#<%= r %>">Comment</label>
-                                        <textarea name="comment" id="comment#<%= r %>"><%= review.comment %></textarea>
-                                        <label for="rating#<%= r %>"></label>
-                                        <select name="rating" id="rating#<%= r %>">
-                                            <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
-                                            <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
-                                            <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
-                                            <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
-                                            <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
-                                        </select>
-                                        <button>Edit</button>
-                                    </form>
-
-                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                        <button>DELETE</button>
-                                    </form>
-                                <% } else {%>
                                 <div>
                                     <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                                     <h2><%= review.userName %></h2>
                                     <p><%= review.comment %></p>
                                     <h4><%= review.rating %></h4>
                                 </div>
+                                <% if(user?.userType == "admin") { %> 
+                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                        <button>DELETE Review</button>
+                                    </form>
                                 <% } %>
                         <% }}); %>
         
