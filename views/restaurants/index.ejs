@@ -39,31 +39,11 @@
           <div class="col-sm-3">
             <div class="card">
               <div class="card-body">
-                <% 
-                  if("image" in restaurant){
-                    if("src" in restaurant.image){
-                      if(restaurant.image.src){
-                      %>
-                      <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name%>" class="dish">
-                      <%
-                      }else{
-                        %>
-                          <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                        <%
-                      } 
-                    }else{
-                      %>
-                      <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                      <%
-                    }
-                  }else{
-                    %>
-                      <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                    <%
-                  } 
-                %>
+                <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name%>" class="dish">
                 <h5>Restaurant Name</h5>
                 <h5 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h5>
+                <h5>Description</h5>
+                <p><%= restaurant.description %></p>
                 <h5>Categories</h5>
                 <% restaurant.categories.forEach ((category) => { %>
                   <p class="type"><%= category.name %></p>
@@ -81,8 +61,24 @@
                 <p class="address"><%= restaurant.address.city %></p>
                 <h6>Country</h6>
                 <p class="address"><%= restaurant.address.country %></p>
-                <h5>Over All Rating</h5>
-                <p class="card-text">Rating</p>
+                <h5>Over All Ratings</h5>
+                <p class="card-text">
+                  <% let count=0; %>
+                  <% let total=0; %>
+                  <% let avr=0 %>
+                  <% restaurant.menu.forEach ((item, i) => { %>
+                    <% item.reviews.forEach ((review , r) => { %>
+                      <% total += review.rating; %>
+                      <% count++;%>
+                    <% }); %>
+                  <% }); %>
+                  <% if (total ===0) {%>
+                    No Reviews Yet
+                  <% }else {%>
+                    <% avr= total/count %>
+                    <%= avr %>
+                  <% } %>
+                </p>
                 <!-- if user is loged in -->
                 <% if (user) { %>
                   <!-- if user is admin -->
@@ -90,7 +86,7 @@
                     <a href="/restaurants/<%= restaurant._id %>">Details</a>
                     <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
                     <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-                      <button>DELETE</button>
+                      <button>DELETE Restaurant</button>
                     </form>
                   <% } %>    
                 <% } %>
