@@ -69,7 +69,24 @@
                 <h5 class="card-title">Description</h5>
                 <p class="card-text"><%= restaurant.description %></p>
                 <h5 class="card-title">Rating</h5>
-                <p class="card-text">4</p>
+                <h5>Over All Ratings</h5>
+                <p class="card-text">
+                  <% let count=0; %>
+                  <% let total=0; %>
+                  <% let avr=0 %>
+                  <% restaurant.menu.forEach ((item, i) => { %>
+                    <% item.reviews.forEach ((review , r) => { %>
+                      <% total += review.rating; %>
+                      <% count++;%>
+                    <% }); %>
+                  <% }); %>
+                  <% if (total ===0) {%>
+                    No Reviews Yet
+                  <% }else {%>
+                    <% avr= total/count %>
+                    <%= avr %>
+                  <% } %>
+                </p>
             </div>
         </div>
     </div>
@@ -108,6 +125,23 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <h5><%= item.name %></h5>
+                        <h6>Rating</h6>
+                        <h5>Over All Ratings</h5>
+                        <p class="card-text">
+                        <% let count=0; %>
+                        <% let total=0; %>
+                        <% let avr=0 %>
+                        <% item.reviews.forEach ((review , r) => { %>
+                            <% total += review.rating; %>
+                            <% count++;%>
+                        <% }); %>
+                        <% if (total ===0) {%>
+                            No Reviews Yet
+                        <% }else {%>
+                            <% avr= total/count %>
+                            <%= avr %>
+                        <% } %>
+                        </p>
                         <% if(user?.userType == "admin"){ %>
                             <a href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit">Edit Item</a>
                             <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
@@ -119,7 +153,7 @@
                             let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
                             
                             if(review) {%>
-                            
+                                <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
                                     <input type="hidden" name="user" value="<%= user._id %>">
                                     <input type="hidden" name="userName" value="<%= user.name %>">
@@ -142,6 +176,7 @@
                                 </form>
                         
                             <%}else{ %>
+                                <img src="<%= user.avatar %>" alt="" referrerpolicy="no-referrer">
                                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
                                     <input type="hidden" name="user" value="<%= user._id %>">
                                     <input type="hidden" name="userName" value="<%= user.name %>">
@@ -160,15 +195,38 @@
                                 </form>
                         <%}} %>
 
-                        <% item.reviews.forEach(review => { 
+                        <% item.reviews.forEach((review, r) => { 
                             if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
+                                <% if(user?.userType == "admin") { %>
+                                    <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
+                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
+                                        <input type="hidden" name="user" value="<%= user._id %>">
+                                        <input type="hidden" name="userName" value="<%= user.name %>">
+                                        <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                                        <label for="comment#<%= r %>">Comment</label>
+                                        <textarea name="comment" id="comment#<%= r %>"><%= review.comment %></textarea>
+                                        <label for="rating#<%= r %>"></label>
+                                        <select name="rating" id="rating#<%= r %>">
+                                            <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
+                                            <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
+                                            <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
+                                            <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
+                                            <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
+                                        </select>
+                                        <button>Edit</button>
+                                    </form>
+
+                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                        <button>DELETE</button>
+                                    </form>
+                                <% } else {%>
                                 <div>
                                     <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                                     <h2><%= review.userName %></h2>
                                     <p><%= review.comment %></p>
                                     <h4><%= review.rating %></h4>
                                 </div>
-
+                                <% } %>
                         <% }}); %>
         
                     </div>
