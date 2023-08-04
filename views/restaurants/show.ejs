@@ -10,7 +10,30 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
-            <img src="<%= restaurant.image.src %>" class="img-fluid" alt="" referrerpolicy="no-referrer">
+        <% 
+            if("image" in restaurant){
+                if("src" in restaurant.image){
+                    if(restaurant.image.src){
+                    %>
+                    <img src="<%= restaurant.image.src %>" class="img-fluid" alt="<%= restaurant.name %>" referrerpolicy="no-referrer">
+                    <%
+                    }else{
+                    %>
+                        <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
+                    <%
+                    } 
+                }else{
+                    %>
+                    <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
+                    <%
+                }
+            }else{
+                %>
+                <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
+                <%
+            } 
+        %>
+            
         </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -35,7 +58,29 @@
 <div class="card-group">
     <% restaurant.menu.forEach(item => { %>
         <div class="card">
-            <img src="<%= item.image.src %>" class="card-img-top">
+            <% 
+                if("image" in item){
+                    if("src" in item.image){
+                        if(item.image.src){
+                        %>
+                        <img src="<%= item.image.src %>" class="card-img-top" alt="<%= item.name %>">
+                        <%
+                        }else{
+                        %>
+                            <img src="/images/dish.jpg" alt="dish image" class="dish">
+                        <%
+                        } 
+                    }else{
+                        %>
+                        <img src="/images/dish.jpg" alt="dish image" class="dish">
+                        <%
+                    }
+                }else{
+                    %>
+                    <img src="/images/dish.jpg" alt="dish image" class="dish">
+                    <%
+                } 
+            %>
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-6">
