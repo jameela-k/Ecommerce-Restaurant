@@ -43,7 +43,24 @@
                         <div class="card-body">
                           <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name %>" class="dish" />
                           <h4 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h4>
-                          <p class="card-text">Rating</p>
+                          <h5 class="card-text">Rating</h5>
+                          <p class="card-text">
+                            <% let count=0; %>
+                            <% let total=0; %>
+                            <% let avr=0 %>
+                            <% restaurant.menu.forEach ((item, i) => { %>
+                              <% item.reviews.forEach ((review , r) => { %>
+                                <% total += review.rating; %>
+                                <% count++;%>
+                              <% }); %>
+                            <% }); %>
+                            <% if (total ===0) {%>
+                              No Reviews Yet
+                            <% }else {%>
+                              <% avr= total/count %>
+                              <%= avr %>
+                            <% } %>
+                          </p>
                         </div>
                       </div>
                     </div>
