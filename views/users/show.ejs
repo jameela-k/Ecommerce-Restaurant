@@ -5,68 +5,76 @@
 <br>
 <br>
 
-<h1><%- title %></h1>
-
-<div class="card mb-3">
-	<div class="row g-0">
-		<div class="col-md-4">
-			<!-- show user avatar -->
-			<img src="<%= dbUser.avatar %>" class="img-fluid" alt="user avatar" referrerpolicy="no-referrer">
+<div class="viewUser">
+	<div class="card mb-3">
+		<div class="card-header">
+			<h4 class="card-title"><%- title %></h4>
 		</div>
-		<div class="col-md-8">
-			<div class="card-body">
-				<!-- show user name -->
-				<h5 class="card-title">Name</h5>
-				<p class="card-text"><%= dbUser.name %></p>
-				<!-- if user is loged in -->
-				<% if (user) { %>
-					<!-- if user is admin -->
-					<% if(user.userType == "admin"){ %>
-						<h2><%= dbUser.email %></h2>
-						<!-- show user type and option to change-->
-						<form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
-							<lable>Prevlages</label>
-							<!-- if admin show radio buttons with admin selected -->
-							
-								<input type="radio" id="admin" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
-								<label for="admin">Admin</label>
-								<input type="radio" id="user" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
-								<label for="user">user</label>
-								<!-- if normal user show radio buttons with user selected -->
-			
-							<input type="submit" value="Update user">
-						</form>
-						<!-- delete user using id and method overide DELETE -->
-						<form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
-								<button>DELETE</button>
-						</form>
-					<% } %>    
-					<!-- maybe add follow button if there is time  -->
-				
-				<% } %>
+		<div class="card-body">
+			<div class="row g-0">
+				<div class="col-md-4">
+					<!-- show user avatar -->
+					<img src="<%= dbUser.avatar %>" class="img-fluid" alt="user avatar" referrerpolicy="no-referrer">
+				</div>
+				<div class="col-md-8">
+					<!-- show user name -->
+					<h5 class="card-title">Name</h5>
+					<p class="card-text"><%= dbUser.name %></p>
+					<!-- if user is loged in -->
+					<% if (user) { %>
+						<!-- if user is admin -->
+						<% if(user.userType == "admin"){ %>
+							<h2><%= dbUser.email %></h2>
+							<!-- show user type and option to change-->
+							<form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
+								<div class="basic-form">
+									<lable>Prevlages</label>
+									<!-- if admin show radio buttons with admin selected -->
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" id="admin" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
+										<label class="form-check-label" for="admin">Admin</label>
+									</div>
+									<!-- if normal user show radio buttons with user selected -->
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" id="user" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
+										<label class="form-check-label" for="user">user</label>
+									</div>
+								
+									<button type="submit" class="btn btn-update btn-primary">Update user</button>
+								</div>
+							</form>
+							<!-- delete user using id and method overide DELETE -->
+							<form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
+								<div class="basic-form">
+									<button type="submit" class="btn btn-del btn-danger">DELETE USER</button>
+								</div>
+							</form>
+						<% } %>    
+						<!-- maybe add follow button if there is time  -->
+					
+					<% } %>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="card-group">
-	<!-- go through all restaurants -->
-	<% restaurants.forEach((restaurant, r) => { %>
-		<!-- go through all of the restaurant's items -->
-		<% restaurant.menu.forEach ((item, i) => { %>
-			<!-- go through all of the items reviews -->
-			<% item.reviews.forEach ((review, w) => { %>
-				<!-- if the review is made by the selected user -->
-				<% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
-					<div class="card row">
-						<div class="col-md-12">
-							<div class="row">
+	
+	<div class="card-group row">
+		<!-- go through all restaurants -->
+		<% restaurants.forEach((restaurant, r) => { %>
+			<!-- go through all of the restaurant's items -->
+			<% restaurant.menu.forEach ((item, i) => { %>
+				<!-- go through all of the items reviews -->
+				<% item.reviews.forEach ((review, w) => { %>
+					<!-- if the review is made by the selected user -->
+					<% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
+						<div class="card col-md-6">
+							<div class="card-header row">
 								<!-- show restaurant logo -->
 								<img  class="col-md-6" src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
 								<!-- show restaurant name -->
 								<h3 class="col-md-6"><%= restaurant.name %></h3>
 							</div>
-							<div class="row">
+							<div class="card-body row">
 								<!-- show item image -->
 								<img class="col-md-3" src="<%= item.image.src %>" alt="Item image" referrerpolicy="no-referrer">
 								<!-- show the item name -->
@@ -137,11 +145,12 @@
 								</div>
 							</div>   
 						</div>
-					</div>
-				<% }; %>
+					<% }; %>
+				<% }); %>
 			<% }); %>
 		<% }); %>
-	<% }); %>
+	</div>
 </div>
+
 
 <%- include('../partials/footer') %>
