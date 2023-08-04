@@ -1,6 +1,23 @@
 # Projct2-Restaurant Food Review
 
-## What is the Website about ? 
+## Technologies used
+ 
+ HTML
+ CSS
+ JavaScript
+ EJS
+ Node Express 
+ MongoDB
+ Mongooses
+ Bootstrap 
+ Google Oauth APIs
+ 
+## the approach was taken
+We started making the wireframe, and once we approved it, we divided the work between the frontend and backend teams.
+
+## unsolved problems,
+carousel (missed todo)
+
 
 
 ## User Stories
@@ -14,9 +31,12 @@ I start by browsing the website and searching for a specific restaurant that I h
 Overall, the customer reviews were helpful in guiding my choices. I can use this website again in the future to discover new restaurants and dishes.
 
 
-
 ### As an Admin
 
 my main goal is to ensure that our customers have a positive and seamless experience when using our platform. This involves monitoring and managing customer reviews. The reviews should be accurate, helpful and appropriate and as an admin I should develop and implement tools that helps to manage and moderate customer reviews more effectively.
 
 Overall, my role as an admin of an e-commerce website that features food reviews is to ensure that our customers have a positive experience when using our platform. This involves managing customer reviews, and working to improve the website’s functionality and the user experience.
+
+## Notes
+
+
