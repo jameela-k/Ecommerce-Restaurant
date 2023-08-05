@@ -1,11 +1,6 @@
 <%- include('../partials/header') %>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-
+<div class="editRestaurantPage">
 <% if (errorMessages && errorMessages.length > 0) { %>
   <div class="alert alert-danger d-flex justify-content-between">
     <div class="alert-body">
@@ -17,7 +12,11 @@
   </div>
 <% } %>
 
-<h2><%- title %></h2>
+<h2 class="titleEditRestaurant"><%- title %></h2>
+
+<div class="divider">
+  <img src="/images/divider/divider.jpg" class="dividerImage"/>
+</div>
 
 <div class="editRestaurant">
   <form id="new-form" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
@@ -37,7 +36,7 @@
               <span><%= errors.file.msg %></span>
             <%  }%>
           
-            <label for="deleteImg" class="form-label col-6">Do you want to delete the img</label>
+            <label for="deleteImg" class="form-label col-6">Do you want to delete the image ? </label>
             <input type="checkbox" class="form-check-input col-6" name="deleteImg" id="deleteImg" value="1">
           </div>
           <div class="row">
@@ -52,70 +51,87 @@
           <div class="row">
             <div class="col-12 description">
               <label class="form-label">Description</label>
-              <input type="text" class="form-control" name="description" value="<%= errors?errors.description?formBody?formBody.description:restaurant.description:restaurant.description:restaurant.description %>">
+              <textarea  name="description" class="form-control" name="description" value="<%= errors?errors.description?formBody?formBody.description:restaurant.description:restaurant.description:restaurant.description %>">
               <% if(errors && errors.description){ %>
                 <span><%= errors.description.msg %></span>
               <%  }%>
+              </textarea>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12 categories">
-              <label class="form-label">categories</label>
-              <% categories.forEach((category, i) => { %>
-                <% let result = RestaurantCategories.findIndex(RCategory => {return JSON.stringify(RCategory._id) == JSON.stringify(category._id)}) + 1 %>
-                <div class="categoriesShow">
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label"for="category#<%= i %>">
-                      <input type="checkbox" class="form-check-input" name="categories[]" value="<%= category._id %>" id="category#<%= i %>"<%= result?'checked':''%>>
-                      <%= category.name %>
-                    </label> 
+      <div class="categories">
+                <label class="form-label">Categories</label>
+                <% categories.forEach((category, i) => { %>
+                  <div class="categoriesShow">
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" name="categories[]" class="form-check-input" value="<%= category._id %>" id="category#<%= i %>">
+                      <label class="form-check-label" for="category# <%= i %>">
+                        <%= category.name %>
+                      </label>
+                    </div>
                   </div>
-                </div>
-              <%}); %>
-            </div>
-          </div>
+                <%}); %>    
+              </div>
 
-          <div class="row">
-            <fieldset class="col-12 form-group border mb-3">
+          <div class="row px-2">
+            <fieldset class="form-group border mb-3 col-md-12">
               <legend>Address</legend>
-              <label class="form-label" for="shopNumber">Shop Number</label>
-              <input type="text" class="form-control" name="address.shopNumber" id="shopNumber" value="<%= errors?errors['address.shopNumber']?formBody?formBody['address.shopNumber']: restaurant.address.shopNumber:restaurant.address.shopNumber:restaurant.address.shopNumber %>">
-              <% if(errors && errors['address.shopNumber']){ %>
-                <span><%= errors['address.shopNumber'].msg %></span>
-              <%  }%>
-              <label class="form-label" for="building">Building</label>   
-              <input type="text" class="form-control" id="building" name="address.building" value="<%= errors?errors['address.building']?formBody?formBody['address.building']:restaurant.address.building:restaurant.address.building:restaurant.address.building %>">
-              <% if(errors && errors['address.building']){ %>
-                <span><%= errors['address.building'].msg %></span>
-              <%  }%>
-              <label class="form-label" for="road">Road</label>   
-              <input type="text" class="form-control" id="road" name="address.road" value="<%= errors?errors['address.road']?formBody?formBody['address.road']: restaurant.address.road:restaurant.address.road:restaurant.address.road %>">
-              <% if(errors && errors['address.road']){ %>
-                <span><%= errors['address.road'].msg %></span>
-              <%  }%>
-              <label class="form-label" for="city">City</label>   
-              <input type="text" class="form-control" id="city" name="address.city" value="<%=  errors?errors['address.city']?formBody?formBody['address.city']: restaurant.address.city:restaurant.address.city:restaurant.address.city %>">
-              <% if(errors && errors['address.city']){ %>
-                <span><%= errors['address.city'].msg %></span>
-              <%  }%>
-              <label class="form-label" for="block">Block</label>   
-              <input type="text" class="form-control" id="block" name="address.block" value="<%= errors?errors['address.block']?formBody?formBody['address.block']: restaurant.address.block:restaurant.address.block:restaurant.address.block %>">
-              <% if(errors && errors['address.block']){ %>
-                <span><%= errors['address.block'].msg %></span>
-              <%  }%>
-              <label class="form-label" for="country">Country</label>   
-              <input type="text" class="form-control" id="country" name="address.country" value="<%= errors?errors['address.country']?formBody?formBody['address.country']:restaurant.address.country:restaurant.address.country:restaurant.address.country %>">
-              <% if(errors && errors['address.country']){ %>
-                <span><%= errors['address.country'].msg %></span>
-              <%  }%>
-
-            </fieldset>
-          </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Shop Number</label>
+                  <input type="text" name="address.shopNumber" class="form-control" value="<%= errors?!errors['address.shopNumber']?formBody?formBody['address.shopNumber']:'':'':'' %>">
+                  <% if(errors && errors['address.shopNumber']){ %>
+                    <span><%= errors['address.shopNumber'].msg %></span>
+                  <%  }%>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Building</label>
+                  <input type="text" name="address.building" class="form-control" value="<%= errors?!errors['address.building']?formBody?formBody['address.building']:'':'':'' %>">
+                  <% if(errors && errors['address.building']){ %>
+                    <span><%= errors['address.building'].msg %></span>
+                  <%  }%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Road</label>
+                  <input type="text" name="address.road" class="form-control" value="<%= errors?!errors['address.road']?formBody?formBody['address.road']:'':'':'' %>">
+                  <% if(errors && errors['address.road']){ %>
+                    <span><%= errors['address.road'].msg %></span>
+                  <%  }%>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Block</label>
+                  <input type="text" name="address.block" class="form-control" value="<%= errors?!errors['address.block']?formBody?formBody['address.block']:'':'':'' %>">
+                  <% if(errors && errors['address.block']){ %>
+                    <span><%= errors['address.block'].msg %></span>
+                  <%  }%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">City</label>
+                  <input type="text" name="address.city" class="form-control" value="<%= errors?!errors['address.city']?formBody?formBody['address.city']:'':'':'' %>">
+                  <% if(errors && errors['address.city']){ %>
+                    <span><%= errors['address.city'].msg %></span>
+                  <%  }%>
+                </div> 
+                <div class="col-md-6">     
+                  <label class="form-label">Country</label>
+                  <input type="text" name="address.country" class="form-control" value="<%= errors?!errors['address.country']?formBody?formBody['address.country']:'':'':'' %>">
+                  <% if(errors && errors['address.country']){ %>
+                    <span><%= errors['address.country'].msg %></span>
+                  <%  }%> 
+                  <br>
+                </div> 
+              </div> 
+            </fieldset> 
+          </div> 
           <button type="submit" class="col-12 btn light btn-add">Update Restaurant</button>
         </div>
       </div>
     </div>
   </form>
+</div>
 </div>
 
 <%- include('../partials/footer') %>
