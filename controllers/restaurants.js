@@ -5,6 +5,16 @@ const path = require("path");
 
 const { checkSchema, validationResult } = require('express-validator');
 
+
+const restaurantRouteParametersCheckSchema = {
+  id: {
+      in: ['params'],
+      isMongoId: {
+          errorMessage: 'Invalid ID'
+      }
+  },
+}
+
 const restaurantFormCheckSchema = {
     name: {
         in: ['body'],
@@ -39,6 +49,7 @@ const restaurantFormCheckSchema = {
         optional: true,
         custom: {
           options: (value, { req }) => {
+            value = value.trim();
             if (value) {
               if(value.length < 10 || value.length >255){
                 return false
@@ -267,6 +278,10 @@ async function create(req, res) {
     if (req.body[key] === '') delete req.body[key];
   }
 
+  if(req.body.description){
+    req.body.description = req.body.description.trim();
+  }
+
   // add restaurant logic
   try {
     const restaurant = await Restaurant.create(req.body);
@@ -286,6 +301,21 @@ async function create(req, res) {
 
 async function showOne(req, res) {
   try{
+    // Manually run checkSchema to validate the route Parameters
+    await checkSchema(restaurantRouteParametersCheckSchema).run(req);
+  
+
+    // Check if there are any validation errors
+    const routeParametersErrors = validationResult(req);
+
+    if (!routeParametersErrors.isEmpty()) {
+        const errors_mapped = routeParametersErrors.mapped(); 
+        // check if one of the params IDs return an error
+        if(errors_mapped.id){
+          req.flash('error', 'dont play with me please');
+          return res.redirect(301, `/`);
+        }
+    }
     const restaurant = await Restaurant.findById(req.params.id).populate('categories'); 
     if(restaurant){
       const successMessages = req.flash('success');
@@ -303,6 +333,21 @@ async function showOne(req, res) {
 
 async function edit(req, res) {
   try{
+    // Manually run checkSchema to validate the route Parameters
+    await checkSchema(restaurantRouteParametersCheckSchema).run(req);
+  
+
+    // Check if there are any validation errors
+    const routeParametersErrors = validationResult(req);
+
+    if (!routeParametersErrors.isEmpty()) {
+        const errors_mapped = routeParametersErrors.mapped(); 
+        // check if one of the params IDs return an error
+        if(errors_mapped.id){
+          req.flash('error', 'dont play with me please');
+          return res.redirect(301, `/`);
+        }
+    }
     let errors = [];
     let formBody = [];
     if(req.session.errors) {
@@ -330,6 +375,25 @@ async function update(req, res) {
 
   // validation
   try {
+
+
+    // Manually run checkSchema to validate the route Parameters
+    await checkSchema(restaurantRouteParametersCheckSchema).run(req);
+  
+
+    // Check if there are any validation errors
+    const routeParametersErrors = validationResult(req);
+
+    if (!routeParametersErrors.isEmpty()) {
+        const errors_mapped = routeParametersErrors.mapped(); 
+        // check if one of the params IDs return an error
+        if(errors_mapped.id){
+          req.flash('error', 'dont play with me please');
+          return res.redirect(301, `/`);
+        }
+    }
+
+
     // Manually run checkSchema to validate the request body
     await checkSchema(restaurantFormCheckSchema).run(req);
 
@@ -459,6 +523,22 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   try {
+
+      // Manually run checkSchema to validate the route Parameters
+      await checkSchema(restaurantRouteParametersCheckSchema).run(req);
+    
+
+      // Check if there are any validation errors
+      const routeParametersErrors = validationResult(req);
+
+      if (!routeParametersErrors.isEmpty()) {
+          const errors_mapped = routeParametersErrors.mapped(); 
+          // check if one of the params IDs return an error
+          if(errors_mapped.id){
+            req.flash('error', 'dont play with me please');
+            return res.redirect(301, `/`);
+          }
+      }
       const result = await Restaurant.deleteOne({_id: req.params.id}); 
       // console.log(result);
         // { acknowledged: true, deletedCount: 1 }
