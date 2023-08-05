@@ -15,12 +15,14 @@
 
   <body>
     <header>
-      <img
-        src="/images/logo/Egg-logo.gif"
-        class="logo"
-        alt="logo"
-        referrerpolicy="no-referrer"
-      />
+      <a href="/">
+        <img
+          src="/images/logo/Egg-logo.gif"
+          class="logo"
+          alt="logo"
+          referrerpolicy="no-referrer"
+        />
+      </a>
       <div class="mainNavBar">
       <ul class="navbar">
         <li><a href="/">Home Page</a></li>
@@ -51,6 +53,7 @@
 
         <% if (user) { %> <% if(user.userType=="admin" ){ %>
         <li><a href="/restaurants/new">Add restaurant</a></li>
+        <li><a href="/categories">Categories</a></li>
         <li><a href="/users/<%= user._id %>"> <%= user.name %> </a></li>
         <% }else if(user.userType=="user" ){ %>
         <li><a href="/users/<%= user._id %>"> <%= user.name %> </a></li>
