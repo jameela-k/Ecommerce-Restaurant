@@ -180,35 +180,33 @@
                             <div class="col-md-2">
                                 <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                             </div>
-                            <div class="row">
-                                <form class="col-md-10" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
-                                    <div class="row">
-                                        <input type="hidden" name="user" value="<%= user._id %>">
-                                        <input type="hidden" name="userName" value="<%= user.name %>">
-                                        <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-                                        <div class="col-md-7">
-                                            <label for="comment">Comment</label>
-                                            <textarea name="comment" id="comment"><%= review.comment %></textarea>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="rating"></label>
-                                            <select name="rating" id="rating">
-                                                <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
-                                                <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
-                                                <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
-                                                <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
-                                                <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button class="btn btn-light">Update Review</button>
-                                        </div>
+                            <form class="col-md-8" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
+                                <div class="row">
+                                    <input type="hidden" name="user" value="<%= user._id %>">
+                                    <input type="hidden" name="userName" value="<%= user.name %>">
+                                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                                    <div class="col-md-7">
+                                        <label for="comment">Comment</label>
+                                        <textarea name="comment" id="comment"><%= review.comment %></textarea>
                                     </div>
-                                </form>
-                                <form class="col-md-2" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                    <button class="btn btn-danger">DELETE Review</button>
-                                </form>
-                            </div>
+                                    <div class="col-md-3">
+                                        <label for="rating"></label>
+                                        <select name="rating" id="rating">
+                                            <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
+                                            <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
+                                            <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
+                                            <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
+                                            <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-light">Update Review</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form class="col-md-2" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                <button class="btn btn-danger">DELETE Review</button>
+                            </form>
                         <%}else{ %>
                             <div class="col-md-2">
                                 <img src="<%= user.avatar %>" alt="" referrerpolicy="no-referrer">
