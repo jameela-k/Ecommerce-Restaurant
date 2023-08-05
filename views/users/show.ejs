@@ -59,7 +59,7 @@
 	</div>
   </div>
 	
-	<div class="card-group row">
+	<div class=" showUserGroup card-group row" style="max-width: 470px;">
 		<!-- go through all restaurants -->
 		<% restaurants.forEach((restaurant, r) => { %>
 			<!-- go through all of the restaurant's items -->
@@ -68,10 +68,12 @@
 				<% item.reviews.forEach ((review, w) => { %>
 					<!-- if the review is made by the selected user -->
 					<% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
-						<div class="card col-md-6">
-							<div class="card-header row">
+						<div class="showCardUser card col-md-6">
+							<div class="card-header col">
 								<!-- show restaurant logo -->
-								<img  class="col-md-6" src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
+								<div class="col-md-6">
+									<img  class="imageShow"  src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
+								</div>
 								<!-- show restaurant name -->
 								<h3 class="col-md-6"><%= restaurant.name %></h3>
 							</div>

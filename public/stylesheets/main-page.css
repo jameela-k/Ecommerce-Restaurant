@@ -463,7 +463,8 @@ ul {
 .dishNameItem, 
 .dishDiscriptionItem,
 .ratingDishItem,
-.titleEditRestaurant {
+.titleEditRestaurant,
+.titleNewRestaurant {
   text-align: center;
 }
 
@@ -503,6 +504,27 @@ ul {
   margin-top: 10%;
 }
 
+.rowEditRestaurant {
+  display: flex;
+  justify-content: center;
+}
+
+.rowEditImage {
+  text-align: center;
+}
+
+.editRestaurantImage {
+  max-width: 400px;
+}
+
+.showUserGroup {
+  margin: 30px;
+}
+
+.imageShow {
+  max-width: 400px;
+  margin-bottom: 10px ;
+}
 
 
 .footer{
@@ -556,3 +578,4 @@ text-align:left;
 margin:0% 3%;
 }
 }
+
