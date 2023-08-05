@@ -29,7 +29,8 @@
 <% } %>
 
 <h2><%- title %></h2>
-
+<div class="row">
+<div class="col-md-8">
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
@@ -99,11 +100,7 @@
                 </p>
             </div>
         </div>
-        <!-- google map and google review section from -->
-        <div class="col-md-4">
-            <div id="map"></div>
-            <div class="" id="testaddress"></div>
-        </div>
+        
     </div>
 </div>
 
@@ -290,5 +287,13 @@
             </div>
         </div>
     <% }); %>
+</div>
+</div>
+
+<!-- google map and google review section from -->
+<div class="col-md-4">
+    <div id="map"></div>
+    <div class="" id="testaddress"></div>
+</div>
 </div>
 <%- include('../partials/footer') %>
