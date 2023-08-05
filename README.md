@@ -1,5 +1,7 @@
 # Projct2-Restaurant Food Review
 
+## What is the project about ? 
+
 ## Technologies used
  
  HTML
@@ -12,11 +14,11 @@
  Bootstrap 
  Google Oauth APIs
  
-## the approach was taken
+## The approach was taken
 We started making the wireframe, and once we approved it, we divided the work between the frontend and backend teams.
 ![WireFrame](https://media.git.generalassemb.ly/user/49784/files/32566e82-a8f8-4066-96a7-7799e8ba92a8)
 
-## unsolved problems,
+## Unsolved problems,
 carousel (missed todo)
 
 
@@ -38,6 +40,6 @@ my main goal is to ensure that our customers have a positive and seamless experi
 
 Overall, my role as an admin of an e-commerce website that features food reviews is to ensure that our customers have a positive experience when using our platform. This involves managing customer reviews, and working to improve the website’s functionality and the user experience.
 
-## Notes
+## Future Works
 
 
