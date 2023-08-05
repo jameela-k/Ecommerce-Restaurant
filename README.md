@@ -14,6 +14,7 @@
  
 ## the approach was taken
 We started making the wireframe, and once we approved it, we divided the work between the frontend and backend teams.
+![WireFrame](https://media.git.generalassemb.ly/user/49784/files/32566e82-a8f8-4066-96a7-7799e8ba92a8)
 
 ## unsolved problems,
 carousel (missed todo)
