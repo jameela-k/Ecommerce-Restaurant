@@ -30,7 +30,11 @@
   </div>
 <% } %>
 
-<h2><%- title %></h2>
+<h2 class="titleIndexAllRestaurant"><%- title %></h2>
+
+<div class="divider">
+  <img src="/images/divider/divider.jpg" class="dividerImage"/>
+</div>
 <div class="container text-center my-3">
   <div class="row mx-auto my-auto">
     <div class="grid-item">
@@ -38,7 +42,7 @@
         <% restaurants.forEach(restaurant => { %>
           <div class="col-sm-3">
             <div class="card">
-              <div class="card-body">
+              <div class="card-body" style="max-height: 800px;">
                 <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name%>" class="dish">
                 <h5>Restaurant Name</h5>
                 <h5 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h5>
