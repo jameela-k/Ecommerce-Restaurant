@@ -40,7 +40,7 @@
               <div class="card-body" style="max-height: 800px;">
                 <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name%>" class="dish">
                 <h5>Restaurant Name</h5>
-                <h5 class="card-title"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h5>
+                <h5 class="card-title-restuarantLink"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h5>
                 <h5>Description</h5>
                 <p><%= restaurant.description %></p>
                 <h5>Categories</h5>
@@ -75,13 +75,17 @@
                   <% } %>
                 </p>
                 <!-- if user is loged in -->
+                <div class="restaurantIndexLinks">
                 <% if (user) { %>
                   <!-- if user is admin -->
                   <% if(user.userType == "admin"){ %>
                     <a href="/restaurants/<%= restaurant._id %>">Details</a>
                     <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
+                  </div>
                     <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-                      <button>DELETE Restaurant</button>
+                      <div class="form-group">
+						            <button class="allUsersBtns"><img style="width: 20px;" src="/images/icons/icons/delete.png" alt="DELETE"></button>
+					            </div>
                     </form>
                   <% } %>    
                 <% } %>
