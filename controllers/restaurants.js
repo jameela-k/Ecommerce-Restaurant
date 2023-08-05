@@ -480,6 +480,10 @@ async function update(req, res) {
     req.body.categories = [];
   }
 
+  if(req.body.description){
+    req.body.description = req.body.description.trim();
+  }
+
   // update restaurant logic
   try {
       // Update this line because now we need the _id of the new movie
