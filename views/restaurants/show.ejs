@@ -155,7 +155,7 @@
                             No Reviews Yet
                         <% }else {%>
                             <% avr= total/count %>
-                            <%= parseFloat(avr.toFixed(2)) %>
+                            <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
                         <% } %>
                         </p>
                     </div>
