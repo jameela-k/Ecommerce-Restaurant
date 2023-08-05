@@ -418,7 +418,13 @@ footer {
     width: 100px;
     border: 2px solid lightgray;
     border-radius: 15px;
-  }
+}
+
+.allCategories {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
 
 .footer{
 
