@@ -391,25 +391,25 @@ footer {
 .userCard {
   border: 2px solid lightgray;
   border-radius: 20px ;
-  }
+}
   
-  .userAvatar {
+.userAvatar {
     border-radius: 25px ;
-  }
+}
   
-  .allUsersBtns {
+.allUsersBtns {
     border: 2px solid lightgray;
     border-radius: 25px;
     padding: 8px;
     margin-top: 10px;
-  }
+}
   
-  .flex-button {
+.flex-button {
     display: flex;
     flex-direction: row;
     gap: 10px;
     justify-content: center;
-  }
+}
   
   
   /* profile  */
@@ -426,8 +426,43 @@ footer {
 }
 
 
-.footer{
+.cardRestaurant {
+  margin: 40px;
+}
 
+.colImageEdit {
+  padding: 10px;
+  max-width: 400px;
+  max-height: 350px;
+}
+
+
+.imageRestaurantShow {
+  padding: 25px;
+  max-width: 920px;
+  max-height: 450px;
+}
+
+.colReviewSection {
+  margin: 5px;
+}
+
+.itemsCard {
+  margin: 40px;
+}
+
+.dishNameItem, 
+.dishDiscriptionItem,
+.ratingDishItem {
+  text-align: center;
+}
+
+.btnDangerItem {
+  border: none;
+}
+
+
+.footer{
   padding:10px 0px;
   text-align:center;
 }
@@ -440,9 +475,9 @@ footer {
   font-size:0.8em;
 }
 
-.footer .row a{
+.footer .row a {
   text-decoration:none;
-  color:gray;
+  color: gray;
   transition:0.5s;
 }
 
