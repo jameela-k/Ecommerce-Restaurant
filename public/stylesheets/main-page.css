@@ -387,6 +387,39 @@ footer {
   justify-content: center;
 }
 
+/* all users  */
+.userCard {
+  border: 2px solid lightgray;
+  border-radius: 20px ;
+  }
+  
+  .userAvatar {
+    border-radius: 25px ;
+  }
+  
+  .allUsersBtns {
+    border: 2px solid lightgray;
+    border-radius: 25px;
+    padding: 8px;
+    margin-top: 10px;
+  }
+  
+  .flex-button {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  
+  /* profile  */
+  
+  .showProfileImg {
+    width: 100px;
+    border: 2px solid lightgray;
+    border-radius: 15px;
+  }
+
 .footer{
 
   padding:10px 0px;

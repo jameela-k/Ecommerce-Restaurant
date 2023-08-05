@@ -7,56 +7,61 @@
 
 <div class="viewUser">
 	<div class="card mb-3">
-		<div class="card-header">
-			<h4 class="card-title"><%- title %></h4>
-		</div>
-		<div class="card-body">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<!-- show user avatar -->
-					<img src="<%= dbUser.avatar %>" class="img-fluid" alt="user avatar" referrerpolicy="no-referrer">
+	  <div class="card-header">
+		<h4 class="card-title"><%- title %></h4>
+	  </div>
+	  <div class="card-body">
+		<div class="row g-0">
+		  <div class="col-md-12 text-center">
+			<!-- show user avatar -->
+			<img class="showProfileImg" src="<%= dbUser.avatar %>" alt="user avatar" referrerpolicy="no-referrer">
+		  </div>
+		  <div class="col-md-8 offset-md-2">
+			<div class="profile-details mt-4">
+			  <!-- show user name -->
+			  <p style="text-align:center;" class="card-text"><strong>Name: </strong><%= dbUser.name %></p>
+			  <hr>
+			  <!-- if user is logged in -->
+			  <% if (user) { %>
+				<!-- if user is admin -->
+				<% if(user.userType == "admin"){ %>
+				  <div class="admin-details">
+					<strong>E-mail: </strong><h6><%= dbUser.email %></h6>
+					<!-- show user type and option to change -->
+					<form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
+					  <div class="form-group">
+						<strong>Privileges: </strong>
+						<!-- if admin show radio buttons with admin selected -->
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" id="admin" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
+						  <label class="form-check-label" for="admin">Admin</label>
+						</div>
+						<!-- if normal user show radio buttons with user selected -->
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" id="user" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
+						  <label class="form-check-label" for="user">User</label>
+						</div>
+						<div class="flex-button">
+							<button class="allUsersBtns" type="submit"><img style="width: 20px;" src="/images/icons/icons/edit.png" alt="EDIT"></button>
+					</form>
+					<!-- delete user using id and method override DELETE -->
+					<form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
+					  <div class="form-group">
+						<button class="allUsersBtns"><img style="width: 20px;" src="/images/icons/icons/delete.png" alt="DELETE"></button>
+					  </div>
+					</form>
 				</div>
-				<div class="col-md-8">
-					<!-- show user name -->
-					<h5 class="card-title">Name</h5>
-					<p class="card-text"><%= dbUser.name %></p>
-					<!-- if user is loged in -->
-					<% if (user) { %>
-						<!-- if user is admin -->
-						<% if(user.userType == "admin"){ %>
-							<h2><%= dbUser.email %></h2>
-							<!-- show user type and option to change-->
-							<form id="edit-userType-form" action="/users/<%= dbUser._id %>?_method=PUT" method="POST">
-								<div class="basic-form">
-									<lable>Prevlages</label>
-									<!-- if admin show radio buttons with admin selected -->
-									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" id="admin" name="userType" value="admin" <%= (dbUser.userType == "admin")? 'checked' : '' %>>
-										<label class="form-check-label" for="admin">Admin</label>
-									</div>
-									<!-- if normal user show radio buttons with user selected -->
-									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" id="user" name="userType" value="user" <%= (dbUser.userType == "user")? 'checked' : '' %>>
-										<label class="form-check-label" for="user">user</label>
-									</div>
-								
-									<button type="submit" class="btn btn-update btn-primary">Update user</button>
-								</div>
-							</form>
-							<!-- delete user using id and method overide DELETE -->
-							<form action="/users/<%= dbUser._id %>?_method=DELETE" method="POST">
-								<div class="basic-form">
-									<button type="submit" class="btn btn-del btn-danger">DELETE USER</button>
-								</div>
-							</form>
-						<% } %>    
-						<!-- maybe add follow button if there is time  -->
-					
-					<% } %>
-				</div>
+				  </div>
+					</div>
+				<% } %>
+				<!-- maybe add a follow button if there is time -->
+			  <% } %>
 			</div>
+		  </div>
 		</div>
+	  </div>
 	</div>
+  </div>
 	
 	<div class="card-group row">
 		<!-- go through all restaurants -->
