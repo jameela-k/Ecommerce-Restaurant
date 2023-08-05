@@ -49,18 +49,14 @@
                   <p class="type"><%= category.name %></p>
                 <% }); %>
                 <h5>Address</h5>
-                <h6>Shop Number</h6>
-                <p class="address"><%= restaurant.address.shopNumber %></p>
-                <h6>Building</h6>
-                <p class="address"><%= restaurant.address.building %></p>
-                <h6>Shop Number</h6>
-                <p class="address"><%= restaurant.address.road %></p>
-                <h6>Road</h6>
-                <p class="address"><%= restaurant.address.block %></p>
-                <h6>City</h6>
-                <p class="address"><%= restaurant.address.city %></p>
-                <h6>Country</h6>
-                <p class="address"><%= restaurant.address.country %></p>
+                <p class="card-text">   <span class="fw-bold">Shop Number: </span><%= restaurant.address.shopNumber %> 
+                  <span class="fw-bold">Building: </span><%= restaurant.address.building %>                     
+                  <span class="fw-bold">Road: </span><%= restaurant.address.road %> 
+                  <span class="fw-bold">Block: </span><%= restaurant.address.block %> 
+                </p>
+                <p class="card-text">   <span class="fw-bold">City: </span><%= restaurant.address.city %> 
+                  <span class="fw-bold">Country: </span><%= restaurant.address.country %> 
+                </p>
                 <h5>Over All Ratings</h5>
                 <p class="card-text">
                   <% let count=0; %>
@@ -76,7 +72,7 @@
                     No Reviews Yet
                   <% }else {%>
                     <% avr= total/count %>
-                    <%= parseFloat(avr.toFixed(2)) %>
+                    <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
                   <% } %>
                 </p>
                 <!-- if user is loged in -->
