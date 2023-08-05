@@ -1,11 +1,7 @@
 <%- include('../partials/header') %>
 
-<br>
-<br>
-<br>
-<br>
-<br>
 
+<div class="newRestaurantPageContainer"> 
 <% if (errorMessages && errorMessages.length > 0) { %>
   <div class="alert alert-danger d-flex justify-content-between">
     <div class="alert-body">
@@ -48,64 +44,81 @@
                 </textarea>
               </div>
               <div class="categories">
-                  <label class="form-label">Categories</label>
-                  <% categories.forEach((category, i) => { %>
-                      <div class="categoriesShow">
-                          <div class="form-check form-check-inline">
-                            <label class="form-check-label"for="category# <%= i %>">
-                                <input type="checkbox" name="categories[]" class="form-check-input" value="<%= category._id %>" id="category#<%= i %>">
-                                <%= category.name %>
-                            </label>
-                          </div>
-                      </div>
-                  <%}); %>   
+                <label class="form-label">Categories</label>
+                <% categories.forEach((category, i) => { %>
+                  <div class="categoriesShow">
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" name="categories[]" class="form-check-input" value="<%= category._id %>" id="category#<%= i %>">
+                      <label class="form-check-label" for="category# <%= i %>">
+                        <%= category.name %>
+                      </label>
+                    </div>
+                  </div>
+                <%}); %>    
               </div>
           </div>
           <div class="row px-2">
-            <fieldset class="form-group border mb-3 col-md-6">
+            <fieldset class="form-group border mb-3 col-md-12">
               <legend>Address</legend>
-                <label class="form-label">Shop Number</label>
-                <input type="text" name="address.shopNumber" class="form-control" value="<%= errors?!errors['address.shopNumber']?formBody?formBody['address.shopNumber']:'':'':'' %>">
-                <% if(errors && errors['address.shopNumber']){ %>
-                  <span><%= errors['address.shopNumber'].msg %></span>
-                <%  }%>
-
-                <label class="form-label">Building</label>
-                <input type="text" name="address.building" class="form-control" value="<%= errors?!errors['address.building']?formBody?formBody['address.building']:'':'':'' %>">
-                <% if(errors && errors['address.building']){ %>
-                  <span><%= errors['address.building'].msg %></span>
-                <%  }%>
-
-                <label class="form-label">Road</label>
-                <input type="text" name="address.road" class="form-control" value="<%= errors?!errors['address.road']?formBody?formBody['address.road']:'':'':'' %>">
-                <% if(errors && errors['address.road']){ %>
-                  <span><%= errors['address.road'].msg %></span>
-                <%  }%>
-
-                <label class="form-label">City</label>
-                <input type="text" name="address.city" class="form-control" value="<%= errors?!errors['address.city']?formBody?formBody['address.city']:'':'':'' %>">
-                <% if(errors && errors['address.city']){ %>
-                  <span><%= errors['address.city'].msg %></span>
-                <%  }%>
-                
-                <label class="form-label">Block</label>
-                <input type="text" name="address.block" class="form-control" value="<%= errors?!errors['address.block']?formBody?formBody['address.block']:'':'':'' %>">
-                <% if(errors && errors['address.block']){ %>
-                  <span><%= errors['address.block'].msg %></span>
-                <%  }%>
-
-                <label class="form-label">Country</label>
-                <input type="text" name="address.country" class="form-control" value="<%= errors?!errors['address.country']?formBody?formBody['address.country']:'':'':'' %>">
-                <% if(errors && errors['address.country']){ %>
-                  <span><%= errors['address.country'].msg %></span>
-                <%  }%>
-              </fieldset>
-            </div>
-            <button type="submit" class="btn light btn-add">Add Restaurant</button>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Shop Number</label>
+                  <input type="text" name="address.shopNumber" class="form-control" value="<%= errors?!errors['address.shopNumber']?formBody?formBody['address.shopNumber']:'':'':'' %>">
+                  <% if(errors && errors['address.shopNumber']){ %>
+                    <span><%= errors['address.shopNumber'].msg %></span>
+                  <%  }%>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Building</label>
+                  <input type="text" name="address.building" class="form-control" value="<%= errors?!errors['address.building']?formBody?formBody['address.building']:'':'':'' %>">
+                  <% if(errors && errors['address.building']){ %>
+                    <span><%= errors['address.building'].msg %></span>
+                  <%  }%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Road</label>
+                  <input type="text" name="address.road" class="form-control" value="<%= errors?!errors['address.road']?formBody?formBody['address.road']:'':'':'' %>">
+                  <% if(errors && errors['address.road']){ %>
+                    <span><%= errors['address.road'].msg %></span>
+                  <%  }%>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Block</label>
+                  <input type="text" name="address.block" class="form-control" value="<%= errors?!errors['address.block']?formBody?formBody['address.block']:'':'':'' %>">
+                  <% if(errors && errors['address.block']){ %>
+                    <span><%= errors['address.block'].msg %></span>
+                  <%  }%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">City</label>
+                  <input type="text" name="address.city" class="form-control" value="<%= errors?!errors['address.city']?formBody?formBody['address.city']:'':'':'' %>">
+                  <% if(errors && errors['address.city']){ %>
+                    <span><%= errors['address.city'].msg %></span>
+                  <%  }%>
+                </div> 
+                <div class="col-md-6">     
+                  <label class="form-label">Country</label>
+                  <input type="text" name="address.country" class="form-control" value="<%= errors?!errors['address.country']?formBody?formBody['address.country']:'':'':'' %>">
+                  <% if(errors && errors['address.country']){ %>
+                    <span><%= errors['address.country'].msg %></span>
+                  <%  }%> 
+                  <br>
+                </div> 
+              </div> 
+            </fieldset> 
+          </div> 
+          <div class="newRestBtn">
+            <button class="addRestaurant" type="submit" class="btn light btn-add">Add Restaurant</button>      
+        </div>     
         </div>  
       </div>
     </div>  
   </form>
+</div>
 </div>
         
 

@@ -320,6 +320,22 @@ ul {
 
 }
 
+.newRestaurantPageContainer {
+  margin-top: 75px;
+}
+
+.addRestaurant {
+  border: black 1px solid;
+  background-color: rgb(186, 182, 182);
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.newRestBtn {
+  display: flex;
+  justify-content: center;
+}
+
 footer {
   text-align: center;
 }
