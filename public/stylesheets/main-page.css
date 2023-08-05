@@ -174,23 +174,24 @@ ul {
 
 @media (max-width: 767px) {
 
-  /* Reduce the size of the logo */
+  .header {
+    position: absolute;
+  }
+
   .logo {
     margin-top: 10px;
     width: 70px;
     height: auto;
   }
 
-  /* Change the layout of the navbar */
-  .navbar {
-    font-size: x-small;
-    display: flex;
-    flex-direction: column;
+  .mainNavBar {
+  display: none;
   }
 
   .homeimage {
     width: 900px;
   }
+
 }
 
 .btnDown {
