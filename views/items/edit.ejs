@@ -29,7 +29,7 @@
             <div class="basic-form" style="max-width: 400px;">
                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 
-                    <div class="row">
+                    <div class="rowImageEdit">
                         <% if(item.image.src){ %>
                             <img src="<%= item.image.src %>" alt="<%= item.name %>" referrerpolicy="no-referrer">
                         <% }else{ %>
