@@ -51,6 +51,8 @@ function initMap() {
 //   map.controls[google.maps.ControlPosition.LEFT_TOP].push(
 //     instructionsElement
 //   );
+
+
   map.controls[google.maps.ControlPosition.LEFT_TOP].push(responseDiv);
   marker = new google.maps.Marker({
     map,
@@ -70,8 +72,10 @@ function initMap() {
   let addr = stAddr + " " + cityContry;
   // let addr = "House: 2836 Road no: 944 City: Hamad Town country: Bahrain" 
   // document.getElementById("testaddress").innerText = addr;
+  
   // "House: 2836 Road no: 944 City: Hamad Town country: Bahrain" 
   geocode({ address: addr });
+  // document.getElementById("testaddress").innerText = gcoderesults;
 }
 
 function clear() {
@@ -88,13 +92,98 @@ function geocode(request) {
       map.setCenter(results[0].geometry.location);
       marker.setPosition(results[0].geometry.location);
       marker.setMap(map);
+
+      // document.getElementById("testaddress").innerText = JSON.stringify(results[0].place_id, null, 2);
     //   response.innerText = JSON.stringify(result, null, 2);
+
+      const request = {
+        placeId: results[0].place_id,
+        fields: ["name", "formatted_address", "place_id", "geometry" , "reviews"],
+      };
+      const infowindow = new google.maps.InfoWindow();
+      const service = new google.maps.places.PlacesService(map);
+
+      service.getDetails(request, (place, status) => {
+        if (
+          status === google.maps.places.PlacesServiceStatus.OK &&
+          place &&
+          place.geometry &&
+          place.geometry.location
+        ) {
+          const marker = new google.maps.Marker({
+            map,
+            position: place.geometry.location,
+          });
+
+          // google.maps.event.addListener(marker, "click", () => {
+          //   const content = document.createElement("div");
+          //   const nameElement = document.createElement("h2");
+
+          //   nameElement.textContent = place.name;
+          //   content.appendChild(nameElement);
+
+          //   const placeIdElement = document.createElement("p");
+
+          //   placeIdElement.textContent = place.place_id;
+          //   content.appendChild(placeIdElement);
+
+          //   const placeAddressElement = document.createElement("p");
+
+          //   placeAddressElement.textContent = place.formatted_address;
+          //   content.appendChild(placeAddressElement);
+          //   infowindow.setContent(content);
+          //   infowindow.open(map, marker);
+          // });
+          // document.getElementById("testaddress").innerText = JSON.stringify(place.reviews, null, 2);
+        }
+        const content = document.createElement("table");
+        const tableHead = document.createElement("thead");
+        tableHead.innerHTML = "<tr><th>Photo</th><th>Author</th><th>Review</th><th>Rating</th></tr>"
+        content.appendChild(tableHead);
+        const tableBody = document.createElement("tbody");
+        place.reviews.forEach(review => {
+          
+          const tableRow = document.createElement("tr");
+
+          const tableFieldPhoto = document.createElement("td");
+          const ReviewerPhoto = document.createElement("img");
+          ReviewerPhoto.src = review.profile_photo_url;
+          tableFieldPhoto.appendChild(ReviewerPhoto);
+          tableRow.appendChild(tableFieldPhoto);
+
+          const tableFieldName = document.createElement("td");
+          const ReviewerName = document.createElement("p");
+          ReviewerName.innerText = review.author_name;
+          tableFieldName.appendChild(ReviewerName);
+          tableRow.appendChild(tableFieldName);
+
+          const tableFieldReview = document.createElement("td");
+          const ReviewerReview = document.createElement("p");
+          ReviewerReview.innerText = review.text;
+          tableFieldReview.appendChild(ReviewerReview);
+          tableRow.appendChild(tableFieldReview);
+
+          const tableFieldRating = document.createElement("td");
+          const ReviewerRating = document.createElement("p");
+          ReviewerRating.innerText = review.rating;
+          tableFieldRating.appendChild(ReviewerRating);
+          tableRow.appendChild(tableFieldRating);
+
+          tableBody.appendChild(tableRow);
+        });
+        content.appendChild(tableBody);
+        document.getElementById("testaddress").appendChild(content);
+      });
+      
       return results;
+      
     })
     .catch((e) => {
       alert("Geocode was not successful for the following reason: " + e);
     });
 }
+
+
 // let addr = "House: 2836 Road no: 944 City: Hamad Town country: Bahrain" 
 // geocode({ address: addr });
 
