@@ -28,7 +28,7 @@
     </div>
 <% } %>
 
-<h2><%- title %></h2>
+<h2 class="itemsTitle"><%- title %></h2>
 
 <div class="cardRestaurant card mb-3">
     <div class="row g-0">
@@ -101,11 +101,11 @@
 </div>
 
 <% if(user?.userType == "admin"){ %>
-    <a class="btn btn-light" href="/restaurants/<%= restaurant._id %>/items/new">Add New Item</a>
+    <a class="btnAddNewItem" href="/restaurants/<%= restaurant._id %>/items/new">Add New Item</a>
 <% } %>
 <div class="card-group itemsCard">
     <% restaurant.menu.forEach(item => { %>
-        <div class="card singleItemCard" style="max-width: 350px;">
+        <div class="card singleItemCard" style="max-width: 500px;">
             <div class="card-head row">
                 <% 
                 if("image" in item){
@@ -161,7 +161,7 @@
                     </div>
                 </div>
              
-                <div class="row">
+                <div class="row btnImageDelEdit">
                     <% if(user?.userType == "admin"){ %>
                         <div class="col">
                             <a class="btn btn-light" href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit"><img style="width: 20px;" src="/images/icons/icons/edit.png" alt="DELETE"></a>
@@ -200,13 +200,13 @@
                                             <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
                                         </select>
                                     </div>
-                                    <div class="col">
-                                        <button class="btn btn-light">Update Review</button>
+                                    <div class="row">
+                                        <button class="btnUpdateReview">Update Review</button>
                                     </div>
                                 </div>
                             </form>
                             <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                <button class="btn">DELETE Review</button>
+                                <button class="btn btn-danger">X</button>
                             </form>
                         <%}else{ %>
                             <div class="col">
@@ -232,7 +232,7 @@
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <button class="btn btn-light">submit</button>
+                                        <button class="btnSubmitItem">submit</button>
                                     </div>
                                 </div>
                             </form> 
@@ -253,9 +253,9 @@
                                     <h4><%= review.rating %></h4>
                                 </div>
                                 <% if(user?.userType == "admin") { %>
-                                    <div class="col"> 
+                                    <div class="row"> 
                                         <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                                <button class="btn btn-danger">DELETE Review</button>
+                                                <button class="btnDeleteReview">DELETE Review</button>
                                         </form>
                                     </div>
                                 <% } %>
