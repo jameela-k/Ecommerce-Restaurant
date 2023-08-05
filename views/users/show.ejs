@@ -75,7 +75,9 @@
 									<img  class="imageShow"  src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
 								</div>
 								<!-- show restaurant name -->
-								<h3 class="col-md-6"><%= restaurant.name %></h3>
+								<div class="titleShowCate">
+									<h3 class="row-md-6"><%= restaurant.name %></h3>
+								</div>
 							</div>
 							<div class="card-body row">
 								<!-- show item image -->
@@ -100,7 +102,7 @@
 																<input type="hidden" name="user" value="<%= user._id %>">
 																<input type="hidden" name="userName" value="<%= user.name %>">
 																<input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-																<div class="col-md-7">
+																<div class="col-md-8">
 																	<!-- show the comment with the user review filled in -->
 																	<label for="comment#<%= r %><%= i %><%= w %>">Comment</label>
 																	<textarea name="comment" id="comment#<%= r %><%= i %><%= w %>"><%= review.comment %></textarea>
@@ -116,13 +118,13 @@
 																		<option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
 																	</select>
 																</div>
-																<button class="col-md-2">Edit</button>
+																<button class="row-md-2">Edit</button>
 															</div>
 														</form>
 														<!-- show the delete button -->
 														<form class ="col-md-2" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
 															<div class="row">
-																	<button class="col-md-12">DELETE</button>
+																	<button class="btn btn-danger"> X </button>
 															</div>
 														</form>
 													</div>

@@ -1,10 +1,7 @@
 <%- include('../partials/header') %>
 
 
-<br>
-<br>
-<br>
-<br>
+<div class="newUserPageContainer">
 <% if (errorMessages && errorMessages.length > 0) { %>
     <div class="alert alert-danger d-flex justify-content-between">
       <div class="alert-body">
@@ -16,16 +13,20 @@
     </div>
 <% } %>
 
-<h2><%- title %></h2>
+<h2 class="titleNewUserPage"><%- title %></h2>
 
-<div class="col-xl-6 col-lg-12">
-    <div class="card">
+<div class="divider">
+    <img src="/images/divider/divider.jpg" class="dividerImage"/>
+  </div>
+
+<div class="row" style="max-width: 600px;">
+    <div class="userShowCard card">
         <div class="card-header">
             <h4 class="card-title"><%= restaurant.name %></h4>
         </div>
 
         <% if(user?.userType == 'admin'){ %>
-        <div class="card-body">
+        <div class="card-body userShowBox">
             <div class="basic-form">
                 <form action="/restaurants/<%= restaurant._id %>/items" method="POST" enctype="multipart/form-data">
 
@@ -74,6 +75,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
