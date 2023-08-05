@@ -236,32 +236,31 @@
                                 </div>
                             </form> 
                     <%}} %>
-                    <div class="row g-3">
-                        <% item.reviews.forEach((review, r) => { 
-                            if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
-                                <div class="col-md-2">
-                                    <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
-                                </div>
-                                <div class="col-md-4">
-                                    <p><%= review.userName %></p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p><%= review.comment %></p>
-                                </div>
-                                <div class="col-md-1">
-                                    <h4><%= review.rating %></h4>
-                                </div>
-                                <% if(user?.userType == "admin") { %>
-                                    <div class="col-md-2"> 
-                                        <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                                <button class="btn btn-danger">DELETE Review</button>
-                                        </form>
-                                    </div>
-                                <% } %>
-                        <% }}); %>
-                    </div>
-                    
                 </div>
+                <% item.reviews.forEach((review, r) => { 
+                    if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
+                        <div class="row g-3">
+                            <div class="col-md-2">
+                                <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
+                            </div>
+                            <div class="col-md-4">
+                                <p><%= review.userName %></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p><%= review.comment %></p>
+                            </div>
+                            <div class="col-md-1">
+                                <h4><%= review.rating %></h4>
+                            </div>
+                            <% if(user?.userType == "admin") { %>
+                                <div class="col-md-2"> 
+                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                            <button class="btn btn-danger">DELETE Review</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                <% }}); %>
             </div>
         </div>
     <% }); %>
