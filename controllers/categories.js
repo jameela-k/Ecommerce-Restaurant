@@ -3,15 +3,17 @@ const Category = require('../models/category');
 
 const { checkSchema, validationResult } = require('express-validator');
 
-const categoryFormCheckSchema = {
 
+const categoryRouteParametersCheckSchema = {
   id: {
     in: ['params'],
-    optional: true,
     isMongoId: {
       errorMessage: 'Invalid ID'
     }
   },
+}
+
+const categoryFormCheckSchema = {
 
   name: {
       in: ['body'],
@@ -125,6 +127,22 @@ async function update(req, res) {
 
    // validation
    try {
+
+    // Manually run checkSchema to validate the route Parameters
+    await checkSchema(categoryRouteParametersCheckSchema).run(req);
+
+    // Check if there are any validation errors
+    const routeParametersErrors = validationResult(req);
+
+    if (!routeParametersErrors.isEmpty()) {
+        const errors_mapped = routeParametersErrors.mapped(); 
+        // check if one of the params IDs return an error
+        if(errors_mapped.id){
+          req.flash('error', 'dont play with me please');
+          return res.redirect(301, `/`);
+        }
+    }
+
     // Manually run checkSchema to validate the request body
     await checkSchema(categoryFormCheckSchema).run(req);
 
@@ -195,6 +213,22 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   try {
+
+     // Manually run checkSchema to validate the route Parameters
+     await checkSchema(categoryRouteParametersCheckSchema).run(req);
+
+     // Check if there are any validation errors
+     const routeParametersErrors = validationResult(req);
+ 
+     if (!routeParametersErrors.isEmpty()) {
+         const errors_mapped = routeParametersErrors.mapped(); 
+         // check if one of the params IDs return an error
+         if(errors_mapped.id){
+           req.flash('error', 'dont play with me please');
+           return res.redirect(301, `/`);
+         }
+     }
+     
     const result = await Category.deleteOne({_id: req.params.id}); 
     // result => // { acknowledged: true, deletedCount: 1 }
     if(result.acknowledged && result.deletedCount > 0){
