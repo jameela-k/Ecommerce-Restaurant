@@ -8,7 +8,7 @@
 <br>
 <br>
 <!-- title provided by controller for users index -->
-<h2><%- title %></h2>
+<h2 class="allCategories"><%- title %></h2>
 
 <% if(user?.userType == "admin"){ %>
 <div class="container categories">
@@ -46,27 +46,15 @@
                             </div>
                         </div>
                         <button type="submit" class="col-12 btn light btn-add">Update Category</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-5 removeCategory mt-3">
-                <form class="row" action="/categories/<%= category._id %>?_method=DELETE" method="POST">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Remove Category</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row basic-form">
-                                
-                            </div>
-                        </div>
-                        <button type="submit" class="col-12 btn light btn-add">Delete Category</button>
+
+                        <form class="row" action="/categories/<%= category._id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="col-12 btn light btn-add">Delete Category</button>
+                        </form>
                     </div>
                 </form>
             </div>
         <% }); %>
     </div>
-</div>
 <% } %>
 
 <%- include('../partials/footer') %>
