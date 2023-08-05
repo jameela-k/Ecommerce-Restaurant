@@ -5,6 +5,22 @@ const path = require("path");
 
 const { checkSchema, validationResult } = require('express-validator');
 
+const itemRouteParametersCheckSchema = {
+  id: {
+    in: ['params'],
+    optional: true,
+    isMongoId: {
+      errorMessage: 'Invalid ID'
+    }
+  },
+  res_id: {
+    in: ['params'],
+    isMongoId: {
+      errorMessage: 'Invalid ID'
+    }
+  },
+}
+
 const itemFormCheckSchema = {
   name: {
       in: ['body'],
@@ -71,6 +87,7 @@ const itemFormCheckSchema = {
     optional: true,
     custom: {
       options: (value, { req }) => {
+        value = value.trim();
         if (value) {
           if(value.length < 10 || value.length >255){
             return false
@@ -141,6 +158,23 @@ const itemFormCheckSchema = {
 
 async function newItem(req, res) {
   try{
+
+    // Manually run checkSchema to validate the route Parameters
+    await checkSchema(itemRouteParametersCheckSchema).run(req);
+  
+
+    // Check if there are any validation errors
+    const routeParametersErrors = validationResult(req);
+
+    if (!routeParametersErrors.isEmpty()) {
+        const errors_mapped = routeParametersErrors.mapped(); 
+        // check if one of the params IDs return an error
+        if(errors_mapped.res_id){
+          req.flash('error', 'dont play with me please');
+          return res.redirect(301, `/`);
+        }
+    }
+
     const restaurant = await Restaurant.findById(req.params.res_id); 
     if(restaurant){
       let errors = [];
@@ -170,6 +204,24 @@ async function create(req, res) {
   
   // validation
   try {
+
+    // Manually run checkSchema to validate the route Parameters
+    await checkSchema(itemRouteParametersCheckSchema).run(req);
+  
+
+    // Check if there are any validation errors
+    const routeParametersErrors = validationResult(req);
+
+    if (!routeParametersErrors.isEmpty()) {
+        const errors_mapped = routeParametersErrors.mapped(); 
+        // check if one of the params IDs return an error
+        if(errors_mapped.res_id){
+          req.flash('error', 'dont play with me please');
+          return res.redirect(301, `/`);
+        }
+    }
+    
+
     // Manually run checkSchema to validate the request body
     await checkSchema(itemFormCheckSchema).run(req);
 
@@ -221,6 +273,10 @@ async function create(req, res) {
       console.log(err);
     }
   }
+
+  if(req.body.description){
+    req.body.description = req.body.description.trim();
+  }
   
   // add Item logic
   try {
@@ -236,6 +292,22 @@ async function create(req, res) {
 }
 
 async function edit(req, res) {
+
+   // Manually run checkSchema to validate the route Parameters
+   await checkSchema(itemRouteParametersCheckSchema).run(req);
+  
+
+   // Check if there are any validation errors
+   const routeParametersErrors = validationResult(req);
+
+   if (!routeParametersErrors.isEmpty()) {
+       const errors_mapped = routeParametersErrors.mapped(); 
+       // check if one of the params IDs return an error
+       if(errors_mapped.res_id || errors_mapped.id ){
+         req.flash('error', 'dont play with me please');
+         return res.redirect(301, `/`);
+       }
+   }
 
   let errors = [];
   let formBody = [];
@@ -277,6 +349,24 @@ async function edit(req, res) {
 async function update(req, res) {
   // validation
   try {
+
+
+    // Manually run checkSchema to validate the route Parameters
+    await checkSchema(itemRouteParametersCheckSchema).run(req);
+  
+
+    // Check if there are any validation errors
+    const routeParametersErrors = validationResult(req);
+
+    if (!routeParametersErrors.isEmpty()) {
+        const errors_mapped = routeParametersErrors.mapped(); 
+        // check if one of the params IDs return an error
+        if(errors_mapped.res_id || errors_mapped.id){
+          req.flash('error', 'dont play with me please');
+          return res.redirect(301, `/`);
+        }
+    }
+
     // Manually run checkSchema to validate the request body
     await checkSchema(itemFormCheckSchema).run(req);
 
@@ -373,6 +463,10 @@ async function update(req, res) {
     }
   }
 
+  if(req.body.description){
+    req.body.description = req.body.description.trim();
+  }
+
   // Add item logic
   try {
       
@@ -429,6 +523,24 @@ async function update(req, res) {
 
 async function destroy(req, res) {
     try {
+
+        // Manually run checkSchema to validate the route Parameters
+        await checkSchema(itemRouteParametersCheckSchema).run(req);
+      
+
+        // Check if there are any validation errors
+        const routeParametersErrors = validationResult(req);
+
+        if (!routeParametersErrors.isEmpty()) {
+            const errors_mapped = routeParametersErrors.mapped(); 
+            // check if one of the params IDs return an error
+            if(errors_mapped.res_id || errors_mapped.id){
+              req.flash('error', 'dont play with me please');
+              return res.redirect(301, `/`);
+            }
+        }
+
+
         // const result = await Restaurant.findOneAndUpdate(
         //     {_id: req.params.res_id},
         //     {$pull: {menu: {_id:req.params.id}},
