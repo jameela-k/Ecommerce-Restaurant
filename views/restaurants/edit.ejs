@@ -20,16 +20,13 @@
 
 <div class="editRestaurant">
   <form id="new-form" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
-    <div class="card" style="max-width: 400px;">
-      <div class="card-header">
-        <h4 class="card-title"><%- title %></h4>
-      </div>
+    <div class="card" style="max-width: 600px;">
       <div class="card-body">
         <div class="container basic-form">
-          <div class="row">
-            <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name %>" referrerpolicy="no-referrer">
+          <div class="rowEditRestaurant">
+            <img class="editRestaurantImage" src="<%= restaurant.image.src %>" alt="<%= restaurant.name %>" referrerpolicy="no-referrer">
           </div>
-          <div class="row">
+          <div class="rowEditImage">
             <label for="image" class="form-label col-12">Image</label>
             <input class="col-12 form-control form-control-sm" name="file" id="image" type="file">
             <% if(errors && errors.file){ %>
