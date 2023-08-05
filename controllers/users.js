@@ -35,6 +35,21 @@ module.exports = {
 async function showOne(req, res) {
   
     try {
+
+        await checkSchema(userRouteParametersCheckSchema).run(req);
+  
+        // Check if there are any validation errors
+        const routeParametersErrors = validationResult(req);
+
+        if (!routeParametersErrors.isEmpty()) {
+            const errors_mapped = routeParametersErrors.mapped(); 
+            // check if one of the params IDs return an error
+            if(errors_mapped.id){
+              req.flash('error', 'dont play with me please');
+              return res.redirect(301, `/`);
+            }
+        }
+
         //get all restaurants
         const restaurants = await Restaurant.find({});
         const dbUser = await User.findOne ({_id: req.params.id})
@@ -91,7 +106,6 @@ async function update(req, res) {
         // Manually run checkSchema to validate the route Parameters
         await checkSchema(userRouteParametersCheckSchema).run(req);
   
-
         // Check if there are any validation errors
         const routeParametersErrors = validationResult(req);
 
@@ -103,7 +117,6 @@ async function update(req, res) {
               return res.redirect(301, `/`);
             }
         }
-
 
         // Manually run checkSchema to validate the request body
         await checkSchema(userFormCheckSchema).run(req);
@@ -169,7 +182,6 @@ async function update(req, res) {
 // Delete user from database function
 async function destroy(req, res) {
 
-    
     try {
 
          // Manually run checkSchema to validate the route Parameters
