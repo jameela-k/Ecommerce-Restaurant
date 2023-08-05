@@ -2,13 +2,15 @@
 
 
 <%- include('../partials/header') %>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+
+<div class="categoriesIndexPageContainer">
 <!-- title provided by controller for users index -->
 <h2 class="allCategories"><%- title %></h2>
+
+<div class="divider">
+    <img src="/images/divider/divider.jpg" class="dividerImage"/>
+  </div>
 
 <% if(user?.userType == "admin"){ %>
 <div class="container categories">
@@ -56,5 +58,6 @@
         <% }); %>
     </div>
 <% } %>
+</div>
 
 <%- include('../partials/footer') %>
