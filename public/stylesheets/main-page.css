@@ -30,7 +30,7 @@ label .hamburger {
   left: 50px;
   width: 30px;
   height: 2px;
-  background: brown;
+  background: darkgray;
   display: block;
   -webkit-transform-origin: center;
   transform-origin: center;
@@ -46,7 +46,7 @@ label .hamburger:after, label .hamburger:before {
   display: block;
   width: 100%;
   height: 100%;
-  background: brown;
+  background: darkgray;
 }
 
 label .hamburger:before { top: -10px; }
@@ -98,7 +98,7 @@ label ul {
 label a {
   margin-bottom: 1em;
   display: block;
-  color: #f38630;
+  color: black;
   text-decoration: none;
   
 }
@@ -301,6 +301,23 @@ ul {
 
 .cardMainPage {
   box-shadow: 0px 10px 1px rgba(221, 221, 221, 1), 0 10px 20px rgba(204, 204, 204, 1);
+}
+
+.card-title-main {
+  text-decoration: none;
+  background-color: transparent;
+  margin-top: 5px;
+}
+
+.card-title-main a {
+  text-decoration:none;
+  color: darkgray;
+  transition:0.5s;
+}
+
+.card-title-main a:hover {
+  color:#fff;
+
 }
 
 footer {
