@@ -426,13 +426,17 @@ footer {
 }
 
 
+.itemsTitle {
+  text-align: center;
+}
+
 .cardRestaurant {
   margin: 40px;
 }
 
 .colImageEdit {
   padding: 10px;
-  max-width: 400px;
+  max-width: 600px;
   max-height: 350px;
 }
 
@@ -457,10 +461,31 @@ footer {
   text-align: center;
 }
 
+
+.btnAddNewItem {
+  display: flex;
+  justify-content: center;
+
+}
+
+.btnImageDelEdit {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
 .btnDangerItem {
   border: none;
 }
 
+.btnUpdateReview,
+.btnDeleteReview {
+  margin-top: 5px;
+  border-radius: 10px;
+  background-color: lightgray;
+}
 
 .footer{
   padding:10px 0px;
