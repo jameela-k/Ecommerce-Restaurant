@@ -1,6 +1,6 @@
 # Projct2-Restaurant Food Review
 
-## What is the project about ? 
+## What is the Website about ? 
 
 ## Technologies used
  
