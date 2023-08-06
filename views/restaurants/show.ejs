@@ -5,7 +5,7 @@
 <br>
 <br>
 
-
+<!-- show seccess messages -->
 <% if (successMessages && successMessages.length > 0) { %>
     <div class="alert alert-success d-flex justify-content-between">
       <div class="alert-body">
@@ -17,6 +17,7 @@
     </div>
 <% } %>
 
+<!-- show error messages -->
 <% if (errorMessages && errorMessages.length > 0) { %>
     <div class="alert alert-danger d-flex justify-content-between">
         <div class="alert-body">
@@ -31,132 +32,39 @@
 <h2 class="itemsTitle"><%- title %></h2>
 
 <div class="row">
-<div class="col-md-8">
+    <div class="col-md-8">
 
-<div class="divider">
-    <img src="/images/divider/divider.jpg" class="dividerImage"/>
-</div>
-
-<div class="cardRestaurant card mb-3">
-    <div class="row g-0">
-        <div class="col-md-4">
-        <% 
-            if("image" in restaurant){
-                if("src" in restaurant.image){
-                    if(restaurant.image.src){
-                    %>
-                    <img class="imageRestaurantShow"  src="<%= restaurant.image.src %>" class="img-fluid" alt="<%= restaurant.name %>" referrerpolicy="no-referrer">
-                    <%
-                    }else{
-                    %>
-                        <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                    <%
-                    } 
-                }else{
-                    %>
-                    <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                    <%
-                }
-            }else{
-                %>
-                <img src="/images/restaurant.jpg" alt="restaurant image" class="dish">
-                <%
-            } 
-        %>
-            
+        <div class="divider">
+            <img src="/images/divider/divider.jpg" class="dividerImage"/>
         </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="cardTitle">Title</h5>
-                <p class="cardText"><%= restaurant.name %></p>
-                <h5 class="cardTitle">Cuisine</h5>
-                    <% restaurant.categories.forEach ((category) => { %>
-                        <p class="card-text"><%= category.name %></p>
-                    <% }); %>
-                <h5 class="cardTitle">Description</h5>
-                <p class="cardText"><%= restaurant.description %></p>
-                <h5 class="cardTitle">Over All Rating</h5>
-                <p class="cardText">
-                  <% let count=0; %>
-                  <% let total=0; %>
-                  <% let avr=0 %>
-                  <% restaurant.menu.forEach ((item, i) => { %>
-                    <% item.reviews.forEach ((review , r) => { %>
-                      <% total += review.rating; %>
-                      <% count++;%>
-                    <% }); %>
-                  <% }); %>
-                  <% if (total ===0) {%>
-                    No Reviews Yet
-                  <% }else {%>
-                    <% avr= total/count %>
-                    <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
-                  <% } %>
-                </p>
-                <h5 class="cardTitle">Adress</h5>
-                <p class="cardText " id="streetAddr">   <span class="fw-bold">Shop Number: </span><%= restaurant.address.shopNumber %> 
-                                        <span class="fw-bold">Building: </span><%= restaurant.address.building %>                     
-                                        <span class="fw-bold">Road no: </span><%= restaurant.address.road %> 
-                                        <span class="fw-bold">Block: </span><%= restaurant.address.block %> 
-                </p>
-                <p class="cardText" id="cityCountry">   <span class="fw-bold">City: </span><%= restaurant.address.city %> 
-                                        <span class="fw-bold">Country: </span><%= restaurant.address.country %> 
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<% if(user?.userType == "admin"){ %>
-    <a class="btnAddNewItem" href="/restaurants/<%= restaurant._id %>/items/new">Add New Item</a>
-<% } %>
-<div class="card-group itemsCard">
-    <% restaurant.menu.forEach(item => { %>
-        <div class="card singleItemCard" style="max-width: 400px;">
-            <div class="card-head row">
-                <% 
-                if("image" in item){
-                    if("src" in item.image){
-                        if(item.image.src){
-                        %>
-                        <img class="colImageEdit" src="<%= item.image.src %>" class="card-img-top" alt="<%= item.name %>">
-                        <%
-                        }else{
-                        %>
-                            <img class="colImageEdit" src="/images/dish.jpg" alt="dish image" class="dish">
-                        <%
-                        } 
-                    }else{
-                        %>
-                        <img class="colImageEdit" src="/images/dish.jpg" alt="dish image" class="dish">
-                        <%
-                    }
-                }else{
-                    %>
-                    <img class="col" src="/images/dish.jpg" alt="dish image" class="dish">
-                    <%
-                } 
-                %>
-            </div>
-            
-            <div class="card-body">
-                <div class="row">
-                    <h5 class="col dishNameItem"><%= item.name %></h5>
+        <div class="cardRestaurant card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+
+                <img class="imageRestaurantShow"  src="<%= restaurant.image.src %>" class="img-fluid" alt="<%= restaurant.name %>" referrerpolicy="no-referrer">
+                    
                 </div>
-                <div class="row">
-                    <div class="col dishDiscriptionItem">
-                        <h6>Description</h6>
-                        <Discription><%= item.description %></Discription>
-                    </div>
-                    <div class="col ratingDishItem">
-                        <h6>Rating</h6>
-                        <p class="card-text">
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="cardTitle">Title</h5>
+                        <p class="cardText"><%= restaurant.name %></p>
+                        <h5 class="cardTitle">Cuisine</h5>
+                            <% restaurant.categories.forEach ((category) => { %>
+                                <p class="card-text"><%= category.name %></p>
+                            <% }); %>
+                        <h5 class="cardTitle">Description</h5>
+                        <p class="cardText"><%= restaurant.description %></p>
+                        <h5 class="cardTitle">Over All Rating</h5>
+                        <p class="cardText">
                         <% let count=0; %>
                         <% let total=0; %>
                         <% let avr=0 %>
-                        <% item.reviews.forEach ((review , r) => { %>
+                        <% restaurant.menu.forEach ((item, i) => { %>
+                            <% item.reviews.forEach ((review , r) => { %>
                             <% total += review.rating; %>
                             <% count++;%>
+                            <% }); %>
                         <% }); %>
                         <% if (total ===0) {%>
                             No Reviews Yet
@@ -165,127 +73,193 @@
                             <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
                         <% } %>
                         </p>
+                        <h5 class="cardTitle">Adress</h5>
+                        <p class="cardText " id="streetAddr">   <span class="fw-bold">Shop Number: </span><%= restaurant.address.shopNumber %> 
+                                                <span class="fw-bold">Building: </span><%= restaurant.address.building %>                     
+                                                <span class="fw-bold">Road no: </span><%= restaurant.address.road %> 
+                                                <span class="fw-bold">Block: </span><%= restaurant.address.block %> 
+                        </p>
+                        <p class="cardText" id="cityCountry">   <span class="fw-bold">City: </span><%= restaurant.address.city %> 
+                                                <span class="fw-bold">Country: </span><%= restaurant.address.country %> 
+                        </p>
                     </div>
-                </div>
-             
-                <div class="row btnImageDelEdit">
-                    <% if(user?.userType == "admin"){ %>
-                        <div class="col">
-                            <a class="btn btn-light" href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit"><img style="width: 20px;" src="/images/icons/icons/edit.png" alt="DELETE"></a>
-                        </div>
-                        <div class="col">
-                            <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
-                                <button class="btnDangerItem"><img style="width: 20px;" src="/images/icons/icons/delete.png" alt="DELETE"></button>
-                            </form>
-                        </div>
-                    <% } %>
-                </div>
-                <div class="row">
-                    <% if(user){
-                        let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
-                        
-                        if(review) {%>
-                            <div class="col">
-                                <img class="avatarImage" src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
-                            </div>
-                            <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
-                                <div class="row">
-                                    <input type="hidden" name="user" value="<%= user._id %>">
-                                    <input type="hidden" name="userName" value="<%= user.name %>">
-                                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-                                    <div class="col">
-                                        <label for="comment">Comment</label>
-                                        <textarea name="comment" id="comment"><%= errors?errors.comment?formBody?formBody.comment:review.comment:review.comment:review.comment %></textarea>
-                                        <% if(errors && errors.comment){ %>
-                                            <span><%= errors.comment.msg %></span>
-                                        <%  }%>
-                                    </div>
-                                    <div class="col">
-                                        <label for="rating"></label>
-                                        <select name="rating" id="rating">
-                                            <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
-                                            <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
-                                            <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
-                                            <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
-                                            <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
-                                        </select>
-                                    </div>
-                                    <div class="row">
-                                        <button class="btnUpdateReview">Update Review</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                <button class="btn btn-danger">X</button>
-                            </form>
-                        <%}else{ %>
-                            <div class="col">
-                                <img class="avatarImage" src="<%= user.avatar %>" alt="" referrerpolicy="no-referrer">
-                            </div>
-                            <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
-                                <div class="row">
-                                    <input type="hidden" name="user" value="<%= user._id %>">
-                                    <input type="hidden" name="userName" value="<%= user.name %>">
-                                    <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-                                    <div class="col">
-                                        <label for="comment">Comment</label>
-                                        <textarea name="comment" id="comment"><%= errors?!errors.comment?formBody?formBody.comment:'':'':'' %></textarea>
-                                        <% if(errors && errors.comment){ %>
-                                            <span><%= errors.comment.msg %></span>
-                                        <%  }%>
-                                    </div>
-                                    <div class="col">
-                                        <label for="rating"></label>
-                                        <select name="rating" id="rating">
-                                            <option value="1">*</option>
-                                            <option value="2">**</option>
-                                            <option value="3">***</option>
-                                            <option value="4">****</option>
-                                            <option value="5">*****</option>
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <button class="btnSubmitItem">submit</button>
-                                    </div>
-                                </div>
-                            </form> 
-                    <%}} %>
-                    <div class="row">
-                        <% item.reviews.forEach((review, r) => { 
-                            if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
-                                <div class="col">
-                                    <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
-                                </div>
-                                <div class="col">
-                                    <p><%= review.userName %></p>
-                                </div>
-                                <div class="col">
-                                    <p><%= review.comment %></p>
-                                </div>
-                                <div class="col">
-                                    <h4><%= review.rating %></h4>
-                                </div>
-                                <% if(user?.userType == "admin") { %>
-                                    <div class="row"> 
-                                        <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                                                <button class="btnDeleteReview">DELETE Review</button>
-                                        </form>
-                                    </div>
-                                <% } %>
-                        <% }}); %>
-                    </div>
-                    
                 </div>
             </div>
         </div>
-    <% }); %>
-</div>
-</div>
 
-<!-- google map and google review section from -->
-<div class="col-md-4">
-    <div id="map"></div>
-    <div class="" id="testaddress"></div>
-</div>
+        <% if(user?.userType == "admin"){ %>
+            <a class="btn btn-light btnAddNewItem" href="/restaurants/<%= restaurant._id %>/items/new">Add New Item</a>
+        <% } %>
+        
+        <div class="card-group itemsCard">
+            <% restaurant.menu.forEach((item, i) => { %>
+                
+                <div class="card singleItemCard" style="max-width: 400px;">
+                    <div class="card-head row">
+                        <img class="colImageEdit" src="<%= item.image.src %>" class="card-img-top" alt="<%= item.name %>">
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="row">
+                            <h5 class="col dishNameItem"><%= item.name %></h5>
+                        </div>
+                        <div class="row">
+                            <div class="col dishDiscriptionItem">
+                                <h6>Description</h6>
+                                <Discription><%= item.description %></Discription>
+                            </div>
+                            <div class="col ratingDishItem">
+                                <h6 class="ratingsBtn">Rating & reviews</h6>
+                                <p class="card-text">
+                                <% let count=0; %>
+                                <% let total=0; %>
+                                <% let avr=0 %>
+                                <% item.reviews.forEach ((review , r) => { %>
+                                    <% total += review.rating; %>
+                                    <% count++;%>
+                                <% }); %>
+                                <% if (total ===0) {%>
+                                    No Reviews Yet
+                                <% }else {%>
+                                    <% avr= total/count %>
+                                    <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
+                                <% } %>
+                                </p>
+                            </div>
+                        </div>
+                    
+                        <div class="row btnImageDelEdit">
+                            <% if(user?.userType == "admin"){ %>
+                                <div class="col">
+                                    <a class="btn btn-light" href="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/edit"><img style="width: 20px;" src="/images/icons/icons/edit.png" alt="DELETE"></a>
+                                </div>
+                                <div class="col">
+                                    <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=DELETE" method="post">
+                                        <button class="btnDangerItem"><img style="width: 20px;" src="/images/icons/icons/delete.png" alt="DELETE"></button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="row">
+                            <!-- if user is loged in -->
+                            <% if(user){
+                                <!-- find loged in user review -->
+                                let review = item.reviews.find(review => JSON.stringify(review.user) == JSON.stringify(user._id));
+                                
+                                <!-- if review found show it as first review -->
+                                if(review) {%>
+                                    <div class="col">
+                                        <img class="avatarImage" src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
+                                    </div>
+                                    <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
+                                        <div class="row">
+                                            <input type="hidden" name="user" value="<%= user._id %>">
+                                            <input type="hidden" name="userName" value="<%= user.name %>">
+                                            <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                                            <div class="col">
+                                                <label for="comment">Comment</label>
+                                                <textarea name="comment" id="comment"><%= errors?errors.comment?formBody?formBody.comment:review.comment:review.comment:review.comment %></textarea>
+                                                <% if(errors && errors.comment){ %>
+                                                    <span><%= errors.comment.msg %></span>
+                                                <%  }%>
+                                            </div>
+                                            <div class="col">
+                                                <label for="rating"></label>
+                                                <select name="rating" id="rating">
+                                                    <option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
+                                                    <option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
+                                                    <option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
+                                                    <option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
+                                                    <option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
+                                                </select>
+                                            </div>
+                                            <div class="row">
+                                                <button class="btnUpdateReview">Update Review</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                        <button class="btn btn-danger">X</button>
+                                    </form>
+                                <%}else{ %>
+                                    <div class="col">
+                                        <img class="avatarImage" src="<%= user.avatar %>" alt="" referrerpolicy="no-referrer">
+                                    </div>
+                                    <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
+                                        <div class="row">
+                                            <input type="hidden" name="user" value="<%= user._id %>">
+                                            <input type="hidden" name="userName" value="<%= user.name %>">
+                                            <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+                                            <div class="col">
+                                                <label for="comment">Comment</label>
+                                                <textarea name="comment" id="comment"><%= errors?!errors.comment?formBody?formBody.comment:'':'':'' %></textarea>
+                                                <% if(errors && errors.comment){ %>
+                                                    <span><%= errors.comment.msg %></span>
+                                                <%  }%>
+                                            </div>
+                                            <div class="col">
+                                                <label for="rating"></label>
+                                                <select name="rating" id="rating">
+                                                    <option value="1">*</option>
+                                                    <option value="2">**</option>
+                                                    <option value="3">***</option>
+                                                    <option value="4">****</option>
+                                                    <option value="5">*****</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <button class="btnSubmitItem btnUpdateReview">submit</button>
+                                            </div>
+                                        </div>
+                                    </form> 
+                            <%}} %>
+                            
+                            <div class="reviewsBox d-none">
+                            <!-- show reviews if they dont belong to loged in user -->
+                            <% item.reviews.forEach((review, r) => { 
+                                if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
+                                    <div class="row">
+                                        <div class="col">
+                                            <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
+                                        </div>
+                                        <div class="col">
+                                            <p><%= review.userName %></p>
+                                        </div>
+                                        <div class="col">
+                                            <p><%= review.comment %></p>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <h4><%= review.rating %></h4>
+                                        </div>
+                                        <% if(user?.userType == "admin") { %>
+                                            <div class="col"> 
+                                                <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                                                        <button class="btnDeleteReview">DELETE Review</button>
+                                                        <!-- <button class="btn btn-danger">X</button> -->
+                                                </form>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                            <% }}); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- force break row before every 4th item or after the last menu item -->
+                <% if ((((i-2) % 3) == 0)  || ((i) == restaurant.menu.length-1)) { %>
+                    <div class="w-100"></div>
+                <% } %>
+            <% }); %>
+        </div>
+
+
+
+    </div>
+
+    <!-- google map and google review section from -->
+    <div class="col-md-4">
+        <div id="map"></div>
+        <div class="" id="testaddress"></div>
+    </div>
 </div>
 <%- include('../partials/footer') %>
