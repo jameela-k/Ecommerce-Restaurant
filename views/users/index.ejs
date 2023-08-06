@@ -1,6 +1,29 @@
 <%- include('../partials/header') %>
 
 <div class="indexPageContainer"></div>
+
+<% if (successMessages && successMessages.length > 0) { %>
+	<div class="alert alert-success d-flex justify-content-between">
+	  <div class="alert-body">
+		<% successMessages.forEach(message => { %>
+		  <p><%= message %></p>
+		<% }); %>
+	  </div>
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+<% } %>
+  
+<% if (errorMessages && errorMessages.length > 0) { %>
+	<div class="alert alert-danger d-flex justify-content-between">
+	  <div class="alert-body">
+		<% errorMessages.forEach(message => { %>
+		  <p><%= message %></p>
+		<% }); %>
+	  </div>
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+<% } %>
+
 <!-- title provided by controller for users index -->
 <!-- title provided by controller for users index -->
 <h2 class="allUsersTitle"><%- title %></h2>
