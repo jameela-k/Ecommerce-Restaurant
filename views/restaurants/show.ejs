@@ -188,7 +188,10 @@
                                     <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
                                     <div class="col">
                                         <label for="comment">Comment</label>
-                                        <textarea name="comment" id="comment"><%= review.comment %></textarea>
+                                        <textarea name="comment" id="comment"><%= errors?errors.comment?formBody?formBody.comment:review.comment:review.comment:review.comment %></textarea>
+                                        <% if(errors && errors.comment){ %>
+                                            <span><%= errors.comment.msg %></span>
+                                        <%  }%>
                                     </div>
                                     <div class="col">
                                         <label for="rating"></label>
@@ -219,7 +222,10 @@
                                     <input type="hidden" name="userAvatar" value="<%= user.avatar %>">
                                     <div class="col">
                                         <label for="comment">Comment</label>
-                                        <textarea name="comment" id="comment"></textarea>
+                                        <textarea name="comment" id="comment"><%= errors?!errors.comment?formBody?formBody.comment:'':'':'' %></textarea>
+                                        <% if(errors && errors.comment){ %>
+                                            <span><%= errors.comment.msg %></span>
+                                        <%  }%>
                                     </div>
                                     <div class="col">
                                         <label for="rating"></label>

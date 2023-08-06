@@ -198,13 +198,6 @@ async function update(req, res) {
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
-
-          // check if one of the params IDs return an error
-          const errors_mapped = errors.mapped();
-          if(errors_mapped.id || errors_mapped.res_id || errors_mapped.item_id){
-            req.flash('error', 'dont play with me please');
-            return res.redirect(301, `/`);
-          }
           req.session.formBody = req.body;
           req.session.errors = errors.mapped();
           req.flash('error', 'validation errors');
