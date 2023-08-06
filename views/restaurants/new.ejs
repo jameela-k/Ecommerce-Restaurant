@@ -41,11 +41,10 @@
               </div>
               <div class="description">
                 <label class="form-label">Description</label>
-                <textarea  name="description" class="form-control" value="<%= errors?!errors.description?formBody?formBody.description:'':'':'' %>">
+                <textarea  name="description" class="form-control"><%= errors?!errors.description?formBody?formBody.description:'':'':'' %></textarea>
                 <% if(errors && errors.description){ %>
                   <span><%= errors.description.msg %></span>
                 <%  }%>
-                </textarea>
               </div>
               <div class="categories">
                 <label class="form-label">Categories</label>

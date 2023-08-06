@@ -48,11 +48,10 @@
           <div class="row">
             <div class="col-12 description">
               <label class="form-label">Description</label>
-              <textarea  name="description" class="form-control" name="description" value="<%= errors?errors.description?formBody?formBody.description:restaurant.description:restaurant.description:restaurant.description %>">
+              <textarea  name="description" class="form-control" name="description"><%= errors?errors.description?formBody?formBody.description:restaurant.description:restaurant.description:restaurant.description %></textarea>
               <% if(errors && errors.description){ %>
                 <span><%= errors.description.msg %></span>
               <%  }%>
-              </textarea>
             </div>
           </div>
       <div class="categories">
