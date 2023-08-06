@@ -89,13 +89,13 @@ const restaurantFormCheckSchema = {
         custom: {
           options: (value, { req }) => {
             if (value) {
-              if(value.length < 1 || value.length >10){
+              if(value.length < 1 || value.length > 50){
                 return false
               }
             }
             return true;
           },
-          errorMessage: 'Shop Number must be between 1 and 10 characters'
+          errorMessage: 'Shop Number must be between 1 and 50 characters'
         }
     },
     "address.building": {
@@ -104,13 +104,13 @@ const restaurantFormCheckSchema = {
         custom: {
           options: (value, { req }) => {
             if (value) {
-              if(value.length < 1 || value.length >10){
+              if(value.length < 1 || value.length > 50){
                 return false
               }
             }
             return true;
           },
-          errorMessage: 'Building must be between 1 and 10 characters'
+          errorMessage: 'Building must be between 1 and 50 characters'
         }
         
     },
@@ -120,13 +120,13 @@ const restaurantFormCheckSchema = {
         custom: {
           options: (value, { req }) => {
             if (value) {
-              if(value.length < 1 || value.length >10){
+              if(value.length < 1 || value.length > 50){
                 return false
               }
             }
             return true;
           },
-          errorMessage: 'Road must be between 1 and 10 characters'
+          errorMessage: 'Road must be between 1 and 50 characters'
         }
         
     },
@@ -136,13 +136,13 @@ const restaurantFormCheckSchema = {
         custom: {
           options: (value, { req }) => {
             if (value) {
-              if(value.length < 1 || value.length >10){
+              if(value.length < 1 || value.length > 50){
                 return false
               }
             }
             return true;
           },
-          errorMessage: 'City must be between 1 and 10 characters'
+          errorMessage: 'City must be between 1 and 50 characters'
         }
     },
     "address.block": {
@@ -151,13 +151,13 @@ const restaurantFormCheckSchema = {
         custom: {
           options: (value, { req }) => {
             if (value) {
-              if(value.length < 1 || value.length >10){
+              if(value.length < 1 || value.length > 50){
                 return false
               }
             }
             return true;
           },
-          errorMessage: 'Block must be between 1 and 10 characters'
+          errorMessage: 'Block must be between 1 and 50 characters'
         }
     },
     "address.country": {
@@ -166,13 +166,13 @@ const restaurantFormCheckSchema = {
         custom: {
           options: (value, { req }) => {
             if (value) {
-              if(value.length < 1 || value.length >10){
+              if(value.length < 1 || value.length > 50){
                 return false
               }
             }
             return true;
           },
-          errorMessage: 'Country must be between 1 and 10 characters'
+          errorMessage: 'Country must be between 1 and 50 characters'
         }
     },
 } 
