@@ -370,7 +370,8 @@ ul {
 .editRestaurantPage,
 .indexAllRestaurantContainer,
 .categoriesIndexPageContainer,
-.newUserPageContainer {
+.newUserPageContainer,
+.editItemPageContainer {
   margin-top: 115px;
 }
 
@@ -401,7 +402,12 @@ ul {
 
 }
 
-.updateRestaurantBtn {
+.updateRestaurantSubmit {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.updateRestaurantInput {
   align-content: center;
   display: inline-block;
   outline: none;
@@ -460,12 +466,12 @@ ul {
   }
 }
 
-.updateRestaurantSubmit {
+.editItemSubmit2 {
   margin-top: 10px;
   text-align: center;
 }
 
-.updateRestaurantInput {
+.editItemInput2 {
   align-content: center;
   display: inline-block;
   outline: none;
@@ -490,6 +496,12 @@ ul {
   :hover {
      background: #f4f4f4;
   }
+}
+
+.dishImageEditPage {
+  padding: 10px;
+  max-width: 500px;
+  max-height: 350px;
 }
 
 .newRestBtn {
@@ -620,7 +632,8 @@ ul {
 .ratingDishItem,
 .titleEditRestaurant,
 .titleNewRestaurant,
-.titleNewUserPage {
+.titleNewUserPage,
+.titleEditItem {
   text-align: center;
 }
 
@@ -688,6 +701,8 @@ ul {
 .itemsForm {
 margin-left: 40px;
 }
+
+
 
 .footer{
   padding:10px 0px;

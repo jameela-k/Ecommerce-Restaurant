@@ -1,7 +1,13 @@
 <%- include('../partials/header') %>
 
 
-<h2><%- title %></h2>
+
+<div class="editItemPageContainer">
+<h2 class="titleEditItem"><%- title %></h2>
+
+<div class="divider">
+    <img src="/images/divider/divider.jpg" class="dividerImage"/>
+  </div>
 
 <% if (errorMessages && errorMessages.length > 0) { %>
     <div class="alert alert-danger d-flex justify-content-between">
@@ -14,22 +20,22 @@
     </div>
   <% } %>
 
-<div class="col-xl-6 col-lg-12">
-    <div class="card">
+<div class="col align-self-center">
+    <div class="card align-self-center">
         <div class="card-header">
             <h4 class="card-title"><%= restaurant.name %></h4>
         </div>
 
         <% if(user?.userType == 'admin'){ %>
-        <div class="card-body">
-            <div class="basic-form" style="max-width: 400px;">
+        <div class="card-body align-self-center">
+            <div class="basic-form align-self-center">
                 <form action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 
                     <div class="rowImageEdit">
                         <% if(item.image.src){ %>
                             <img src="<%= item.image.src %>" alt="<%= item.name %>" referrerpolicy="no-referrer">
                         <% }else{ %>
-                            <img src="/images/dish.jpg" alt="<%= item.name %>" referrerpolicy="no-referrer">
+                            <img class="dishImageEditPage" src="/images/dish.jpg" alt="<%= item.name %>" referrerpolicy="no-referrer">
                         <%} %>
                     </div>
                     <div class="row">
@@ -76,12 +82,15 @@
                             <%  }%>
                         </div>
                     </div>
-                    <input type="submit" value="Edit Item">
+                    <div class="editItemSubmit2">
+                        <input class="editItemInput2" type="submit" value="Edit Item">
+                    </div>
                 </form>
                 <% } %>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <%- include('../partials/footer') %>

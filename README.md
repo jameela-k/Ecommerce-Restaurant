@@ -4,18 +4,18 @@
 The website is designed for reviewing restaurants dishs and to be used as references.
 
 ## Technologies used
- HTML
- CSS
- JavaScript
- EJS
- Node 
- Express JS
- MongoDB
- Mongooses
- Bootstrap
- Cloudinary
- Google Oauth APIs
- Google map APIs
+ 1. HTML
+ 2. CSS
+ 3. JavaScript
+ 4. EJS
+ 5. node.js 
+ 6. express.js
+ 7. MongoDB
+ 8. mongooses
+ 9. Bootstrap
+ 10. Cloudinary
+ 11. Google Oauth APIs
+ 12. Google map APIs
  
 ## The approach was taken
 We started making the wireframe, and once we approved it, we divided the work between the frontend and backend teams.

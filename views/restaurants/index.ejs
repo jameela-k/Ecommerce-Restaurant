@@ -30,6 +30,7 @@
 <div class="divider">
   <img src="/images/divider/divider.jpg" class="dividerImage"/>
 </div>
+
 <div class="container text-center my-3">
   <div class="row mx-auto my-auto">
     <div class="grid-item">
@@ -81,14 +82,14 @@
                   <% if(user.userType == "admin"){ %>
                     <a href="/restaurants/<%= restaurant._id %>">Details</a>
                     <a href="/restaurants/<%= restaurant._id %>/edit">Edit</a>
-                  </div>
                     <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
                       <div class="form-group">
 						            <button class="allUsersBtns"><img style="width: 20px;" src="/images/icons/icons/delete.png" alt="DELETE"></button>
 					            </div>
                     </form>
-                  <% } %>    
+                  <% } %> 
                 <% } %>
+              </div> 
               </div>
             </div>
           </div>
