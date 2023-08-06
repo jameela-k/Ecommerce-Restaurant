@@ -1,0 +1,8 @@
+#map {
+    height: 400px;
+    width: 400px;
+  }
+
+  #map::before, #map::after {
+    background-color: transparent;
+  }
