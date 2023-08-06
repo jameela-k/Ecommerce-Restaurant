@@ -45,7 +45,10 @@
                     <div class="row basic-form">
                         <div class="col">
                             <label class="form-label"  for="category">Category Name </label>
-                            <input type="text" class="form-control" name="name" id="category">
+                            <input type="text" class="form-control" name="name" id="category" value="<%= errors && method?(!errors.name && method=='create')?formBody && method=='create'?formBody.name:'':'':'' %>" required>
+                            <% if(errors && errors.name && method == "create"){ %>
+                                <span><%= errors.name.msg %></span>
+                            <%  }%>
                         </div>
                     </div>
                     
@@ -65,7 +68,11 @@
                         <form class="row" action="/categories/<%= category._id %>?_method=PUT" method="post">
                             <div class="row basic-form">
                                 <label class="form-label" for="category#<%= i %>">Name</label>
-                                <input type="text" class="form-control" name="name" id="category#<%= i %>" value="<%= category.name %>">
+                                <input type="hidden" name="catIndexUpdate" value="<%= i %>">
+                                <input type="text" class="form-control" name="name" id="category#<%= i %>" value="<%= errors && method?errors.name && method=='update' && catIndexUpdate == i?formBody && method=='update' && catIndexUpdate == i?formBody.name:category.name:category.name:category.name %>" required>
+                                <% if(errors && errors.name && method == "update" && catIndexUpdate == i){ %>
+                                    <span><%= errors.name.msg %></span>
+                                <%  }%>
                             </div>
                             <button type="submit" class="col-12 btn light btn-add">Update Category</button>
                        </form>

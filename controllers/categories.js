@@ -57,16 +57,25 @@ async function index(req, res) {
     const categories = await Category.find({});
     let errors = [];
     let formBody = [];
+    let method;
+    let catIndexUpdate;
     if(req.session.errors) {
         // console.log(req.session.errors);
         formBody = req.session.formBody;
         delete req.session.formBody;
         errors = req.session.errors;
         delete req.session.errors;
+        method = req.session.categoryMethod;
+        delete req.session.categoryMethod;
+        if(method == "update"){
+          catIndexUpdate = req.session.catIndexUpdate;
+          delete req.session.catIndexUpdate;
+        }
+
     }
     const successMessages = req.flash('success');
     const errorMessages = req.flash('error');
-    res.render('categories/index', { title: 'All Categories', categories, errors, formBody, successMessages, errorMessages });
+    res.render('categories/index', { title: 'All Categories', categories, errors, formBody, successMessages, errorMessages, method, catIndexUpdate });
   }catch(err){
     console.log(err);
   }
@@ -87,6 +96,7 @@ async function create(req, res) {
     if (!errors.isEmpty()) {
         req.session.formBody = req.body;
         req.session.errors = errors.mapped();
+        req.session.categoryMethod = "create";
         req.flash('error', 'validation errors');
         return res.redirect(301, `/categories`);
     }
@@ -150,15 +160,10 @@ async function update(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-
-        // check if one of the params IDs return an error
-        const errors_mapped = errors.mapped();
-        if(errors_mapped.id){
-          req.flash('error', 'dont play with me please');
-          return res.redirect(301, `/`);
-        }
         req.session.formBody = req.body;
         req.session.errors = errors.mapped();
+        req.session.categoryMethod = "update";
+        req.session.catIndexUpdate = req.body.catIndexUpdate;
         req.flash('error', 'validation errors');
         return res.redirect(301, `/categories`);
     }
