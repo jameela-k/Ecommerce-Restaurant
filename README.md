@@ -44,6 +44,7 @@ Overall, my role as an admin of an e-commerce website that features food reviews
 2. Design polishing.
 3. Google map location improvement.
 4. Add link the footer navigation.
+5. Follow user thet you liked their review
 
 
 
