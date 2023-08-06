@@ -77,10 +77,9 @@
 		  </div>
 		</div>
 	  </div>
-	</div>
-  </div>
 	
-	<div class=" showUserGroup card-group row" style="max-width: 470px;">
+	<div class=" showUserGroup card-group row">
+		<% let counter = 0 %>
 		<!-- go through all restaurants -->
 		<% restaurants.forEach((restaurant, r) => { %>
 			<!-- go through all of the restaurant's items -->
@@ -89,11 +88,11 @@
 				<% item.reviews.forEach ((review, w) => { %>
 					<!-- if the review is made by the selected user -->
 					<% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
-						<div class="showCardUser card col-md-6">
+						<div class="showCardUser card col-md-6" style="max-width: 580px;">
 							<div class="card-header col">
 								<!-- show restaurant logo -->
 								<div class="col-md-6">
-									<img  class="imageShow"  src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer">
+									<img  class="imageShow"  src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer" style="max-block-size: 100px ;">
 								</div>
 								<!-- show restaurant name -->
 								<div class="titleShowCate">
@@ -102,7 +101,7 @@
 							</div>
 							<div class="card-body row">
 								<!-- show item image -->
-								<img class="col-md-3" src="<%= item.image.src %>" alt="Item image" referrerpolicy="no-referrer">
+								<img class="col-md-3" src="<%= item.image.src %>" alt="Item image" referrerpolicy="no-referrer" style="max-block-size: inherit ;">
 								<!-- show the item name -->
 								<div class="col-md-9">
 									<div class="row">
@@ -171,12 +170,17 @@
 								</div>
 							</div>   
 						</div>
+						<!-- force break row before every 3rd item or after the last menu item -->
+						<% if (((counter-2) % 3) == 0) { %>
+							<div class="w-100"></div>
+						<% } %>
+						<% counter++ %>
 					<% }; %>
 				<% }); %>
 			<% }); %>
 		<% }); %>
 	</div>
-</div>
+
 
 
 <%- include('../partials/footer') %>
