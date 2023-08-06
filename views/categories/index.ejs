@@ -5,6 +5,27 @@
 
 
 <div class="categoriesIndexPageContainer">
+    <% if (successMessages && successMessages.length > 0) { %>
+        <div class="alert alert-success d-flex justify-content-between">
+          <div class="alert-body">
+            <% successMessages.forEach(message => { %>
+              <p><%= message %></p>
+            <% }); %>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
+      
+      <% if (errorMessages && errorMessages.length > 0) { %>
+        <div class="alert alert-danger d-flex justify-content-between">
+          <div class="alert-body">
+            <% errorMessages.forEach(message => { %>
+              <p><%= message %></p>
+            <% }); %>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
 <!-- title provided by controller for users index -->
 <h2 class="allCategories"><%- title %></h2>
 
@@ -36,24 +57,23 @@
     <div class="row editRemoveCategory justify-content-evenly mt-5">
         <% categories.forEach((category, i) => { %>
             <div class="col-5 editCategory mt-3">
-                <form class="row" action="/categories/<%= category._id %>?_method=PUT" method="post">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Edit Category</h4>
-                        </div>
-                        <div class="card-body">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Edit Category</h4>
+                    </div>
+                    <div class="card-body">
+                        <form class="row" action="/categories/<%= category._id %>?_method=PUT" method="post">
                             <div class="row basic-form">
                                 <label class="form-label" for="category#<%= i %>">Name</label>
                                 <input type="text" class="form-control" name="name" id="category#<%= i %>" value="<%= category.name %>">
                             </div>
-                        </div>
-                        <button type="submit" class="col-12 btn light btn-add">Update Category</button>
-
-                        <form class="row" action="/categories/<%= category._id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="col-12 btn light btn-add">Update Category</button>
+                       </form>
+                       <form class="row" action="/categories/<%= category._id %>?_method=DELETE" method="POST">
                             <button type="submit" class="col-12 btn light btn-add">Delete Category</button>
                         </form>
                     </div>
-                </form>
+                </div>    
             </div>
         <% }); %>
     </div>
