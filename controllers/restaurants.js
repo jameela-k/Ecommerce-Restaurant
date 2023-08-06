@@ -318,9 +318,17 @@ async function showOne(req, res) {
     }
     const restaurant = await Restaurant.findById(req.params.id).populate('categories'); 
     if(restaurant){
+      let errors = [];
+      let formBody = [];
+      if(req.session.errors) {
+        formBody = req.session.formBody;
+        delete req.session.formBody;
+        errors = req.session.errors;
+        delete req.session.errors;
+      }
       const successMessages = req.flash('success');
       const errorMessages = req.flash('error');
-      res.render('restaurants/show', { title: 'Restaurant Detail', restaurant, successMessages, errorMessages});
+      res.render('restaurants/show', { title: 'Restaurant Detail', restaurant, errors, formBody, successMessages, errorMessages});
     }else {
       // requested restaurant is not exist
       res.redirect(301, '/restaurants');
