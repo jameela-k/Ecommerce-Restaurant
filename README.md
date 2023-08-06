@@ -21,6 +21,11 @@ The website is designed for reviewing restaurants dishs and to be used as refere
 We started making the wireframe, and once we approved it, we divided the work between the frontend and backend teams.
 ![WireFrame](https://media.git.generalassemb.ly/user/49784/files/32566e82-a8f8-4066-96a7-7799e8ba92a8)
 
+![Screenshot (54)](https://media.git.generalassemb.ly/user/49784/files/c29f0b66-cab6-45d6-81c6-a8c99ed965ce)
+![Screenshot (55)](https://media.git.generalassemb.ly/user/49784/files/e833dc2b-4447-4dc8-9882-ea2723a40bdc)
+![Screenshot (56)](https://media.git.generalassemb.ly/user/49784/files/1c35d3fe-b57d-41a7-8398-a47d8affdb92)
+![Screenshot (58)](https://media.git.generalassemb.ly/user/49784/files/37f1aae8-4e87-4447-8dbc-be91ce48f899)
+
 
 
 ## User Stories
