@@ -1,6 +1,7 @@
 # Project 2 Restaurant Food Review
 
 ## What is the Website about ? 
+The website is designed for reviewing restaurants dishs and to be used as references.
 
 ## Technologies used
  HTML
