@@ -256,7 +256,7 @@ async function create(req, res) {
   }else {
     // if user does not upload an image add the default image 
     req.body.image = {};
-    req.body.image.src = "/images/dish.jpg";
+    req.body.image.src = "/images/dish.jpeg";
   }
 
 
@@ -430,7 +430,7 @@ async function update(req, res) {
               }
               req.body.image = {};
               // after remove the image set the default image
-              req.body.image.src = "/images/dish.jpg";
+              req.body.image.src = "/images/dish.jpeg";
             }
           }
         }
@@ -501,7 +501,7 @@ async function update(req, res) {
             item.description = undefined;
           }
           if(req.body.price){
-            item.price = req.body.price?req.body.price:null;
+            item.price = req.body.price;
           }else{
             item.price = undefined;
           }
