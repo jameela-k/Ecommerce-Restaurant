@@ -176,17 +176,16 @@ ul {
 @media (max-width: 767px) {
 
   .header {
-    position: absolute;
+  position: absolute;
+  text-align:left;
+  padding:5%;
+
   }
 
   .logo {
     margin-top: 10px;
     width: 70px;
     height: auto;
-  }
-
-  .mainNavBar {
-  display: none;
   }
 
   .homeimage {
@@ -429,6 +428,70 @@ ul {
   }
 }
 
+.addItemSubmit {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.addItemInput {
+  align-content: center;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 3px;
+  padding: 0 15px;
+  border-radius: 4px;
+  color: brown;
+  background: transparent;
+  line-height: 1.15;
+  font-size: 14px;
+  height: 36px;
+  word-spacing: 0px;
+  letter-spacing: .0892857143em;
+  text-decoration: none;
+  text-transform: uppercase;
+  min-width: 64px;
+  border: 1px solid brown;
+  text-align: center;
+  transition: background 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  :hover {
+     background: #f4f4f4;
+  }
+}
+
+.updateRestaurantSubmit {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.updateRestaurantInput {
+  align-content: center;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 3px;
+  padding: 0 15px;
+  border-radius: 4px;
+  color: brown;
+  background: transparent;
+  line-height: 1.15;
+  font-size: 14px;
+  height: 36px;
+  word-spacing: 0px;
+  letter-spacing: .0892857143em;
+  text-decoration: none;
+  text-transform: uppercase;
+  min-width: 64px;
+  border: 1px solid brown;
+  text-align: center;
+  transition: background 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  :hover {
+     background: #f4f4f4;
+  }
+}
+
 .newRestBtn {
   display: flex;
   justify-content: center;
@@ -622,8 +685,8 @@ ul {
   text-align: center;
 }
 
-.userShowBox {
-  margin-left: 40px;
+.itemsForm {
+margin-left: 40px;
 }
 
 .footer{

@@ -318,6 +318,15 @@ async function showOne(req, res) {
     }
     const restaurant = await Restaurant.findById(req.params.id).populate('categories'); 
     if(restaurant){
+
+      // sort items by type
+      restaurant.menu.sort((a, b) => {
+        if (a.type < b.type) return -1;
+        if (a.type > b.type) return 1;
+        return 0;
+      });
+      
+
       let errors = [];
       let formBody = [];
       if(req.session.errors) {

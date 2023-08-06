@@ -19,14 +19,15 @@
     <img src="/images/divider/divider.jpg" class="dividerImage"/>
   </div>
 
-<div class="row" style="max-width: 600px;">
+<div class="align-self-center">
     <div class="userShowCard card">
         <div class="card-header">
             <h4 class="card-title"><%= restaurant.name %></h4>
         </div>
 
+    <div class="itemsForm">
         <% if(user?.userType == 'admin'){ %>
-        <div class="card-body userShowBox">
+        <div class="card-body userShowBox align-self-center">
             <div class="basic-form">
                 <form action="/restaurants/<%= restaurant._id %>/items" method="POST" enctype="multipart/form-data">
 
@@ -69,13 +70,15 @@
                             <%  }%>
                         </div>
                     </div>
-                    <input type="submit" value="Add Item">
+                    <div class="addItemSubmit">
+                        <input class="addItemInput" type="submit" value="Add Item">
+                    </div>
                 </form>
                 <% } %>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
