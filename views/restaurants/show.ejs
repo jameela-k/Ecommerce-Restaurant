@@ -88,6 +88,7 @@
         </div>
 
         <% if(user?.userType == "admin"){ %>
+            <a class="btn btn-light btnEditRestaurant btnAddNewItem" href="/restaurants/<%= restaurant._id %>/edit">Edit Restaurant</a>
             <a class="btn btn-light btnAddNewItem" href="/restaurants/<%= restaurant._id %>/items/new">Add New Item</a>
         <% } %>
         
