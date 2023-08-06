@@ -7,8 +7,15 @@ const restaurant = require('../models/restaurant');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-  const restaurants = await restaurant.find({});
-  res.render('index', { title: 'Home Page' , restaurants});
+  try{
+    const restaurants = await restaurant.find({});
+    const successMessages = req.flash('success');
+    const errorMessages = req.flash('error');
+    res.render('index', { title: 'Home Page' , restaurants, successMessages, errorMessages});
+  }catch(err){
+    console.log(err);
+  }
+
 });
 
 // Google OAuth login route
