@@ -167,3 +167,22 @@ function geocode(request) {
 window.initMap = initMap;
 // let addr = "House: 2836 Road no: 944 City: Hamad Town country: Bahrain" 
 // geocode({ address: addr });
+
+
+
+window.addEventListener("DOMContentLoaded", (event) => {
+  //  console.log("DOM fully loaded and parsed");
+   // grab all the h4 rating item element
+   const ratingsBtns = document.getElementsByClassName("ratingsBtn");
+
+  // add listner to all the for each item's h4 rating
+   for (let i=0; i < ratingsBtns.length; i++) {
+     
+    //when clicked
+    ratingsBtns[i].addEventListener("click",  function(e){
+      const reviewsBoxes = document.getElementsByClassName("reviewsBox");
+      // hide reviews by other users
+      reviewsBoxes[i].classList.toggle('d-none');
+    });
+   }
+ });
