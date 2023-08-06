@@ -74,14 +74,14 @@
               <div class="row">
                 <div class="col-md-6">
                   <label class="form-label">Shop Number</label>
-                  <input type="text" name="address.shopNumber" class="form-control" value="<%= errors?!errors['address.shopNumber']?formBody?formBody['address.shopNumber']:'':'':'' %>">
+                  <input type="text" name="address.shopNumber" class="form-control" value="<%= errors?errors['address.shopNumber']?formBody?formBody['address.shopNumber']:restaurant.address.shopNumber:restaurant.address.shopNumber:restaurant.address.shopNumber %>">
                   <% if(errors && errors['address.shopNumber']){ %>
                     <span><%= errors['address.shopNumber'].msg %></span>
                   <%  }%>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Building</label>
-                  <input type="text" name="address.building" class="form-control" value="<%= errors?!errors['address.building']?formBody?formBody['address.building']:'':'':'' %>">
+                  <input type="text" name="address.building" class="form-control" value="<%= errors?errors['address.building']?formBody?formBody['address.building']:restaurant.address.building:restaurant.address.building:restaurant.address.building %>">
                   <% if(errors && errors['address.building']){ %>
                     <span><%= errors['address.building'].msg %></span>
                   <%  }%>
@@ -90,14 +90,14 @@
               <div class="row">
                 <div class="col-md-6">
                   <label class="form-label">Road</label>
-                  <input type="text" name="address.road" class="form-control" value="<%= errors?!errors['address.road']?formBody?formBody['address.road']:'':'':'' %>">
+                  <input type="text" name="address.road" class="form-control" value="<%= errors?errors['address.road']?formBody?formBody['address.road']:restaurant.address.road:restaurant.address.road:restaurant.address.road %>">
                   <% if(errors && errors['address.road']){ %>
                     <span><%= errors['address.road'].msg %></span>
                   <%  }%>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Block</label>
-                  <input type="text" name="address.block" class="form-control" value="<%= errors?!errors['address.block']?formBody?formBody['address.block']:'':'':'' %>">
+                  <input type="text" name="address.block" class="form-control" value="<%= errors?errors['address.block']?formBody?formBody['address.block']:restaurant.address.block:restaurant.address.block:restaurant.address.block %>">
                   <% if(errors && errors['address.block']){ %>
                     <span><%= errors['address.block'].msg %></span>
                   <%  }%>
@@ -106,14 +106,14 @@
               <div class="row">
                 <div class="col-md-6">
                   <label class="form-label">City</label>
-                  <input type="text" name="address.city" class="form-control" value="<%= errors?!errors['address.city']?formBody?formBody['address.city']:'':'':'' %>">
+                  <input type="text" name="address.city" class="form-control" value="<%= errors?errors['address.city']?formBody?formBody['address.city']:restaurant.address.city:restaurant.address.city:restaurant.address.city %>">
                   <% if(errors && errors['address.city']){ %>
                     <span><%= errors['address.city'].msg %></span>
                   <%  }%>
                 </div> 
                 <div class="col-md-6">     
                   <label class="form-label">Country</label>
-                  <input type="text" name="address.country" class="form-control" value="<%= errors?!errors['address.country']?formBody?formBody['address.country']:'':'':'' %>">
+                  <input type="text" name="address.country" class="form-control" value="<%= errors?errors['address.country']?formBody?formBody['address.country']:restaurant.address.country:restaurant.address.country:restaurant.address.country %>">
                   <% if(errors && errors['address.country']){ %>
                     <span><%= errors['address.country'].msg %></span>
                   <%  }%> 

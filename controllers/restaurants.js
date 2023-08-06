@@ -489,9 +489,9 @@ async function update(req, res) {
 
   // Remove empty properties so that defaults will be applied
   
-  for (let key in req.body) {
-      if (req.body[key] === '') delete req.body[key];
-  }
+  // for (let key in req.body) {
+  //     if (req.body[key] === '') delete req.body[key];
+  // }
 
   if(!("categories" in req.body)){
     req.body.categories = [];
