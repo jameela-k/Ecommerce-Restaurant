@@ -6,3 +6,11 @@
   #map::before, #map::after {
     background-color: transparent;
   }
+
+  .ratingsBtn:hover {
+    background-color: whitesmoke;
+  }
+
+  .ratingsBtn:active {
+    background-color: gray;
+  }
