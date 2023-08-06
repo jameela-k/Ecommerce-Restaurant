@@ -88,12 +88,12 @@
                   <% } %>
                 </p>
                 <h5 class="cardTitle">Adress</h5>
-                <p class="cardText">   <span class="fw-bold">Shop Number: </span><%= restaurant.address.shopNumber %> 
+                <p class="cardText " id="streetAddr">   <span class="fw-bold">Shop Number: </span><%= restaurant.address.shopNumber %> 
                                         <span class="fw-bold">Building: </span><%= restaurant.address.building %>                     
-                                        <span class="fw-bold">Road: </span><%= restaurant.address.road %> 
+                                        <span class="fw-bold">Road no: </span><%= restaurant.address.road %> 
                                         <span class="fw-bold">Block: </span><%= restaurant.address.block %> 
                 </p>
-                <p class="cardText">   <span class="fw-bold">City: </span><%= restaurant.address.city %> 
+                <p class="cardText" id="cityCountry">   <span class="fw-bold">City: </span><%= restaurant.address.city %> 
                                         <span class="fw-bold">Country: </span><%= restaurant.address.country %> 
                 </p>
             </div>
