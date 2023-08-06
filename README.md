@@ -1,4 +1,4 @@
-# Projct2-Restaurant Food Review
+# Project 2-Restaurant Food Review
 
 ## What is the Website about ? 
 
