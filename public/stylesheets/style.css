@@ -9,8 +9,18 @@
 
   .ratingsBtn:hover {
     background-color: whitesmoke;
+    cursor: pointer;
   }
 
   .ratingsBtn:active {
+    background-color: gray;
+  }
+
+  .iRatings:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+  }
+
+  .iRatingsBtn:active {
     background-color: gray;
   }
