@@ -94,6 +94,12 @@ const restaurantSchema = new Schema({
         country: {
             type: String
         },
+        plusCode: {
+            type: String
+        },
+        googlePlaceId: {
+            type: String
+        },
    },
    menu: [menuSchema],
 

@@ -33,12 +33,24 @@ function initMap() {
   // take address from page
   let stAddr = document.getElementById("streetAddr").innerText;
   let cityContry = document.getElementById("cityCountry").innerText;
-  // put it in variable
-  let addr = stAddr + " " + cityContry;
+  let plusCode = document.getElementById("plusCode").innerText;
+  let restaurantName = document.getElementById("restaurantName").innerText;
   
-  // get geolocation from google using our address 
-  geocode({ address: addr });
+  // if pluss code available
+  if (plusCode) {
 
+    // get geolocation from google using pluss code and place name 
+    geocode({ address: plusCode + ", " +  restaurantName});
+  }
+  // else if no plus code available
+  else if (!plusCode) {
+
+    // put it in variable
+    let addr = stAddr + " " + cityContry;
+    
+    // get geolocation from google using our address 
+    geocode({ address: addr });
+    }
 
 }
 

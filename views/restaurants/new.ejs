@@ -112,6 +112,15 @@
                   <br>
                 </div> 
               </div> 
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Plus Code</label>
+                  <input type="text" name="address.plusCode" class="form-control" value="<%= errors?!errors['address.plusCode']?formBody?formBody['address.plusCode']:'':'':'' %>">
+                  <% if(errors && errors['address.plusCode']){ %>
+                    <span><%= errors['address.plusCode'].msg %></span>
+                  <%  }%>
+                </div> 
+              </div> 
             </fieldset> 
           </div> 
           <div class="newRestBtn">
