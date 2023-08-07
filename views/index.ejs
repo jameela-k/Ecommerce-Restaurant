@@ -63,23 +63,24 @@
       </div>
       <div class="containerMainPage text-center my-3">
         <div class="row mx-auto my-auto">
-          <div id="myCarousel" class="carousel slide w-100" data-ride="carousel">
+          <div id="myCarousel" class="carousel slide w-100" data-bs-ride="carousel">
             <div class="carousel-inner" role="listbox">
-              <% let act="active"; %>
-              <div class="carousel-item py-5 <%= act %>">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                  <% restaurants.forEach((restaurant) => { %>
+              
+              <% let i %>
+                <div class="carousel-item py-5 active">
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <% for(i=0; (i<restaurants.length && i<3); i++) { %>
                     <div class="col-sm-3">
                       <div class="cardMainPage">
                         <div class="card-body" style="max-width: 400px;">
-                          <img src="<%= restaurant.image.src %>" alt="<%= restaurant.name %>" class="dish" />
-                          <h4 class="card-title-main"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h4>
+                          <img src="<%= restaurants[i].image.src %>" alt="<%= restaurants[i].name %>" class="dish" />
+                          <h4 class="card-title-main"><a href="/restaurants/<%= restaurants[i]._id %>"><%= restaurants[i].name %></a></h4>
                           <h5 class="card-text">Rating</h5>
                           <p class="card-text">
                             <% let count=0; %>
                             <% let total=0; %>
                             <% let avr=0 %>
-                            <% restaurant.menu.forEach ((item, i) => { %>
+                            <% restaurants[i].menu.forEach ((item, i) => { %>
                               <% item.reviews.forEach ((review , r) => { %>
                                 <% total += review.rating; %>
                                 <% count++;%>
@@ -95,16 +96,80 @@
                         </div>
                       </div>
                     </div>
-                  <% act="" }); %>
+                    <% }; %>
+                  </div>
                 </div>
-                <button class="carousel-control-prev" data-bs-target="#myCarousel" role="button"href="#myCarousel" data-slide="prev" type="button">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </button>
-                <button class="carousel-control-next" role="button" data-bs-slide="next" data-bs-target="#myCarousel" type="button">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </button>
-              </div>
+                <div class="carousel-item py-5">
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <% for(i=3; (i<restaurants.length && i<6); i++) { %>
+                    <div class="col-sm-3">
+                      <div class="cardMainPage">
+                        <div class="card-body" style="max-width: 400px;">
+                          <img src="<%= restaurants[i].image.src %>" alt="<%= restaurants[i].name %>" class="dish" />
+                          <h4 class="card-title-main"><a href="/restaurants/<%= restaurants[i]._id %>"><%= restaurants[i].name %></a></h4>
+                          <h5 class="card-text">Rating</h5>
+                          <p class="card-text">
+                            <% let count=0; %>
+                            <% let total=0; %>
+                            <% let avr=0 %>
+                            <% restaurants[i].menu.forEach ((item, i) => { %>
+                              <% item.reviews.forEach ((review , r) => { %>
+                                <% total += review.rating; %>
+                                <% count++;%>
+                              <% }); %>
+                            <% }); %>
+                            <% if (total ===0) {%>
+                              No Reviews Yet
+                            <% }else {%>
+                              <% avr= total/count %>
+                              <%= parseFloat(avr.toFixed(2)) %>
+                            <% } %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <% }; %>
+                  </div>
+                </div>
+                <div class="carousel-item py-5">
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <% for(i=6; (i<restaurants.length && i<9); i++) { %>
+                    <div class="col-sm-3">
+                      <div class="cardMainPage">
+                        <div class="card-body" style="max-width: 400px;">
+                          <img src="<%= restaurants[i].image.src %>" alt="<%= restaurants[i].name %>" class="dish" />
+                          <h4 class="card-title-main"><a href="/restaurants/<%= restaurants[i]._id %>"><%= restaurants[i].name %></a></h4>
+                          <h5 class="card-text">Rating</h5>
+                          <p class="card-text">
+                            <% let count=0; %>
+                            <% let total=0; %>
+                            <% let avr=0 %>
+                            <% restaurants[i].menu.forEach ((item, i) => { %>
+                              <% item.reviews.forEach ((review , r) => { %>
+                                <% total += review.rating; %>
+                                <% count++;%>
+                              <% }); %>
+                            <% }); %>
+                            <% if (total ===0) {%>
+                              No Reviews Yet
+                            <% }else {%>
+                              <% avr= total/count %>
+                              <%= parseFloat(avr.toFixed(2)) %>
+                            <% } %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <% }; %>
+                  </div>
+                </div>
             </div>
+            <button class="carousel-control-prev" role="button" data-bs-slide="prev" data-bs-target="#myCarousel" type="button">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" role="button" data-bs-slide="next" data-bs-target="#myCarousel" type="button">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
           </div>
         </div>
 

@@ -112,22 +112,24 @@
                                 <Discription><%= item.description %></Discription>
                             </div>
                             <div class="col ratingDishItem">
-                                <h6 class="ratingsBtn">Rating & reviews</h6>
-                                <p class="card-text">
-                                <% let count=0; %>
-                                <% let total=0; %>
-                                <% let avr=0 %>
-                                <% item.reviews.forEach ((review , r) => { %>
-                                    <% total += review.rating; %>
-                                    <% count++;%>
-                                <% }); %>
-                                <% if (total ===0) {%>
-                                    No Reviews Yet
-                                <% }else {%>
-                                    <% avr= total/count %>
-                                    <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
-                                <% } %>
-                                </p>
+                                <span class="ratingsBtn">
+                                    <h6 class="iRatings">Rating & reviews</h6>
+                                    <p class="card-text iRatings">
+                                    <% let count=0; %>
+                                    <% let total=0; %>
+                                    <% let avr=0 %>
+                                    <% item.reviews.forEach ((review , r) => { %>
+                                        <% total += review.rating; %>
+                                        <% count++;%>
+                                    <% }); %>
+                                    <% if (total ===0) {%>
+                                        No Reviews Yet
+                                    <% }else {%>
+                                        <% avr= total/count %>
+                                        <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
+                                    <% } %>
+                                    </p>
+                                </span>
                             </div>
                         </div>
                     
