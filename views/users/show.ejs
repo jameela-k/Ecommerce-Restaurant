@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 
 
-<div class="viewUser">
+<div class="viewUser container">
 	<% if (successMessages && successMessages.length > 0) { %>
 		<div class="alert alert-success d-flex justify-content-between">
 		  <div class="alert-body">
@@ -23,7 +23,7 @@
 		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
 	<% } %>
-	<div class="card mb-3">
+	<div class="card mb-3 row">
 	  <div class="card-header">
 		<h4 class="card-title"><%- title %></h4>
 	  </div>
@@ -76,7 +76,7 @@
 			</div>
 		  </div>
 		</div>
-	  </div>
+	  
 	
 	<div class=" showUserGroup card-group row">
 		<% let counter = 0 %>
@@ -88,22 +88,22 @@
 				<% item.reviews.forEach ((review, w) => { %>
 					<!-- if the review is made by the selected user -->
 					<% if (JSON.stringify(review.user) == JSON.stringify(dbUser._id)) {%>
-						<div class="showCardUser card col-md-6" style="max-width: 580px;">
-							<div class="card-header col">
+						<div class="showCardUser card col-md-6">
+							<div class="card-header row">
 								<!-- show restaurant logo -->
-								<div class="col-md-6">
+								<div class="col">
 									<img  class="imageShow"  src="<%= restaurant.image.src %>" alt="logo" referrerpolicy="no-referrer" style="max-block-size: 100px ;">
 								</div>
 								<!-- show restaurant name -->
-								<div class="titleShowCate">
+								<div class="titleShowCate col">
 									<h3 class="card-title-restuarantLink row-md-6"><a href="/restaurants/<%= restaurant._id %>"><%= restaurant.name %></a></h3>
 								</div>
 							</div>
 							<div class="card-body row">
 								<!-- show item image -->
-								<img class="col-md-3" src="<%= item.image.src %>" alt="Item image" referrerpolicy="no-referrer" style="max-block-size: inherit ;">
+								<img class="col" src="<%= item.image.src %>" alt="Item image" referrerpolicy="no-referrer" style="max-width: 150px; max-block-size: 150px;">
 								<!-- show the item name -->
-								<div class="col-md-9">
+								<div class="col">
 									<div class="row">
 										<div class="col">
 											<h4><%= item.name %></h4>
@@ -114,58 +114,66 @@
 										<!-- if the loged in user is the same user selected or admin -->
 										<% if(JSON.stringify(user._id) == JSON.stringify(dbUser._id) || user.userType == "admin") {%>
 											<div class="row">
-												<div class="col-md-12">
+												<!-- show the edit form -->
+												<form class="col-md-10" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
 													<div class="row">
-														<!-- show the edit form -->
-														<form class="col-md-10" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
-															<div class="row">
-																<input type="hidden" name="user" value="<%= user._id %>">
-																<input type="hidden" name="userName" value="<%= user.name %>">
-																<input type="hidden" name="userAvatar" value="<%= user.avatar %>">
-																<div class="col-md-8">
-																	<!-- show the comment with the user review filled in -->
-																	<label for="comment#<%= r %><%= i %><%= w %>">Comment</label>
-																	<textarea name="comment" id="comment#<%= r %><%= i %><%= w %>"><%= review.comment %></textarea>
-																</div>
-																<div class="col-md-3">
-																	<!-- show the user's rating for the item -->
-																	<label for="rating#<%= r %><%= i %><%= w %>">Rating</label>
-																	<select name="rating" id="rating#<%= r %><%= i %><%= w %>">
-																		<option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
-																		<option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
-																		<option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
-																		<option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
-																		<option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
-																	</select>
-																</div>
-																<button class="row-md-2">Edit</button>
-															</div>
-														</form>
-														<!-- show the delete button -->
-														<form class ="col-md-2" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-															<div class="row">
-																	<button class="btn btn-danger"> X </button>
-															</div>
-														</form>
+														<input type="hidden" name="user" value="<%= user._id %>">
+														<input type="hidden" name="userName" value="<%= user.name %>">
+														<input type="hidden" name="userAvatar" value="<%= user.avatar %>">
+														<div class="col-md-8">
+															<!-- show the comment with the user review filled in -->
+															<label for="comment#<%= r %><%= i %><%= w %>">Comment</label>
+															<textarea name="comment" id="comment#<%= r %><%= i %><%= w %>"><%= review.comment %></textarea>
+														</div>
+														<div class="col-md-3">
+															<!-- show the user's rating for the item -->
+															<label for="rating#<%= r %><%= i %><%= w %>">Rating</label>
+															<select name="rating" id="rating#<%= r %><%= i %><%= w %>">
+																<option value="1" <%= review.rating == 1?'selected': '' %>>*</option>
+																<option value="2" <%= review.rating == 2?'selected': '' %>>**</option>
+																<option value="3" <%= review.rating == 3?'selected': '' %>>***</option>
+																<option value="4" <%= review.rating == 4?'selected': '' %>>****</option>
+																<option value="5" <%= review.rating == 5?'selected': '' %>>*****</option>
+															</select>
+														</div>
+														<button class="row-md-2">Edit</button>
 													</div>
-												</div>
+												</form>
+												<!-- show the delete button -->
+												<form class ="col-md-2" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+													<div class="row">
+															<button class="btn btn-danger"> X </button>
+													</div>
+												</form>
 											</div>
 												
 										<!-- if loged in user is normal user and not owner of the reviews -->
 										<% } else { %>
+											<div class="row">
 											<!-- show comment and rating -->
+											<div class="col">
 											<h5>Comment</h5>
 											<p><%= review.comment %></p>
+											</div>
+											<div class="col">
 											<h5>Rating</h5>
 											<p><%= review.rating %></p> 
+											</div>
+											</div>
 										<% } %> 
 									<!-- if no user is loged in -->
 									<% } else { %>
+											<div class="row">
 											<!-- show comment and rating -->
+											<div class="col">
 											<h5>Comment</h5>
 											<p><%= review.comment %></p>
+											</div>
+											<div class="col">
 											<h5>Rating</h5>
-											<p><%= review.rating %></hp> 
+											<p><%= review.rating %></p> 
+											</div>
+											</div>
 									<% } %>
 								</div>
 							</div>   
@@ -180,7 +188,7 @@
 			<% }); %>
 		<% }); %>
 	</div>
-
+</div>
 
 
 <%- include('../partials/footer') %>
