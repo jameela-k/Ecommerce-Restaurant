@@ -97,9 +97,11 @@ function geocode(request) {
 
         // creating a table to desplay the reviews from the detailed information we got from getDetail api
         const content = document.createElement("table");
+        content.classList.add("table");
+        content.classList.add("table-striped");
         // create table head
         const tableHead = document.createElement("thead");
-        tableHead.innerHTML = "<tr><th>Photo</th><th>Author</th><th>Review</th><th>Rating</th></tr>"
+        tableHead.innerHTML = '<tr><th scope="col">Photo</th><th scope="col">Author</th><th scope="col">Review</th><th scope="col">Rating</th></tr>'
         // add table head to table
         content.appendChild(tableHead);
         // create table body
@@ -111,6 +113,7 @@ function geocode(request) {
           
           //creat table field for photo
           const tableFieldPhoto = document.createElement("td");
+          tableFieldPhoto.setAttribute("scope", "row");
           // creat img html element
           const ReviewerPhoto = document.createElement("img");
           ReviewerPhoto.setAttribute("alt", "user avatar");
