@@ -170,7 +170,7 @@ function geocode(request) {
         // add table body to table
         content.appendChild(tableBody);
         // put the table html inside the page div
-        document.getElementById("testaddress").appendChild(content);
+        document.getElementById("googleReviews").appendChild(content);
       });
       
       return results;
