@@ -123,13 +123,13 @@ const itemFormCheckSchema = {
       custom: {
         options: (value, { req }) => {
           if (value) {
-            if(value.length < 1 || value.length >10){
+            if(value.length < 1 || value.length >20){
               return false
             }
           }
           return true;
         },
-        errorMessage: 'type must be between 1 and 10 characters'
+        errorMessage: 'type must be between 1 and 20 characters'
       }
   },
 
