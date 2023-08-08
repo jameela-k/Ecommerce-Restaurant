@@ -40,13 +40,13 @@ function initMap() {
   if (plusCode) {
 
     // get geolocation from google using pluss code and place name 
-    geocode({ address: plusCode + ", " +  restaurantName});
+    geocode({ address: restaurantName + ", " + plusCode });
   }
   // else if no plus code available
   else if (!plusCode) {
 
     // put it in variable
-    let addr = stAddr + " " + cityContry;
+    let addr = restaurantName + ", " + stAddr + ", " + cityContry;
     
     // get geolocation from google using our address 
     geocode({ address: addr });
@@ -137,6 +137,8 @@ function geocode(request) {
           const tableFieldReview = document.createElement("td");
           // creat p html element
           const ReviewerReview = document.createElement("p");
+          // add class overflow scroll
+          ReviewerReview.classList.add("overflowScroll");
           // add google user's review to p.innerText
           ReviewerReview.innerText = review.text;
           // add p to table field
