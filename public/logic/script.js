@@ -114,6 +114,7 @@ function geocode(request) {
           //creat table field for photo
           const tableFieldPhoto = document.createElement("td");
           tableFieldPhoto.setAttribute("scope", "row");
+          tableFieldPhoto.classList.add("align-middle");
           // creat img html element
           const ReviewerPhoto = document.createElement("img");
           ReviewerPhoto.setAttribute("alt", "user avatar");
@@ -127,6 +128,7 @@ function geocode(request) {
 
           //creat table field for name
           const tableFieldName = document.createElement("td");
+          tableFieldName.classList.add("align-middle");
           // creat p html element
           const ReviewerName = document.createElement("p");
           // add google user's name to p.innerText
@@ -138,6 +140,7 @@ function geocode(request) {
 
           //creat table field for review
           const tableFieldReview = document.createElement("td");
+          tableFieldReview.classList.add("align-middle");
           // creat p html element
           const ReviewerReview = document.createElement("p");
           // add class overflow scroll
@@ -151,6 +154,7 @@ function geocode(request) {
 
           //creat table field for rating
           const tableFieldRating = document.createElement("td");
+          tableFieldRating.classList.add("align-middle");
           // creat p html element
           const ReviewerRating = document.createElement("p");
           // add google user's rating to p.innerText
