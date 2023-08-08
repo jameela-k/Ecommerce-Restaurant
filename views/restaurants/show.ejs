@@ -31,12 +31,12 @@
 
 <h2 class="itemsTitle"><%- title %></h2>
 
+<div class="divider">
+    <img src="/images/divider/divider.jpg" class="dividerImage"/>
+</div>
+
 <div class="row">
     <div class="col-md-8">
-
-        <div class="divider">
-            <img src="/images/divider/divider.jpg" class="dividerImage"/>
-        </div>
 
         <div class="cardRestaurant card mb-3">
             <div class="row g-0">
@@ -73,7 +73,7 @@
                             <%= parseFloat(avr.toFixed(2)) %> (<%= count %> <% if(count==1){%>review<%}else{%>reviews<%} %>)
                         <% } %>
                         </p>
-                        <h5 class="cardTitle">Adress</h5>
+                        <h5 class="cardTitle">Address:</h5>
                         <p class="cardText " id="streetAddr">   <span class="fw-bold">Shop Number: </span><%= restaurant.address.shopNumber %> 
                                                 <span class="fw-bold">Building: </span><%= restaurant.address.building %>                     
                                                 <span class="fw-bold" >Road no: </span><span id="roadNo"><%= restaurant.address.road %></span> 
@@ -264,7 +264,7 @@
     <!-- google map and google review section from -->
     <div class="col-md-4">
         <div id="map"></div>
-        <div class="" id="testaddress"></div>
+        <div class="" id="googleReviews"></div>
     </div>
 </div>
 <%- include('../partials/footer') %>

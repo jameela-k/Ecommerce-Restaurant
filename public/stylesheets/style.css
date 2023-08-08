@@ -24,3 +24,8 @@
   .iRatingsBtn:active {
     background-color: gray;
   }
+
+  .overflowScroll {
+    max-height: 100px;
+    overflow-y: scroll;
+  }

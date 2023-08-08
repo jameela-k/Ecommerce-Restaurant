@@ -40,13 +40,13 @@ function initMap() {
   if (plusCode) {
 
     // get geolocation from google using pluss code and place name 
-    geocode({ address: plusCode + ", " +  restaurantName});
+    geocode({ address: restaurantName + ", " + plusCode });
   }
   // else if no plus code available
   else if (!plusCode) {
 
     // put it in variable
-    let addr = stAddr + " " + cityContry;
+    let addr = restaurantName + ", " + stAddr + ", " + cityContry;
     
     // get geolocation from google using our address 
     geocode({ address: addr });
@@ -97,9 +97,11 @@ function geocode(request) {
 
         // creating a table to desplay the reviews from the detailed information we got from getDetail api
         const content = document.createElement("table");
+        content.classList.add("table");
+        content.classList.add("table-striped");
         // create table head
         const tableHead = document.createElement("thead");
-        tableHead.innerHTML = "<tr><th>Photo</th><th>Author</th><th>Review</th><th>Rating</th></tr>"
+        tableHead.innerHTML = '<tr><th scope="col">Photo</th><th scope="col">Author</th><th scope="col">Review</th><th scope="col">Rating</th></tr>'
         // add table head to table
         content.appendChild(tableHead);
         // create table body
@@ -111,6 +113,8 @@ function geocode(request) {
           
           //creat table field for photo
           const tableFieldPhoto = document.createElement("td");
+          tableFieldPhoto.setAttribute("scope", "row");
+          tableFieldPhoto.classList.add("align-middle");
           // creat img html element
           const ReviewerPhoto = document.createElement("img");
           ReviewerPhoto.setAttribute("alt", "user avatar");
@@ -124,6 +128,7 @@ function geocode(request) {
 
           //creat table field for name
           const tableFieldName = document.createElement("td");
+          tableFieldName.classList.add("align-middle");
           // creat p html element
           const ReviewerName = document.createElement("p");
           // add google user's name to p.innerText
@@ -135,8 +140,11 @@ function geocode(request) {
 
           //creat table field for review
           const tableFieldReview = document.createElement("td");
+          tableFieldReview.classList.add("align-middle");
           // creat p html element
           const ReviewerReview = document.createElement("p");
+          // add class overflow scroll
+          ReviewerReview.classList.add("overflowScroll");
           // add google user's review to p.innerText
           ReviewerReview.innerText = review.text;
           // add p to table field
@@ -146,6 +154,7 @@ function geocode(request) {
 
           //creat table field for rating
           const tableFieldRating = document.createElement("td");
+          tableFieldRating.classList.add("align-middle");
           // creat p html element
           const ReviewerRating = document.createElement("p");
           // add google user's rating to p.innerText
@@ -161,7 +170,7 @@ function geocode(request) {
         // add table body to table
         content.appendChild(tableBody);
         // put the table html inside the page div
-        document.getElementById("testaddress").appendChild(content);
+        document.getElementById("googleReviews").appendChild(content);
       });
       
       return results;
