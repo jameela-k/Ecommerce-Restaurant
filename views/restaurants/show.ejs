@@ -154,7 +154,7 @@
                                 <!-- if review found show it as first review -->
                                 if(review) {%>
                                     <div class="col">
-                                        <img class="avatarImage" src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
+                                        <img class="avatarImage avatar" src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                                     </div>
                                     <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/<%= review._id %>?_method=PUT" method="post">
                                         <div class="row">
@@ -188,7 +188,7 @@
                                     </form>
                                 <%}else{ %>
                                     <div class="col">
-                                        <img class="avatarImage" src="<%= user.avatar %>" alt="" referrerpolicy="no-referrer">
+                                        <img class="avatarImage avatar" src="<%= user.avatar %>" alt="" referrerpolicy="no-referrer">
                                     </div>
                                     <form class="col" action="/restaurants/<%= restaurant._id %>/items/<%= item._id %>/reviews/" method="post">
                                         <div class="row">
@@ -225,7 +225,7 @@
                                 if(JSON.stringify(review.user) != JSON.stringify(user?._id)){%>
                                     <div class="row">
                                         <div class="col">
-                                            <img src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
+                                            <img class="avatar" src="<%= review.userAvatar %>" alt="" referrerpolicy="no-referrer">
                                         </div>
                                         <div class="col">
                                             <a href="/users/<%= review.user %>"><p><%= review.userName %></p></a>
