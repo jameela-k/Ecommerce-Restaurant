@@ -16,7 +16,7 @@
   </head>
 
   <body>
-    <header>
+    <header class="sticky-top">
       <a href="/">
         <img
           src="/images/logo/Egg-logo.gif"
@@ -25,50 +25,109 @@
           referrerpolicy="no-referrer"
         />
       </a>
+
+      <div class="BurgerNavBar">
+        <ul class="navbar">
+          <div class="dropdown-center">
+            <button
+              class="btnDown btn-secondary dropdown-toggle backGroundNone"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+            CUISINE
+            </button>
+            <ul class="dropdown-menu burgerCuisine">
+              <li><a class="dropdown-item" href="/restaurants">Show All </a></li>
+              <% allCategories.forEach ((c, i)=> { %>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/restaurants/?category=<%= c.name %>"
+                  ><%= c.name %></a
+                >
+              </li>
+              <% }); %>
+            </ul>
+          </div>
+
+          <div class="dropdown-left burgerNav">
+            <button
+              class="btnDown btn-secondary backGroundNone"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+            <img class="navIcon" src="/images/icons/icons/burger icon.jpg">
+            </button>
+            <ul class="dropdown-menu burgerDropMenu">
+              <li><a class="dropdown-item" href="/">Home Page</a></li>
+              <li><a class="dropdown-item" href="/users">Show Users</a></li>
+              <% if (user) { %> <% if(user.userType=="admin" ){ %>
+                <li><a class="dropdown-item" href="/restaurants/new">Add restaurant</a></li>
+                <li><a class="dropdown-item" href="/categories">Categories</a></li>
+                <li><a class="dropdown-item" href="/users/<%= user._id %>"> <img class="avatar navAvatar" src="<%= user.avatar %>"> <%= user.name %> </a></li>
+                <% }else if(user.userType=="user" ){ %>
+                <li><a class="dropdown-item" href="/users/<%= user._id %>"> <img class="avatar navAvatar" src="<%= user.avatar %>"> <%= user.name %> </a></li>
+                <% } %>
+                <li><a class="dropdown-item" href="/logout">LOG OUT</a></li>
+              <% } else { %>
+                <li>
+                  <a class="dropdown-item" href="/auth/google" class="login"
+                    >LOG IN&nbsp;<img id="logo2" src="https://i.imgur.com/FHjYyi0.png"
+                  /></a>
+                </li>
+              <% } %>
+            </ul>
+          </div>
+        </ul>
+      </div>
+
       <div class="mainNavBar">
-      <ul class="navbar">
-        <li><a href="/">Home Page</a></li>
-        <li><a href="/users">Show Users</a></li>
+        <ul class="navbar">
+          <li><a href="/">Home Page</a></li>
+          <li><a href="/users">Show Users</a></li>
 
-        <div class="dropdown-center">
-          <button
-            class="btnDown btn-secondary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-          CUISINE
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/restaurants">Show All </a></li>
-            <% allCategories.forEach ((c, i)=> { %>
-            <li>
-              <a
-                class="dropdown-item"
-                href="/restaurants/?category=<%= c.name %>"
-                ><%= c.name %></a
-              >
-            </li>
-            <% }); %>
-          </ul>
-        </div>
+          <div class="dropdown-center">
+            <button
+              class="btnDown btn-secondary dropdown-toggle backGroundNone"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+            CUISINE
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/restaurants">Show All </a></li>
+              <% allCategories.forEach ((c, i)=> { %>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/restaurants/?category=<%= c.name %>"
+                  ><%= c.name %></a
+                >
+              </li>
+              <% }); %>
+            </ul>
+          </div>
 
-        <% if (user) { %> <% if(user.userType=="admin" ){ %>
-        <li><a href="/restaurants/new">Add restaurant</a></li>
-        <li><a href="/categories">Categories</a></li>
-        <li><a href="/users/<%= user._id %>"> <%= user.name %> </a></li>
-        <% }else if(user.userType=="user" ){ %>
-        <li><a href="/users/<%= user._id %>"> <%= user.name %> </a></li>
-        <% } %>
-        <li><a href="/logout">LOG OUT</a></li>
-        <% } else { %>
-        <li>
-          <a href="/auth/google" class="login"
-            >LOG IN&nbsp;<img id="logo" src="https://i.imgur.com/FHjYyi0.png"
-          /></a>
-        </li>
-        <% } %>
-      </ul>
+          <% if (user) { %> <% if(user.userType=="admin" ){ %>
+          <li><a href="/restaurants/new">Add restaurant</a></li>
+          <li><a href="/categories">Categories</a></li>
+          <li><a href="/users/<%= user._id %>"> <img class="avatar navAvatar" src="<%= user.avatar %>"> <%= user.name %> </a></li>
+          <% }else if(user.userType=="user" ){ %>
+          <li><a href="/users/<%= user._id %>"> <img class="avatar navAvatar" src="<%= user.avatar %>"> <%= user.name %> </a></li>
+          <li></li>
+          <% } %>
+          <li><a href="/logout">LOG OUT</a></li>
+          <% } else { %>
+          <li>
+            <a href="/auth/google" class="login"
+              >LOG IN&nbsp;<img id="logo" src="https://i.imgur.com/FHjYyi0.png"
+            /></a>
+          </li>
+          <% } %>
+        </ul>
       </div>
     </header>
 
